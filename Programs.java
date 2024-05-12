@@ -1,18 +1,16 @@
-import javax.swing.border.Border;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.Border;
 
-// import javafx.scene.text.Font;
 
-public class eventPlanner extends JFrame {
+public class Programs extends JFrame {
+    public Programs() {
 
-    public eventPlanner() {
         setTitle("Dashboard");
 
         setSize(1440, 1024);
 
         setLayout(null);
-
 
         JPanel background = new JPanel();
         JPanel menuPanel1 = new JPanel();
@@ -113,31 +111,31 @@ public class eventPlanner extends JFrame {
         programLabel.setForeground(blueColor);
 
         /*
-         * titleLabel.setFont(boldFont);
-         * dateLabel
-         * attendeesLabel
-         * attendeesNumberLabel
-         * attendeesPeopleLabel
-         * budgetLabel
-         * budgetNumberLabel
-         * remainingLabel
-         * remainingFirstNumberLabel
-         * remaingingSecondNumberLabel
-         * checklistLabel
-         * dashboardLabel
-         * welcomeLabel
-         * totalExpensesLabel
-         * totalExpensesAmountLabel
-         * totalRevenueLabel
-         * totalRevenueAmountLabel
-         * revenueLabel
-         * revenueNameLabel
-         * revenuePriceLabel
-         * expensesLabel
-         * expensesNameLabel
-         * expensesPriceLabel
-         * programLabel
-         */
+        * titleLabel.setFont(boldFont);
+        * dateLabel
+        * attendeesLabel
+        * attendeesNumberLabel
+        * attendeesPeopleLabel
+        * budgetLabel
+        * budgetNumberLabel
+        * remainingLabel
+        * remainingFirstNumberLabel
+        * remaingingSecondNumberLabel
+        * checklistLabel
+        * dashboardLabel
+        * welcomeLabel
+        * totalExpensesLabel
+        * totalExpensesAmountLabel
+        * totalRevenueLabel
+        * totalRevenueAmountLabel
+        * revenueLabel
+        * revenueNameLabel
+        * revenuePriceLabel
+        * expensesLabel
+        * expensesNameLabel
+        * expensesPriceLabel
+        * programLabel
+        */
 
         titleLabel.setBounds(67, 72, 252, 44);
         dateLabel.setBounds(67, 84, 100, 100);
@@ -239,22 +237,5 @@ public class eventPlanner extends JFrame {
         add(totalExpensesPanel);
         add(totalRevenuePanel);
         add(background);
-        setVisible(false);
-    }
-
-    
-
-    public static void main(String[] args) {
-
-        
-        Dashboard dashboard = new Dashboard();
-        Programs programPage = new Programs();
-        dashboard.setVisible(true);
-        
-        new eventPlanner();
-
-        while (true) {
-            System.out.println("Hello");
-        }
     }
 }
