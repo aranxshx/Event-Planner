@@ -1,14 +1,53 @@
-import java.awt.*;
-import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// import javafx.scene.text.Font;
 
-public class Dashboard extends JFrame {
+public class Dashboard extends JPanel {
+    JButton financesToggle,peopleToggle,programsToggle;
+    Color blueColor = new Color(97, 113, 255);
+    Border border = BorderFactory.createLineBorder(blueColor, 1);
+
+    JLabel titleLabel = new JLabel("Insert Title");
+    JLabel dateLabel = new JLabel("Date");
+    JLabel attendeesLabel = new JLabel("Attendees");
+    JLabel attendeesNumberLabel = new JLabel("500");
+    JLabel attendeesPeopleLabel = new JLabel("people");
+    JLabel budgetLabel = new JLabel("Budget Allocated");
+    JLabel budgetNumberLabel = new JLabel("P5,000");
+    JLabel remainingLabel = new JLabel("Remaining Budget");
+    JLabel remainingFirstNumberLabel = new JLabel("P5,000");
+    JLabel remaingingSecondNumberLabel = new JLabel("/ P10,000");
+    JLabel checklistLabel = new JLabel("Checklist");
+    JLabel dashboardLabel = new JLabel("Dashboard");
+    JLabel welcomeLabel = new JLabel("Welcome back, Andrew!");
+    JLabel totalExpensesLabel = new JLabel("Total Expenses");
+    JLabel totalExpensesAmountLabel = new JLabel("P500");
+    JLabel totalRevenueLabel = new JLabel("Total Revenue");
+    JLabel totalRevenueAmountLabel = new JLabel("P500");
+    JLabel revenueLabel = new JLabel("Revenue");
+    JLabel revenueNameLabel = new JLabel("Name");
+    JLabel revenuePriceLabel = new JLabel("Price");
+    JLabel expensesLabel = new JLabel("Expenses");
+    JLabel expensesNameLabel = new JLabel("Name");
+    JLabel expensesPriceLabel = new JLabel("Price");
+    JLabel programLabel = new JLabel("Program");
+    JPanel DASHBOARD = new JPanel();
+        
+        
+        
+
+        JPanel FINANCES = new JPanel();
+        
+        JPanel PEOPLE = new JPanel();
+        
+        JPanel RESOURCES = new JPanel();
+        
+
     public Dashboard() {
-
-        setTitle("Dashboard");
 
         setSize(1440, 1024);
 
@@ -25,13 +64,10 @@ public class Dashboard extends JFrame {
         JPanel checkPanel = new JPanel();
         JPanel revenuePanel = new JPanel();
         JPanel expensesPanel = new JPanel();
-
         JPanel programPanel = new JPanel();
 
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
-        Color blueColor = new Color(97, 113, 255);
-        Border border = BorderFactory.createLineBorder(blueColor, 1);
 
         // Icons
         ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
@@ -63,39 +99,11 @@ public class Dashboard extends JFrame {
         add(icon6);
 
         // JPanels
-        JLabel titleLabel = new JLabel("Insert Title");
-        JLabel dateLabel = new JLabel("Date");
-        JLabel attendeesLabel = new JLabel("Attendees");
-        JLabel attendeesNumberLabel = new JLabel("500");
-        JLabel attendeesPeopleLabel = new JLabel("people");
-        JLabel budgetLabel = new JLabel("Budget Allocated");
-        JLabel budgetNumberLabel = new JLabel("P5,000");
-        JLabel remainingLabel = new JLabel("Remaining Budget");
-        JLabel remainingFirstNumberLabel = new JLabel("P5,000");
-        JLabel remaingingSecondNumberLabel = new JLabel("/ P10,000");
-        JLabel checklistLabel = new JLabel("Checklist");
-        JLabel dashboardLabel = new JLabel("Dashboard");
-        JLabel welcomeLabel = new JLabel("Welcome back, Andrew!");
-        JLabel totalExpensesLabel = new JLabel("Total Expenses");
-        JLabel totalExpensesAmountLabel = new JLabel("P500");
-        JLabel totalRevenueLabel = new JLabel("Total Revenue");
-        JLabel totalRevenueAmountLabel = new JLabel("P500");
-        JLabel revenueLabel = new JLabel("Revenue");
-        JLabel revenueNameLabel = new JLabel("Name");
-        JLabel revenuePriceLabel = new JLabel("Price");
-        JLabel expensesLabel = new JLabel("Expenses");
-        JLabel expensesNameLabel = new JLabel("Name");
-        JLabel expensesPriceLabel = new JLabel("Price");
-        JLabel programLabel = new JLabel("Program");
-        JButton financesToggle = new JButton("FINANCES");
+        
 
-        financesToggle.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+        // Finances
+        
 
-        JButton programsToggle = new JButton("RESOURCES");
-        JButton peopleToggle = new JButton("PEOPLE");
         titleLabel.setForeground(Color.WHITE);
         dateLabel.setForeground(Color.WHITE);
         attendeesLabel.setForeground(blueColor);
@@ -113,7 +121,6 @@ public class Dashboard extends JFrame {
         totalExpensesAmountLabel.setForeground(Color.WHITE);
         totalRevenueLabel.setForeground(Color.WHITE);
         totalRevenueAmountLabel.setForeground(Color.WHITE);
-        
         revenueLabel.setForeground(blueColor);
         revenueNameLabel.setForeground(blueColor);
         revenuePriceLabel.setForeground(blueColor);
@@ -121,37 +128,7 @@ public class Dashboard extends JFrame {
         expensesNameLabel.setForeground(blueColor);
         expensesPriceLabel.setForeground(blueColor);
         programLabel.setForeground(blueColor);
-        
-      
-        
-        /*
-        * titleLabel.setFont(boldFont);
-        * dateLabel
-        * attendeesLabel
-        * attendeesNumberLabel
-        * attendeesPeopleLabel
-        * budgetLabel
-        * budgetNumberLabel
-        * remainingLabel
-        * remainingFirstNumberLabel
-        * remaingingSecondNumberLabel
-        * checklistLabel
-        * dashboardLabel
-        * welcomeLabel
-        * totalExpensesLabel
-        * totalExpensesAmountLabel
-        * totalRevenueLabel
-        * totalRevenueAmountLabel
-        * revenueLabel
-        * revenueNameLabel
-        * revenuePriceLabel
-        * expensesLabel
-        * expensesNameLabel
-        * expensesPriceLabel
-        * programLabel
-        */
 
-        // Mneu bar labels
         titleLabel.setBounds(67, 72, 252, 44);
         dateLabel.setBounds(67, 84, 100, 100);
         attendeesLabel.setBounds(91, 190, 100, 100);
@@ -163,17 +140,14 @@ public class Dashboard extends JFrame {
         remainingFirstNumberLabel.setBounds(91, 456, 100, 100);
         remaingingSecondNumberLabel.setBounds(150, 456, 100, 100);
         checklistLabel.setBounds(91, 559, 100, 100);
-        
-
-
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
-        
+
         // Finances
-        totalExpensesLabel.setBounds(486, 831, 100, 100);
-        totalExpensesAmountLabel.setBounds(486, 857, 100, 100);
-        totalRevenueLabel.setBounds(935, 832, 100, 100);
-        totalRevenueAmountLabel.setBounds(935, 858, 100, 100);
+        totalExpensesLabel.setBounds(486, 156, 100, 100);
+        totalExpensesAmountLabel.setBounds(486, 182, 100, 100);
+        totalRevenueLabel.setBounds(935, 156, 100, 100);
+        totalRevenueAmountLabel.setBounds(935, 182, 100, 100);
         revenueLabel.setBounds(500, 265, 100, 100);
         revenueNameLabel.setBounds(500, 300, 100, 100);
         revenuePriceLabel.setBounds(700, 300, 100, 100);
@@ -182,6 +156,8 @@ public class Dashboard extends JFrame {
         expensesPriceLabel.setBounds(1150, 300, 100, 100);
         // programLabel.setBounds(0, 0, 100, 100);
 
+        
+        
         background.setBackground(Color.WHITE);
         background.setBounds(0, 0, 1440, 1024);
 
@@ -192,10 +168,10 @@ public class Dashboard extends JFrame {
         menuPanel2.setBounds(1341, 0, 365, 1024);
 
         totalExpensesPanel.setBackground(blueColor);
-        totalExpensesPanel.setBounds(453, 838, 396, 93);
+        totalExpensesPanel.setBounds(458, 173, 396, 93);
 
         totalRevenuePanel.setBackground(blueColor);
-        totalRevenuePanel.setBounds(902, 838, 396, 93);
+        totalRevenuePanel.setBounds(907, 173, 396, 93);
 
         attendeesPanel.setBackground(Color.WHITE);
         attendeesPanel.setBounds(70, 215, 303, 93);
@@ -210,30 +186,12 @@ public class Dashboard extends JFrame {
         checkPanel.setBounds(70, 582, 303, 290);
 
         revenuePanel.setBackground(Color.WHITE);
-        revenuePanel.setBounds(453, 279, 396, 537);
+        revenuePanel.setBounds(458, 282, 395, 656);
         revenuePanel.setBorder(border);
 
         expensesPanel.setBackground(Color.WHITE);
-        expensesPanel.setBounds(902, 279, 396, 537);
+        expensesPanel.setBounds(907, 282, 395, 656);
         expensesPanel.setBorder(border);
-
-        
-        financesToggle.setBackground(blueColor);
-        financesToggle.setForeground(Color.WHITE);
-        financesToggle.setBounds(458, 173, 259, 81);
-        financesToggle.setBorder(border);
-
-        programsToggle.setBackground(Color.WHITE);
-        programsToggle.setForeground(blueColor);
-        programsToggle.setBounds(755, 173, 259, 81);
-        programsToggle.setBorder(border);
-        
-
-        peopleToggle.setBackground(Color.WHITE);
-        peopleToggle.setForeground(blueColor);
-        peopleToggle.setBounds(1043,173, 259, 81);
-        peopleToggle.setBorder(border);
-        
 
         // programPanel.setBackground(Color.WHITE);
         // programPanel.setBounds(458, 601, 844, 290);
@@ -258,19 +216,10 @@ public class Dashboard extends JFrame {
         add(expensesLabel);
         add(expensesNameLabel);
         add(expensesPriceLabel);
-        add(totalExpensesLabel);
-        add(totalExpensesAmountLabel);
-        add(totalRevenueLabel);
-        add(totalRevenueAmountLabel);
-
-      
-
-        add(financesToggle);
-        add(programsToggle);
-        add(peopleToggle);
-        
-
-        
+        // DASHBOARD.add(totalExpensesLabel);
+        // DASHBOARD.add(totalExpensesAmountLabel);
+        // DASHBOARD.add(totalRevenueLabel);
+        // DASHBOARD.add(totalRevenueAmountLabel);
 
         // add(programPanel);
         add(revenuePanel);
@@ -281,9 +230,12 @@ public class Dashboard extends JFrame {
         add(attendeesPanel);
         add(menuPanel1);
         add(menuPanel2);
-        add(totalExpensesPanel);
-        add(totalRevenuePanel);
+        // DASHBOARD.add(totalExpensesPanel);
+        // DASHBOARD.add(totalRevenuePanel);
         add(background);
+        
+     
+        setVisible(true);
         
     }
 }
