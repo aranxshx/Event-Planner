@@ -44,7 +44,7 @@ public class eventPlanner extends JFrame {
         
     People PEOPLE = new People();
     
-    JPanel RESOURCES = new JPanel();
+    Programs RESOURCES = new Programs();
         
 
     public eventPlanner() {
@@ -55,12 +55,13 @@ public class eventPlanner extends JFrame {
         setLayout(null);
         add(DASHBOARD);
         DASHBOARD.setLayout(null);
-        setContentPane(DASHBOARD);
         add(FINANCES);
         FINANCES.setLayout(null);
+        setContentPane(FINANCES);
         add(PEOPLE);
         PEOPLE.setLayout(null);
         add(RESOURCES);
+        RESOURCES.setLayout(null);
 
         JPanel background = new JPanel();
         JPanel menuPanel1 = new JPanel();

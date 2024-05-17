@@ -3,10 +3,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 
-public class Programs extends JFrame {
+public class Programs extends JPanel {
     public Programs() {
 
-        setTitle("Dashboard");
 
         setSize(1440, 1024);
 
@@ -73,16 +72,7 @@ public class Programs extends JFrame {
         JLabel checklistLabel = new JLabel("Checklist");
         JLabel dashboardLabel = new JLabel("Dashboard");
         JLabel welcomeLabel = new JLabel("Welcome back, Andrew!");
-        JLabel totalExpensesLabel = new JLabel("Total Expenses");
-        JLabel totalExpensesAmountLabel = new JLabel("P500");
-        JLabel totalRevenueLabel = new JLabel("Total Revenue");
-        JLabel totalRevenueAmountLabel = new JLabel("P500");
-        JLabel revenueLabel = new JLabel("Revenue");
-        JLabel revenueNameLabel = new JLabel("Name");
-        JLabel revenuePriceLabel = new JLabel("Price");
-        JLabel expensesLabel = new JLabel("Expenses");
-        JLabel expensesNameLabel = new JLabel("Name");
-        JLabel expensesPriceLabel = new JLabel("Price");
+        
         JLabel programLabel = new JLabel("Program");
 
         titleLabel.setForeground(Color.WHITE);
@@ -98,16 +88,6 @@ public class Programs extends JFrame {
         checklistLabel.setForeground(blueColor);
         dashboardLabel.setForeground(Color.BLACK);
         welcomeLabel.setForeground(Color.BLACK);
-        totalExpensesLabel.setForeground(Color.WHITE);
-        totalExpensesAmountLabel.setForeground(Color.WHITE);
-        totalRevenueLabel.setForeground(Color.WHITE);
-        totalRevenueAmountLabel.setForeground(Color.WHITE);
-        revenueLabel.setForeground(blueColor);
-        revenueNameLabel.setForeground(blueColor);
-        revenuePriceLabel.setForeground(blueColor);
-        expensesLabel.setForeground(blueColor);
-        expensesNameLabel.setForeground(blueColor);
-        expensesPriceLabel.setForeground(blueColor);
         programLabel.setForeground(blueColor);
 
         /*
@@ -150,16 +130,6 @@ public class Programs extends JFrame {
         checklistLabel.setBounds(91, 559, 100, 100);
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
-        totalExpensesLabel.setBounds(486, 156, 100, 100);
-        totalExpensesAmountLabel.setBounds(486, 182, 100, 100);
-        totalRevenueLabel.setBounds(935, 156, 100, 100);
-        totalRevenueAmountLabel.setBounds(935, 182, 100, 100);
-        revenueLabel.setBounds(500, 265, 100, 100);
-        revenueNameLabel.setBounds(500, 300, 100, 100);
-        revenuePriceLabel.setBounds(700, 300, 100, 100);
-        expensesLabel.setBounds(950, 265, 100, 100);
-        expensesNameLabel.setBounds(950, 300, 100, 100);
-        expensesPriceLabel.setBounds(1150, 300, 100, 100);
         // programLabel.setBounds(0, 0, 100, 100);
 
         background.setBackground(Color.WHITE);
@@ -214,28 +184,17 @@ public class Programs extends JFrame {
         add(checklistLabel);
         add(dashboardLabel);
         add(welcomeLabel);
-        add(revenueLabel);
-        add(revenueNameLabel);
-        add(revenuePriceLabel);
-        add(expensesLabel);
-        add(expensesNameLabel);
-        add(expensesPriceLabel);
-        add(totalExpensesLabel);
-        add(totalExpensesAmountLabel);
-        add(totalRevenueLabel);
-        add(totalRevenueAmountLabel);
+        
 
         // add(programPanel);
-        add(revenuePanel);
-        add(expensesPanel);
+        
         add(budgetPanel);
         add(remainingBudgetPanel);
         add(checkPanel);
         add(attendeesPanel);
         add(menuPanel1);
         add(menuPanel2);
-        add(totalExpensesPanel);
-        add(totalRevenuePanel);
+        
         add(background);
     }
 }

@@ -55,6 +55,9 @@ public class Finances extends JPanel {
         JPanel expensesPanel = new JPanel();
         JPanel programPanel = new JPanel();
 
+        JPanel totalExpensesPanel = new JPanel();
+        JPanel totalRevenuePanel = new JPanel();
+
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
@@ -72,6 +75,13 @@ public class Finances extends JPanel {
         JLabel icon4 = new JLabel(addStaffIcon);
         JLabel icon5 = new JLabel(addAttendeeIcon);
         JLabel icon6 = new JLabel(addTaskIcon);
+
+        JLabel revenueLabel = new JLabel("Revenue");
+        JLabel revenueNameLabel = new JLabel("Name");
+        JLabel revenuePriceLabel = new JLabel("Price");
+        JLabel expensesLabel = new JLabel("Expenses");
+        JLabel expensesNameLabel = new JLabel("Name");
+        JLabel expensesPriceLabel = new JLabel("Price");
 
         icon1.setBounds(1343, 230, 80, 80);
         icon2.setBounds(1343, 300, 80, 80);
@@ -106,6 +116,12 @@ public class Finances extends JPanel {
         checklistLabel.setForeground(blueColor);
         dashboardLabel.setForeground(Color.BLACK);
         welcomeLabel.setForeground(Color.BLACK);
+        revenueLabel.setForeground(blueColor);
+        revenueNameLabel.setForeground(blueColor);
+        revenuePriceLabel.setForeground(blueColor);
+        expensesLabel.setForeground(blueColor);
+        expensesNameLabel.setForeground(blueColor);
+        expensesPriceLabel.setForeground(blueColor);
  
        
         programLabel.setForeground(blueColor);
@@ -126,9 +142,25 @@ public class Finances extends JPanel {
 
   
         // programLabel.setBounds(0, 0, 100, 100);
+        totalExpensesLabel.setBounds(486, 156, 100, 100);
+        totalExpensesAmountLabel.setBounds(486, 182, 100, 100);
+        totalRevenueLabel.setBounds(935, 156, 100, 100);
+        totalRevenueAmountLabel.setBounds(935, 182, 100, 100);
+
+        revenueLabel.setBounds(500, 265, 100, 100);
+        revenueNameLabel.setBounds(500, 300, 100, 100);
+        revenuePriceLabel.setBounds(700, 300, 100, 100);
+        expensesLabel.setBounds(950, 265, 100, 100);
+        expensesNameLabel.setBounds(950, 300, 100, 100);
+        expensesPriceLabel.setBounds(1150, 300, 100, 100);
 
         
-        
+        totalExpensesPanel.setBackground(blueColor);
+        totalExpensesPanel.setBounds(458, 173, 396, 93);
+
+        totalRevenuePanel.setBackground(blueColor);
+        totalRevenuePanel.setBounds(907, 173, 396, 93);
+
         background.setBackground(Color.WHITE);
         background.setBounds(0, 0, 1440, 1024);
 
@@ -152,10 +184,20 @@ public class Finances extends JPanel {
         checkPanel.setBounds(70, 582, 303, 290);
 
  
+        revenuePanel.setBackground(Color.WHITE);
+        revenuePanel.setBounds(458, 282, 395, 656);
+        revenuePanel.setBorder(border);
 
+        expensesPanel.setBackground(Color.WHITE);
+        expensesPanel.setBounds(907, 282, 395, 656);
+        expensesPanel.setBorder(border);
         // programPanel.setBackground(Color.WHITE);
         // programPanel.setBounds(458, 601, 844, 290);
         // programPanel.setBorder(border);
+        add(totalExpensesLabel);
+        add(totalExpensesAmountLabel);
+        add(totalRevenueLabel);
+        add(totalRevenueAmountLabel);
 
         add(titleLabel);
         add(dateLabel);
@@ -170,6 +212,12 @@ public class Finances extends JPanel {
         add(checklistLabel);
         add(dashboardLabel);
         add(welcomeLabel);
+        add(revenueLabel);
+        add(revenueNameLabel);
+        add(revenuePriceLabel);
+        add(expensesLabel);
+        add(expensesNameLabel);
+        add(expensesPriceLabel);
         
         // DASHBOARD.add(totalExpensesLabel);
         // DASHBOARD.add(totalExpensesAmountLabel);
@@ -177,16 +225,20 @@ public class Finances extends JPanel {
         // DASHBOARD.add(totalRevenueAmountLabel);
 
         // add(programPanel);
-        
+        add(revenuePanel);
+        add(expensesPanel);
         add(budgetPanel);
         add(remainingBudgetPanel);
         add(checkPanel);
         add(attendeesPanel);
         add(menuPanel1);
         add(menuPanel2);
+        add(totalExpensesPanel);
+        add(totalRevenuePanel);
         // DASHBOARD.add(totalExpensesPanel);
         // DASHBOARD.add(totalRevenuePanel);
         add(background);
+        
         
      
         setVisible(true);
