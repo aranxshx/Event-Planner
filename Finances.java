@@ -155,10 +155,16 @@ public class Finances extends JPanel {
         expensesNameLabel.setForeground(blueColor);
         expensesPriceLabel.setForeground(blueColor);
 
-        totalExpensesLabel.setBounds(486, 156, 100, 100);
-        totalExpensesAmountLabel.setBounds(486, 182, 100, 100);
-        totalRevenueLabel.setBounds(935, 156, 100, 100);
-        totalRevenueAmountLabel.setBounds(935, 182, 100, 100);
+        totalExpensesLabel.setBounds(486, 820, 100, 100);
+        totalExpensesAmountLabel.setBounds(486, 846, 100, 100);
+        totalExpensesLabel.setForeground(Color.WHITE);
+        totalExpensesAmountLabel.setForeground(Color.WHITE);
+
+        totalRevenueLabel.setForeground(Color.WHITE);
+        totalRevenueAmountLabel.setForeground(Color.WHITE);
+
+        totalRevenueLabel.setBounds(935, 820, 100, 100);
+        totalRevenueAmountLabel.setBounds(935, 846, 100, 100);
 
         revenueLabel.setBounds(500, 265, 100, 100);
         revenueNameLabel.setBounds(500, 300, 100, 100);
@@ -168,10 +174,10 @@ public class Finances extends JPanel {
         expensesPriceLabel.setBounds(1150, 300, 100, 100);
 
         totalExpensesPanel.setBackground(blueColor);
-        totalExpensesPanel.setBounds(458, 173, 396, 93);
+        totalExpensesPanel.setBounds(458, 838, 396, 93);
 
         totalRevenuePanel.setBackground(blueColor);
-        totalRevenuePanel.setBounds(907, 173, 396, 93);
+        totalRevenuePanel.setBounds(907, 838, 396, 93);
 
         revenuePanel.setBackground(Color.WHITE);
         revenuePanel.setBounds(458, 282, 395, 505);
