@@ -177,11 +177,11 @@ public class Dashboard extends JPanel {
         expensesPriceLabel.setBounds(1150, 300, 100, 100);
 
         revenuePanel.setBackground(Color.WHITE);
-        revenuePanel.setBounds(458, 282, 395, 656);
+        revenuePanel.setBounds(458, 282, 395, 505);
         revenuePanel.setBorder(border);
 
         expensesPanel.setBackground(Color.WHITE);
-        expensesPanel.setBounds(907, 282, 395, 656);
+        expensesPanel.setBounds(907, 282, 395, 505);
         expensesPanel.setBorder(border);
         // ----------------------------------------------------------- >
 
