@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 // import javafx.scene.text.Font;
 
 public class eventPlanner extends JFrame {
-    JButton financesToggle,peopleToggle,programsToggle;
+    JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
 
@@ -36,16 +36,12 @@ public class eventPlanner extends JFrame {
     JLabel expensesPriceLabel = new JLabel("Price");
     JLabel programLabel = new JLabel("Program");
     Dashboard DASHBOARD = new Dashboard();
-        
-        
-        
 
     Finances FINANCES = new Finances();
-        
+
     People PEOPLE = new People();
-    
+
     Programs RESOURCES = new Programs();
-        
 
     public eventPlanner() {
         setTitle("Dashboard");
@@ -79,7 +75,7 @@ public class eventPlanner extends JFrame {
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
-        // Icons
+        // - > Icons
         ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
         ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
         ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
@@ -107,12 +103,11 @@ public class eventPlanner extends JFrame {
         add(icon4);
         add(icon5);
         add(icon6);
+        // ----------------------------------------------------------------- >
 
-        // JPanels
-        
-
-        // Finances
-        
+        // - > Menu
+        background.setBackground(Color.WHITE);
+        background.setBounds(0, 0, 1440, 1024);
 
         titleLabel.setForeground(Color.WHITE);
         dateLabel.setForeground(Color.WHITE);
@@ -127,44 +122,6 @@ public class eventPlanner extends JFrame {
         checklistLabel.setForeground(blueColor);
         dashboardLabel.setForeground(Color.BLACK);
         welcomeLabel.setForeground(Color.BLACK);
-        totalExpensesLabel.setForeground(Color.WHITE);
-        totalExpensesAmountLabel.setForeground(Color.WHITE);
-        totalRevenueLabel.setForeground(Color.WHITE);
-        totalRevenueAmountLabel.setForeground(Color.WHITE);
-        revenueLabel.setForeground(blueColor);
-        revenueNameLabel.setForeground(blueColor);
-        revenuePriceLabel.setForeground(blueColor);
-        expensesLabel.setForeground(blueColor);
-        expensesNameLabel.setForeground(blueColor);
-        expensesPriceLabel.setForeground(blueColor);
-        programLabel.setForeground(blueColor);
-
-        /*
-         * titleLabel.setFont(boldFont);
-         * dateLabel
-         * attendeesLabel
-         * attendeesNumberLabel
-         * attendeesPeopleLabel
-         * budgetLabel
-         * budgetNumberLabel
-         * remainingLabel
-         * remainingFirstNumberLabel
-         * remaingingSecondNumberLabel
-         * checklistLabel
-         * dashboardLabel
-         * welcomeLabel
-         * totalExpensesLabel
-         * totalExpensesAmountLabel
-         * totalRevenueLabel
-         * totalRevenueAmountLabel
-         * revenueLabel
-         * revenueNameLabel
-         * revenuePriceLabel
-         * expensesLabel
-         * expensesNameLabel
-         * expensesPriceLabel
-         * programLabel
-         */
 
         titleLabel.setBounds(67, 72, 252, 44);
         dateLabel.setBounds(67, 84, 100, 100);
@@ -180,7 +137,37 @@ public class eventPlanner extends JFrame {
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
 
-        // Finances
+        menuPanel1.setBackground(blueColor);
+        menuPanel1.setBounds(0, 0, 409, 1024);
+
+        menuPanel2.setBackground(blueColor);
+        menuPanel2.setBounds(1341, 0, 365, 1024);
+
+        attendeesPanel.setBackground(Color.WHITE);
+        attendeesPanel.setBounds(70, 215, 303, 93);
+
+        budgetPanel.setBackground(Color.WHITE);
+        budgetPanel.setBounds(70, 334, 303, 93);
+
+        remainingBudgetPanel.setBackground(Color.WHITE);
+        remainingBudgetPanel.setBounds(70, 453, 303, 93);
+
+        checkPanel.setBackground(Color.WHITE);
+        checkPanel.setBounds(70, 582, 303, 290);
+        // ---------------------------------------------------------------- >
+
+        // - > Finances
+        totalExpensesLabel.setForeground(Color.WHITE);
+        totalExpensesAmountLabel.setForeground(Color.WHITE);
+        totalRevenueLabel.setForeground(Color.WHITE);
+        totalRevenueAmountLabel.setForeground(Color.WHITE);
+        revenueLabel.setForeground(blueColor);
+        revenueNameLabel.setForeground(blueColor);
+        revenuePriceLabel.setForeground(blueColor);
+        expensesLabel.setForeground(blueColor);
+        expensesNameLabel.setForeground(blueColor);
+        expensesPriceLabel.setForeground(blueColor);
+
         totalExpensesLabel.setBounds(486, 156, 100, 100);
         totalExpensesAmountLabel.setBounds(486, 182, 100, 100);
         totalRevenueLabel.setBounds(935, 156, 100, 100);
@@ -191,9 +178,28 @@ public class eventPlanner extends JFrame {
         expensesLabel.setBounds(950, 265, 100, 100);
         expensesNameLabel.setBounds(950, 300, 100, 100);
         expensesPriceLabel.setBounds(1150, 300, 100, 100);
-        // programLabel.setBounds(0, 0, 100, 100);
 
-        //toggles for dashboard
+        totalExpensesPanel.setBackground(blueColor);
+        totalExpensesPanel.setBounds(458, 173, 396, 93);
+
+        totalRevenuePanel.setBackground(blueColor);
+        totalRevenuePanel.setBounds(907, 173, 396, 93);
+
+        revenuePanel.setBackground(Color.WHITE);
+        revenuePanel.setBounds(458, 282, 395, 656);
+        revenuePanel.setBorder(border);
+
+        expensesPanel.setBackground(Color.WHITE);
+        expensesPanel.setBounds(907, 282, 395, 656);
+        expensesPanel.setBorder(border);
+        // --------------------------------------------------------------- >
+
+        // - > Programs
+        programLabel.setForeground(blueColor);
+        // programLabel.setBounds(0, 0, 100, 100);
+        // -------------------------------------------------------------- >
+
+        // toggles for dashboard
         financesToggle = new JButton("FINANCES");
 
         financesToggle.addActionListener(new ActionListener() {
@@ -219,7 +225,7 @@ public class eventPlanner extends JFrame {
                 addToggle();
             }
         });
-      
+
         financesToggle.setBackground(blueColor);
         financesToggle.setForeground(Color.WHITE);
         financesToggle.setBounds(458, 173, 259, 81);
@@ -229,93 +235,14 @@ public class eventPlanner extends JFrame {
         programsToggle.setForeground(blueColor);
         programsToggle.setBounds(755, 173, 259, 81);
         programsToggle.setBorder(border);
-        
+
         peopleToggle.setBackground(Color.WHITE);
         peopleToggle.setForeground(blueColor);
-        peopleToggle.setBounds(1043,173, 259, 81);
+        peopleToggle.setBounds(1043, 173, 259, 81);
         peopleToggle.setBorder(border);
-        
-        background.setBackground(Color.WHITE);
-        background.setBounds(0, 0, 1440, 1024);
 
-        menuPanel1.setBackground(blueColor);
-        menuPanel1.setBounds(0, 0, 409, 1024);
+        addToggle();
 
-        menuPanel2.setBackground(blueColor);
-        menuPanel2.setBounds(1341, 0, 365, 1024);
-
-        totalExpensesPanel.setBackground(blueColor);
-        totalExpensesPanel.setBounds(458, 173, 396, 93);
-
-        totalRevenuePanel.setBackground(blueColor);
-        totalRevenuePanel.setBounds(907, 173, 396, 93);
-
-        attendeesPanel.setBackground(Color.WHITE);
-        attendeesPanel.setBounds(70, 215, 303, 93);
-
-        budgetPanel.setBackground(Color.WHITE);
-        budgetPanel.setBounds(70, 334, 303, 93);
-
-        remainingBudgetPanel.setBackground(Color.WHITE);
-        remainingBudgetPanel.setBounds(70, 453, 303, 93);
-
-        checkPanel.setBackground(Color.WHITE);
-        checkPanel.setBounds(70, 582, 303, 290);
-
-        revenuePanel.setBackground(Color.WHITE);
-        revenuePanel.setBounds(458, 282, 395, 656);
-        revenuePanel.setBorder(border);
-
-        expensesPanel.setBackground(Color.WHITE);
-        expensesPanel.setBounds(907, 282, 395, 656);
-        expensesPanel.setBorder(border);
-
-        // programPanel.setBackground(Color.WHITE);
-        // programPanel.setBounds(458, 601, 844, 290);
-        // programPanel.setBorder(border);
-
-        /*
-        DASHBOARD.add(titleLabel);
-        DASHBOARD.add(dateLabel);
-        DASHBOARD.add(attendeesLabel);
-        DASHBOARD.add(attendeesNumberLabel);
-        DASHBOARD.add(attendeesPeopleLabel);
-        DASHBOARD.add(budgetLabel);
-        DASHBOARD.add(budgetNumberLabel);
-        DASHBOARD.add(remainingLabel);
-        DASHBOARD.add(remainingFirstNumberLabel);
-        DASHBOARD.add(remaingingSecondNumberLabel);
-        DASHBOARD.add(checklistLabel);
-        DASHBOARD.add(dashboardLabel);
-        DASHBOARD.add(welcomeLabel);
-        DASHBOARD.add(revenueLabel);
-        DASHBOARD.add(revenueNameLabel);
-        DASHBOARD.add(revenuePriceLabel);
-        DASHBOARD.add(expensesLabel);
-        DASHBOARD.add(expensesNameLabel);
-        DASHBOARD.add(expensesPriceLabel);
-        // DASHBOARD.add(totalExpensesLabel);
-        // DASHBOARD.add(totalExpensesAmountLabel);
-        // DASHBOARD.add(totalRevenueLabel);
-        // DASHBOARD.add(totalRevenueAmountLabel);
-
-        // add(programPanel);
-        DASHBOARD.add(revenuePanel);
-        DASHBOARD.add(expensesPanel);
-        DASHBOARD.add(budgetPanel);
-        DASHBOARD.add(remainingBudgetPanel);
-        DASHBOARD.add(checkPanel);
-        DASHBOARD.add(attendeesPanel);
-        DASHBOARD.add(menuPanel1);
-        DASHBOARD.add(menuPanel2);
-        // DASHBOARD.add(totalExpensesPanel);
-        // DASHBOARD.add(totalRevenuePanel);
-        DASHBOARD.add(background);
-
-        */
-        
-       addToggle();
-     
         setVisible(true);
     }
 
@@ -326,7 +253,7 @@ public class eventPlanner extends JFrame {
         revalidate();
         repaint();
     }
-    
+
     public void resources(JPanel panel) {
 
         panel.add(financesToggle);
@@ -334,7 +261,7 @@ public class eventPlanner extends JFrame {
         panel.add(peopleToggle);
         revalidate();
         repaint();
-        
+
     }
 
     public void people(JPanel panel) {
@@ -344,17 +271,10 @@ public class eventPlanner extends JFrame {
         panel.add(peopleToggle);
         revalidate();
         repaint();
-        
+
     }
 
     public static void main(String[] args) {
-
-        
-        
-        
         new eventPlanner();
-        
-
-    
     }
 }

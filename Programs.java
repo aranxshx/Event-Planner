@@ -2,10 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-
 public class Programs extends JPanel {
     public Programs() {
-
 
         setSize(1440, 1024);
 
@@ -29,7 +27,7 @@ public class Programs extends JPanel {
         Color blueColor = new Color(97, 113, 255);
         Border border = BorderFactory.createLineBorder(blueColor, 1);
 
-        // Icons
+        // - > Icons
         ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
         ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
         ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
@@ -57,8 +55,12 @@ public class Programs extends JPanel {
         add(icon4);
         add(icon5);
         add(icon6);
+        // ----------------------------------------------- >
 
-        // JPanels
+        // - > Menu Bar
+        background.setBackground(Color.WHITE);
+        background.setBounds(0, 0, 1440, 1024);
+
         JLabel titleLabel = new JLabel("Insert Title");
         JLabel dateLabel = new JLabel("Date");
         JLabel attendeesLabel = new JLabel("Attendees");
@@ -72,8 +74,6 @@ public class Programs extends JPanel {
         JLabel checklistLabel = new JLabel("Checklist");
         JLabel dashboardLabel = new JLabel("Dashboard");
         JLabel welcomeLabel = new JLabel("Welcome back, Andrew!");
-        
-        JLabel programLabel = new JLabel("Program");
 
         titleLabel.setForeground(Color.WHITE);
         dateLabel.setForeground(Color.WHITE);
@@ -88,34 +88,6 @@ public class Programs extends JPanel {
         checklistLabel.setForeground(blueColor);
         dashboardLabel.setForeground(Color.BLACK);
         welcomeLabel.setForeground(Color.BLACK);
-        programLabel.setForeground(blueColor);
-
-        /*
-        * titleLabel.setFont(boldFont);
-        * dateLabel
-        * attendeesLabel
-        * attendeesNumberLabel
-        * attendeesPeopleLabel
-        * budgetLabel
-        * budgetNumberLabel
-        * remainingLabel
-        * remainingFirstNumberLabel
-        * remaingingSecondNumberLabel
-        * checklistLabel
-        * dashboardLabel
-        * welcomeLabel
-        * totalExpensesLabel
-        * totalExpensesAmountLabel
-        * totalRevenueLabel
-        * totalRevenueAmountLabel
-        * revenueLabel
-        * revenueNameLabel
-        * revenuePriceLabel
-        * expensesLabel
-        * expensesNameLabel
-        * expensesPriceLabel
-        * programLabel
-        */
 
         titleLabel.setBounds(67, 72, 252, 44);
         dateLabel.setBounds(67, 84, 100, 100);
@@ -128,24 +100,12 @@ public class Programs extends JPanel {
         remainingFirstNumberLabel.setBounds(91, 456, 100, 100);
         remaingingSecondNumberLabel.setBounds(150, 456, 100, 100);
         checklistLabel.setBounds(91, 559, 100, 100);
-        dashboardLabel.setBounds(464, 34, 100, 100);
-        welcomeLabel.setBounds(464, 65, 500, 100);
-        // programLabel.setBounds(0, 0, 100, 100);
-
-        background.setBackground(Color.WHITE);
-        background.setBounds(0, 0, 1440, 1024);
 
         menuPanel1.setBackground(blueColor);
         menuPanel1.setBounds(0, 0, 409, 1024);
 
         menuPanel2.setBackground(blueColor);
         menuPanel2.setBounds(1341, 0, 365, 1024);
-
-        totalExpensesPanel.setBackground(blueColor);
-        totalExpensesPanel.setBounds(458, 173, 396, 93);
-
-        totalRevenuePanel.setBackground(blueColor);
-        totalRevenuePanel.setBounds(907, 173, 396, 93);
 
         attendeesPanel.setBackground(Color.WHITE);
         attendeesPanel.setBounds(70, 215, 303, 93);
@@ -159,18 +119,37 @@ public class Programs extends JPanel {
         checkPanel.setBackground(Color.WHITE);
         checkPanel.setBounds(70, 582, 303, 290);
 
-        revenuePanel.setBackground(Color.WHITE);
-        revenuePanel.setBounds(458, 282, 395, 656);
-        revenuePanel.setBorder(border);
+        dashboardLabel.setBounds(464, 34, 100, 100);
+        welcomeLabel.setBounds(464, 65, 500, 100);
+        // ------------------------------------------------------ >
+
+        // - > Finances
+        totalExpensesPanel.setBackground(blueColor);
+        totalExpensesPanel.setBounds(458, 173, 396, 93);
+
+        totalRevenuePanel.setBackground(blueColor);
+        totalRevenuePanel.setBounds(907, 173, 396, 93);
 
         expensesPanel.setBackground(Color.WHITE);
         expensesPanel.setBounds(907, 282, 395, 656);
         expensesPanel.setBorder(border);
 
+        revenuePanel.setBackground(Color.WHITE);
+        revenuePanel.setBounds(458, 282, 395, 656);
+        revenuePanel.setBorder(border);
+        // ------------------------------------------------------ >
+
+        // - > Programs
+        JLabel programLabel = new JLabel("Program");
+        programLabel.setForeground(blueColor);
+        programLabel.setBounds(0, 0, 100, 100);
+
         // programPanel.setBackground(Color.WHITE);
         // programPanel.setBounds(458, 601, 844, 290);
-        // programPanel.setBorder(border);
+        // programPanel.setBorder(border)
+        // ------------------------------------------------------ >;
 
+        // - > Menu Add Label
         add(titleLabel);
         add(dateLabel);
         add(attendeesLabel);
@@ -184,17 +163,25 @@ public class Programs extends JPanel {
         add(checklistLabel);
         add(dashboardLabel);
         add(welcomeLabel);
-        
+        // ----------------------------------------------------- >
 
+        // - > Finances Add Label
         // add(programPanel);
-        
+        // ----------------------------------------------------- >
+
+        // - > Finances Add Panel
+
+        // ----------------------------------------------------- >
+
+        // - > Menu Add Panel
         add(budgetPanel);
         add(remainingBudgetPanel);
         add(checkPanel);
         add(attendeesPanel);
         add(menuPanel1);
         add(menuPanel2);
-        
         add(background);
+        // ----------------------------------------------------- >
+
     }
 }

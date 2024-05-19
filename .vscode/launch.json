@@ -9,7 +9,14 @@
             "name": "eventPlanner",
             "request": "launch",
             "mainClass": "eventPlanner",
-            "projectName": "Event-Planner_94705cda",
+            "projectName": "Java CP2_e32aabee"
+        },
+        {
+            "type": "java",
+            "name": "eventPlanner",
+            "request": "launch",
+            "mainClass": "eventPlanner",
+            "projectName": "Event-Planner_94705cda"
         }
     ]
 }

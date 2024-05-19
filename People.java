@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 // import javafx.scene.text.Font;
 
 public class People extends JPanel {
-    JButton financesToggle,peopleToggle,programsToggle;
+    JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
 
@@ -35,8 +35,6 @@ public class People extends JPanel {
     JLabel expensesNameLabel = new JLabel("Name");
     JLabel expensesPriceLabel = new JLabel("Price");
     JLabel programLabel = new JLabel("Program");
-        
-        
 
     public People() {
 
@@ -58,7 +56,7 @@ public class People extends JPanel {
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
-        // Icons
+        // - > Icons
         ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
         ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
         ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
@@ -86,12 +84,11 @@ public class People extends JPanel {
         add(icon4);
         add(icon5);
         add(icon6);
+        // ------------------------------------------------------------ >
 
-        // JPanels
-        
-
-        // Finances
-        
+        // - > Menu
+        background.setBackground(Color.WHITE);
+        background.setBounds(0, 0, 1440, 1024);
 
         titleLabel.setForeground(Color.WHITE);
         dateLabel.setForeground(Color.WHITE);
@@ -106,9 +103,6 @@ public class People extends JPanel {
         checklistLabel.setForeground(blueColor);
         dashboardLabel.setForeground(Color.BLACK);
         welcomeLabel.setForeground(Color.BLACK);
- 
-       
-        programLabel.setForeground(blueColor);
 
         titleLabel.setBounds(67, 72, 252, 44);
         dateLabel.setBounds(67, 84, 100, 100);
@@ -124,20 +118,11 @@ public class People extends JPanel {
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
 
-  
-        // programLabel.setBounds(0, 0, 100, 100);
-
-        
-        
-        background.setBackground(Color.WHITE);
-        background.setBounds(0, 0, 1440, 1024);
-
         menuPanel1.setBackground(blueColor);
         menuPanel1.setBounds(0, 0, 409, 1024);
 
         menuPanel2.setBackground(blueColor);
         menuPanel2.setBounds(1341, 0, 365, 1024);
-
 
         attendeesPanel.setBackground(Color.WHITE);
         attendeesPanel.setBounds(70, 215, 303, 93);
@@ -150,13 +135,22 @@ public class People extends JPanel {
 
         checkPanel.setBackground(Color.WHITE);
         checkPanel.setBounds(70, 582, 303, 290);
+        // ----------------------------------------------------------- >
 
- 
+        // - > Finances
+
+        // ----------------------------------------------------------- >
+
+        // - > Program
+        programLabel.setForeground(blueColor);
+        programLabel.setBounds(0, 0, 100, 100);
 
         // programPanel.setBackground(Color.WHITE);
         // programPanel.setBounds(458, 601, 844, 290);
         // programPanel.setBorder(border);
+        // ----------------------------------------------------------- >
 
+        // - > Menu Add Label
         add(titleLabel);
         add(dateLabel);
         add(attendeesLabel);
@@ -170,26 +164,27 @@ public class People extends JPanel {
         add(checklistLabel);
         add(dashboardLabel);
         add(welcomeLabel);
-        
-        // DASHBOARD.add(totalExpensesLabel);
-        // DASHBOARD.add(totalExpensesAmountLabel);
-        // DASHBOARD.add(totalRevenueLabel);
-        // DASHBOARD.add(totalRevenueAmountLabel);
+        // --------------------------------- >
 
+        // - > Finances Add Label
         // add(programPanel);
-        
+        // --------------------------------- >
+
+        // - > Finances Add Panel
+
+        // --------------------------------- >
+
+        // - > Menu Add Panel
         add(budgetPanel);
         add(remainingBudgetPanel);
         add(checkPanel);
         add(attendeesPanel);
         add(menuPanel1);
         add(menuPanel2);
-        // DASHBOARD.add(totalExpensesPanel);
-        // DASHBOARD.add(totalRevenuePanel);
         add(background);
-        
-     
+        // --------------------------------- ?
+
         setVisible(true);
-        
+
     }
 }
