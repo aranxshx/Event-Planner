@@ -37,6 +37,22 @@ public class eventPlanner extends JFrame {
     JLabel programLabel = new JLabel("Program");
     Dashboard DASHBOARD = new Dashboard();
 
+    // - > Icons
+    ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
+    ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
+    ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
+    ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("Add Staff.png"));
+    ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("Add Attendee.png"));
+    ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("Add Task.png"));
+
+
+    JButtonIcon financesButton = new JButtonIcon(financesIcon, false);
+    JButtonIcon addProgramButton = new JButtonIcon(addProgramIcon, false);
+    JButtonIcon addResourceButton = new JButtonIcon(addResourceIcon, false);
+    JButtonIcon addStaffButton = new JButtonIcon(addStaffIcon, false);
+    JButtonIcon addAttendeeButton = new JButtonIcon(addAttendeeIcon, false);
+    JButtonIcon addTaskButton = new JButtonIcon(addTaskIcon, false);
+
     Finances FINANCES = new Finances();
 
     People PEOPLE = new People();
@@ -75,34 +91,42 @@ public class eventPlanner extends JFrame {
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
-        // - > Icons
-        ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
-        ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
-        ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
-        ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("Add Staff.png"));
-        ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("Add Attendee.png"));
-        ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("Add Task.png"));
 
-        JLabel icon1 = new JLabel(financesIcon);
-        JLabel icon2 = new JLabel(addProgramIcon);
-        JLabel icon3 = new JLabel(addResourceIcon);
-        JLabel icon4 = new JLabel(addStaffIcon);
-        JLabel icon5 = new JLabel(addAttendeeIcon);
-        JLabel icon6 = new JLabel(addTaskIcon);
+        //
+        
 
-        icon1.setBounds(1343, 230, 80, 80);
-        icon2.setBounds(1343, 300, 80, 80);
-        icon3.setBounds(1343, 380, 80, 80);
-        icon4.setBounds(1343, 460, 80, 80);
-        icon5.setBounds(1343, 540, 80, 80);
-        icon6.setBounds(1343, 850, 80, 80);
+        
+        
 
-        add(icon1);
-        add(icon2);
-        add(icon3);
-        add(icon4);
-        add(icon5);
-        add(icon6);
+
+        financesButton.setBounds(1343, 230, 80, 80);
+        addProgramButton.setBounds(1343, 300, 80, 80);
+        addResourceButton.setBounds(1343, 380, 80, 80);
+        addStaffButton.setBounds(1343, 460, 80, 80);
+        addAttendeeButton.setBounds(1343, 540, 80, 80);
+        addTaskButton.setBounds(1343, 850, 80, 80);
+
+        financesButton.setBackground(blueColor);
+        financesButton.setBorder(border);
+        addProgramButton.setBackground(blueColor);
+        addProgramButton.setBorder(border);
+        addResourceButton.setBackground(blueColor);
+        addResourceButton.setBorder(border);
+        addStaffButton.setBackground(blueColor);
+        addStaffButton.setBorder(border);
+        addAttendeeButton.setBackground(blueColor);
+        addAttendeeButton.setBorder(border);
+        addTaskButton.setBackground(blueColor);
+        addTaskButton.setBorder(border);
+        // 
+        financesButton.setIcon(financesIcon);
+        addProgramButton.setIcon(addProgramIcon);
+        addResourceButton.setIcon(addResourceIcon);
+        addStaffButton.setIcon(addStaffIcon);
+        addAttendeeButton.setIcon(addAttendeeIcon);
+        addTaskButton.setIcon(addTaskIcon);
+
+        
         // ----------------------------------------------------------------- >
 
         // - > Menu
@@ -206,6 +230,7 @@ public class eventPlanner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setContentPane(FINANCES);
                 addToggle();
+                addButtons();
             }
         });
 
@@ -215,6 +240,7 @@ public class eventPlanner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setContentPane(RESOURCES);
                 addToggle();
+                addButtons();
             }
         });
 
@@ -223,6 +249,7 @@ public class eventPlanner extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setContentPane(PEOPLE);
                 addToggle();
+                addButtons();
             }
         });
 
@@ -252,6 +279,17 @@ public class eventPlanner extends JFrame {
         getContentPane().add(programsToggle);
         revalidate();
         repaint();
+    }
+
+    private void addButtons() {
+        getContentPane().add(financesButton);
+        getContentPane().add(addProgramButton);
+        getContentPane().add(addResourceButton);
+        getContentPane().add(addStaffButton);
+        getContentPane().add(addAttendeeButton);
+        getContentPane().add(addTaskButton);
+
+        
     }
 
     public void resources(JPanel panel) {
