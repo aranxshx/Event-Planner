@@ -3,10 +3,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 // import javafx.scene.text.Font;
 
 public class eventPlanner extends JFrame {
+    // Revenue: String-float
+    Map<String, Float> revenueMap = new HashMap<>();
+
+    // Income: String-float
+    Map<String, Float> incomeMap = new HashMap<>();
+
+    // Program: String-time (assuming time is represented as long milliseconds)
+    Map<String, Long> programMap = new HashMap<>();
+
+    // Resource: String-dictionary (another Map)
+    Map<String, Map<String, Object>> resourceMap = new HashMap<>();
+
+    // Staff: String-String
+    Map<String, String> staffMap = new HashMap<>();
+
+    // Attendee: String-String
+    Map<String, String> attendeeMap = new HashMap<>();
+
+    // Task: String-boolean
+    Map<String, Boolean> taskMap = new HashMap<>();
+    
     JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
@@ -92,11 +115,8 @@ public class eventPlanner extends JFrame {
         // Font lightFont = new Font("Inter-Light", 13);
 
 
-        //
-        
-
-        
-        
+        // Panel for revenue pop        
+ 
 
 
         financesButton.setBounds(1343, 230, 80, 80);
@@ -216,6 +236,44 @@ public class eventPlanner extends JFrame {
         expensesPanel.setBackground(Color.WHITE);
         expensesPanel.setBounds(907, 282, 395, 505);
         expensesPanel.setBorder(border);
+
+        // -------------------------------------------------------------- > 
+        // - > Button functions\
+        addButtons();
+        financesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                financeInputPopup(revenueMap); // Assuming you want to add to revenueMap initially
+            }
+        });
+        addProgramButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addResourceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addStaffButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addAttendeeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        addTaskButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+
+
+
+
         // --------------------------------------------------------------- >
 
         // - > Programs
@@ -310,6 +368,24 @@ public class eventPlanner extends JFrame {
         revalidate();
         repaint();
 
+    }
+
+    public void financeInputPopup(Map<String, Float> targetMap) {
+        String title = targetMap == revenueMap? "Add Revenue" : "Add Income";
+        String prompt = targetMap == revenueMap? "Enter Revenue Details:" : "Enter Income Details:";
+        
+        // Create a dialog with input fields and buttons
+        Object[] message = {prompt};
+        String inputString = JOptionPane.showInputDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
+        if (inputString!= null &&!inputString.isEmpty()) {
+            try {
+                float inputValue = Float.parseFloat(JOptionPane.showInputDialog(null, "Enter Value:", title, JOptionPane.PLAIN_MESSAGE));
+                targetMap.put(inputString, inputValue);
+                JOptionPane.showMessageDialog(null, "Data added successfully!", title, JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid number format entered.", title, JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public static void main(String[] args) {
