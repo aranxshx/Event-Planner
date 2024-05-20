@@ -3,6 +3,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class eventPlanner extends JFrame {
 
     // Task: String-boolean
     Map<String, Boolean> taskMap = new HashMap<>();
-    
+
     JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
@@ -67,7 +70,6 @@ public class eventPlanner extends JFrame {
     ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("Add Staff.png"));
     ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("Add Attendee.png"));
     ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("Add Task.png"));
-
 
     JButtonIcon financesButton = new JButtonIcon(financesIcon, false);
     JButtonIcon addProgramButton = new JButtonIcon(addProgramIcon, false);
@@ -114,11 +116,7 @@ public class eventPlanner extends JFrame {
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
-
-        // Panel for revenue pop        
- 
-
-
+        // Panel for revenue pop
         financesButton.setBounds(1343, 230, 80, 80);
         addProgramButton.setBounds(1343, 300, 80, 80);
         addResourceButton.setBounds(1343, 380, 80, 80);
@@ -138,7 +136,7 @@ public class eventPlanner extends JFrame {
         addAttendeeButton.setBorder(border);
         addTaskButton.setBackground(blueColor);
         addTaskButton.setBorder(border);
-        // 
+        //
         financesButton.setIcon(financesIcon);
         addProgramButton.setIcon(addProgramIcon);
         addResourceButton.setIcon(addResourceIcon);
@@ -146,7 +144,6 @@ public class eventPlanner extends JFrame {
         addAttendeeButton.setIcon(addAttendeeIcon);
         addTaskButton.setIcon(addTaskIcon);
 
-        
         // ----------------------------------------------------------------- >
 
         // - > Menu
@@ -237,8 +234,9 @@ public class eventPlanner extends JFrame {
         expensesPanel.setBounds(907, 282, 395, 505);
         expensesPanel.setBorder(border);
 
-        // -------------------------------------------------------------- > 
-        // - > Button functions\
+        // -------------------------------------------------------------- >
+
+        // - > Button functions
         addButtons();
         financesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -247,32 +245,29 @@ public class eventPlanner extends JFrame {
         });
         addProgramButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                programInputPopup(programMap);
             }
         });
         addResourceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                resourceInputPopup(resourceMap);
             }
         });
         addStaffButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                staffInputPopup(staffMap);
             }
         });
         addAttendeeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                attendeeInputPopup(attendeeMap);
             }
         });
         addTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+
             }
         });
-
-
-
 
         // --------------------------------------------------------------- >
 
@@ -347,7 +342,6 @@ public class eventPlanner extends JFrame {
         getContentPane().add(addAttendeeButton);
         getContentPane().add(addTaskButton);
 
-        
     }
 
     public void resources(JPanel panel) {
@@ -371,21 +365,141 @@ public class eventPlanner extends JFrame {
     }
 
     public void financeInputPopup(Map<String, Float> targetMap) {
-        String title = targetMap == revenueMap? "Add Revenue" : "Add Income";
-        String prompt = targetMap == revenueMap? "Enter Revenue Details:" : "Enter Income Details:";
-        
+        String title = targetMap == revenueMap ? "Add Revenue" : "Add Income";
+        String prompt = targetMap == revenueMap ? "Enter Revenue Details:" : "Enter Income Details:";
+
         // Create a dialog with input fields and buttons
-        Object[] message = {prompt};
+        Object[] message = { prompt };
         String inputString = JOptionPane.showInputDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
-        if (inputString!= null &&!inputString.isEmpty()) {
+        if (inputString != null && !inputString.isEmpty()) {
             try {
-                float inputValue = Float.parseFloat(JOptionPane.showInputDialog(null, "Enter Value:", title, JOptionPane.PLAIN_MESSAGE));
+                float inputValue = Float.parseFloat(
+                        JOptionPane.showInputDialog(null, "Enter Value:", title, JOptionPane.PLAIN_MESSAGE));
                 targetMap.put(inputString, inputValue);
                 JOptionPane.showMessageDialog(null, "Data added successfully!", title, JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Invalid number format entered.", title, JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public void programInputPopup(Map<String, Long> targetMap) {
+        String title = "Add Program";
+        String prompt = "Enter Program Name:";
+
+        // Create a dialog with input fields and buttons
+        String programName = JOptionPane.showInputDialog(null, prompt, title, JOptionPane.PLAIN_MESSAGE);
+        if (programName != null && !programName.isEmpty()) {
+            try {
+                String dateTimePrompt = "Enter Date and Time (yyyy-MM-dd HH:mm):";
+                String dateTimeString = JOptionPane.showInputDialog(null, dateTimePrompt, title,
+                        JOptionPane.PLAIN_MESSAGE);
+                if (dateTimeString != null && !dateTimeString.isEmpty()) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
+                    long epochMillis = dateTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+                    targetMap.put(programName, epochMillis);
+                    JOptionPane.showMessageDialog(null, "Program added successfully!", title,
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid date-time format entered.", title,
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void resourceInputPopup(Map<String, Map<String, Object>> targetMap) {
+        String title = "Add Resource";
+        String prompt = "Enter Resource Name:";
+
+        // Prompt for resource name
+        String resourceName = JOptionPane.showInputDialog(null, prompt, title, JOptionPane.PLAIN_MESSAGE);
+        if (resourceName != null && !resourceName.isEmpty()) {
+            // Prompt for resource source
+            String resourceSource = JOptionPane.showInputDialog(null, "Enter Resource Source:", title,
+                    JOptionPane.PLAIN_MESSAGE);
+            if (resourceSource != null && !resourceSource.isEmpty()) {
+                try {
+                    // Prompt for date and time
+                    String dateTimePrompt = "Enter Date and Time (yyyy-MM-dd HH:mm):";
+                    String dateTimeString = JOptionPane.showInputDialog(null, dateTimePrompt, title,
+                            JOptionPane.PLAIN_MESSAGE);
+                    if (dateTimeString != null && !dateTimeString.isEmpty()) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
+                        long epochMillis = dateTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+                        // Store the resource details in a nested map
+                        Map<String, Object> resourceDetails = new HashMap<>();
+                        resourceDetails.put("source", resourceSource);
+                        resourceDetails.put("dateTime", epochMillis);
+
+                        targetMap.put(resourceName, resourceDetails);
+                        JOptionPane.showMessageDialog(null, "Resource added successfully!", title,
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid date-time format entered.", title,
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    public void staffInputPopup(Map<String, String> targetMap) {
+        String title = "Add Staff";
+        String namePrompt = "Enter Staff Name:";
+        String rolePrompt = "Enter Staff Role:";
+
+        // Prompt for staff name
+        String staffName = JOptionPane.showInputDialog(null, namePrompt, title, JOptionPane.PLAIN_MESSAGE);
+        if (staffName != null && !staffName.isEmpty()) {
+            // Prompt for staff role
+            String staffRole = JOptionPane.showInputDialog(null, rolePrompt, title, JOptionPane.PLAIN_MESSAGE);
+            if (staffRole != null && !staffRole.isEmpty()) {
+                targetMap.put(staffName, staffRole);
+                JOptionPane.showMessageDialog(null, "Staff added successfully!", title,
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Staff role cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Staff name cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void attendeeInputPopup(Map<String, String> attendeeMap) {
+        String title = "Add Attendee";
+
+        String name = JOptionPane.showInputDialog(null, "Enter Attendee Name:", title, JOptionPane.PLAIN_MESSAGE);
+        if (name == null || name.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String email = JOptionPane.showInputDialog(null, "Enter Attendee Email:", title, JOptionPane.PLAIN_MESSAGE);
+        if (email == null || email.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Email cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String seatCode = JOptionPane.showInputDialog(null, "Enter Seat Code:", title, JOptionPane.PLAIN_MESSAGE);
+        if (seatCode == null || seatCode.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Seat Code cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        attendeeMap.put("Name", name);
+        attendeeMap.put("Email", email);
+        attendeeMap.put("SeatCode", seatCode);
+
+        String summary = "Attendee Details:\n"
+                + "Name: " + name + "\n"
+                + "Email: " + email + "\n"
+                + "Seat Code: " + seatCode;
+
+        JOptionPane.showMessageDialog(null, summary, "Attendee Summary", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void main(String[] args) {

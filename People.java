@@ -49,8 +49,8 @@ public class People extends JPanel {
         JPanel budgetPanel = new JPanel();
         JPanel remainingBudgetPanel = new JPanel();
         JPanel checkPanel = new JPanel();
-        JPanel revenuePanel = new JPanel();
-        JPanel expensesPanel = new JPanel();
+        JPanel peoplePanel = new JPanel();
+        JPanel staffPanel = new JPanel();
         JPanel programPanel = new JPanel();
 
         // Font boldFont = new Font("Inter-Bold", 24);
@@ -138,7 +138,22 @@ public class People extends JPanel {
         // ----------------------------------------------------------- >
 
         // - > Finances
+        JLabel peopleLabel = new JLabel("Attendees");
+        JLabel staffLabel = new JLabel("Staff");
 
+        peopleLabel.setForeground(blueColor);
+        staffLabel.setForeground(blueColor);
+
+        peopleLabel.setBounds(490, 265, 100, 100);
+        staffLabel.setBounds(940, 265, 100, 100);
+
+        peoplePanel.setBackground(Color.WHITE);
+        peoplePanel.setBounds(458, 282, 395, 650);
+        peoplePanel.setBorder(border);
+
+        staffPanel.setBackground(Color.WHITE);
+        staffPanel.setBounds(907, 282, 395, 650);
+        staffPanel.setBorder(border);
         // ----------------------------------------------------------- >
 
         // - > Program
@@ -167,11 +182,13 @@ public class People extends JPanel {
         // --------------------------------- >
 
         // - > Finances Add Label
-        // add(programPanel);
+        add(peopleLabel);
+        add(staffLabel);
         // --------------------------------- >
 
         // - > Finances Add Panel
-
+        add(peoplePanel);
+        add(staffPanel);
         // --------------------------------- >
 
         // - > Menu Add Panel
