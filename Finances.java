@@ -81,12 +81,12 @@ public class Finances extends JPanel {
         JLabel expensesNameLabel = new JLabel("Name");
         JLabel expensesPriceLabel = new JLabel("Price");
 
-        icon1.setBounds(1343, 230, 80, 80);
-        icon2.setBounds(1343, 300, 80, 80);
-        icon3.setBounds(1343, 380, 80, 80);
-        icon4.setBounds(1343, 460, 80, 80);
-        icon5.setBounds(1343, 540, 80, 80);
-        icon6.setBounds(1343, 850, 80, 80);
+        icon1.setBounds(1343, 230, 60, 60);
+        icon2.setBounds(1343, 300, 60, 60);
+        icon3.setBounds(1343, 380, 60, 60);
+        icon4.setBounds(1343, 460, 60, 60);
+        icon5.setBounds(1343, 540, 60, 60);
+        icon6.setBounds(1343, 850, 60, 60);
 
         add(icon1);
         add(icon2);
