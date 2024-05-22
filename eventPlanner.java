@@ -344,25 +344,7 @@ public class eventPlanner extends JFrame {
 
     }
 
-    public void resources(JPanel panel) {
-
-        panel.add(financesToggle);
-        panel.add(programsToggle);
-        panel.add(peopleToggle);
-        revalidate();
-        repaint();
-
-    }
-
-    public void people(JPanel panel) {
-
-        panel.add(financesToggle);
-        panel.add(programsToggle);
-        panel.add(peopleToggle);
-        revalidate();
-        repaint();
-
-    }
+// Instead of a popup, make a proper customized JPanel for the inputs
 
     public void financeInputPopup(Map<String, Float> targetMap) {
         String title = targetMap == revenueMap ? "Add Revenue" : "Add Income";
