@@ -7,6 +7,11 @@ import java.awt.event.ActionListener;
 // import javafx.scene.text.Font;
 
 public class Finances extends JPanel {
+    Font boldFont = new Font("Arial", Font.BOLD, 14);
+
+    // Non-bold (Regular Weight) font
+    Font regularFont = new Font("Arial", Font.PLAIN, 14);
+    
     JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
@@ -127,6 +132,33 @@ public class Finances extends JPanel {
         checklistLabel.setBounds(91, 559, 100, 100);
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
+
+        titleLabel.setFont(boldFont);
+        dateLabel.setFont(boldFont);
+        attendeesLabel.setFont(boldFont);
+        attendeesNumberLabel.setFont(boldFont);
+        attendeesPeopleLabel.setFont(boldFont);
+        budgetLabel.setFont(boldFont);
+        budgetNumberLabel.setFont(boldFont);
+        remainingLabel.setFont(boldFont);
+        remainingFirstNumberLabel.setFont(boldFont);
+        remaingingSecondNumberLabel.setFont(boldFont);
+        checklistLabel.setFont(boldFont);
+        dashboardLabel.setFont(boldFont);
+        welcomeLabel.setFont(boldFont);
+        titleLabel.setFont(boldFont);
+        dateLabel.setFont(boldFont);
+        attendeesLabel.setFont(boldFont);
+        attendeesNumberLabel.setFont(boldFont);
+        attendeesPeopleLabel.setFont(boldFont);
+        budgetLabel.setFont(boldFont);
+        budgetNumberLabel.setFont(boldFont);
+        remainingLabel.setFont(boldFont);
+        remainingFirstNumberLabel.setFont(boldFont);
+        remaingingSecondNumberLabel.setFont(boldFont);
+        checklistLabel.setFont(boldFont);
+        dashboardLabel.setFont(boldFont);
+        welcomeLabel.setFont(boldFont);
 
         menuPanel1.setBackground(blueColor);
         menuPanel1.setBounds(0, 0, 409, 1024);

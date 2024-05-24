@@ -23,6 +23,11 @@ import java.util.List;
 
 public class eventPlanner extends JFrame {
     // Variables
+    // Bold font
+    Font boldFont = new Font("Arial", Font.BOLD, 14);
+
+    // Non-bold (Regular Weight) font
+    Font regularFont = new Font("Arial", Font.PLAIN, 14);
     public static String currentEventName = "";
     public static String currentEventDate = "";
     public static float eventBudgetAllocated = 0;
@@ -206,6 +211,9 @@ public class eventPlanner extends JFrame {
         checklistLabel.setBounds(91, 559, 100, 100);
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
+
+
+
 
         menuPanel1.setBackground(blueColor);
         menuPanel1.setBounds(0, 0, 409, 1024);
