@@ -11,7 +11,7 @@ public class Finances extends JPanel {
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
 
-    JLabel titleLabel = new JLabel("Insert Title");
+    JLabel titleLabel = new JLabel(eventPlanner.currentEventName);
     JLabel dateLabel = new JLabel("Date");
     JLabel attendeesLabel = new JLabel("Attendees");
     JLabel attendeesNumberLabel = new JLabel("500");

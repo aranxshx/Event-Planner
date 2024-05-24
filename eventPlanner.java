@@ -3,15 +3,39 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 // import javafx.scene.text.Font;
 
 public class eventPlanner extends JFrame {
+    // Variables
+    public static String currentEventName = "";
+    public static String currentEventDate = "";
+    public static float eventBudgetAllocated = 0;
+
+    public static List<String> eventNames = new ArrayList<>();
+    public static List<String> eventDates = new ArrayList<>();
+    public static List<String> programNames = new ArrayList<>();
+    public static List<String> programTimes = new ArrayList<>();
+    public static List<String> outflowNames = new ArrayList<>();
+    public static List<Float> outflowPrices = new ArrayList<>();
+    public static List<String> inflowNames = new ArrayList<>();
+    public static List<Float> inflowPrices = new ArrayList<>();
+
     // Revenue: String-float
     Map<String, Float> revenueMap = new HashMap<>();
 
@@ -37,7 +61,7 @@ public class eventPlanner extends JFrame {
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
 
-    JLabel titleLabel = new JLabel("Insert Title");
+    JLabel titleLabel = new JLabel(currentEventName);
     JLabel dateLabel = new JLabel("Date");
     JLabel attendeesLabel = new JLabel("Attendees");
     JLabel attendeesNumberLabel = new JLabel("500");
@@ -77,6 +101,7 @@ public class eventPlanner extends JFrame {
     JButtonIcon addStaffButton = new JButtonIcon(addStaffIcon, false);
     JButtonIcon addAttendeeButton = new JButtonIcon(addAttendeeIcon, false);
     JButtonIcon addTaskButton = new JButtonIcon(addTaskIcon, false);
+    JButtonIcon loadEventButton = new JButtonIcon(addTaskIcon, false);
 
     Finances FINANCES = new Finances();
 
@@ -123,6 +148,7 @@ public class eventPlanner extends JFrame {
         addStaffButton.setBounds(1343, 460, 80, 80);
         addAttendeeButton.setBounds(1343, 540, 80, 80);
         addTaskButton.setBounds(1343, 850, 80, 80);
+        loadEventButton.setBounds(1343, 100, 80, 80);
 
         financesButton.setBackground(blueColor);
         financesButton.setBorder(border);
@@ -136,6 +162,8 @@ public class eventPlanner extends JFrame {
         addAttendeeButton.setBorder(border);
         addTaskButton.setBackground(blueColor);
         addTaskButton.setBorder(border);
+        loadEventButton.setBackground(blueColor);
+        loadEventButton.setBorder(border);
         //
         financesButton.setIcon(financesIcon);
         addProgramButton.setIcon(addProgramIcon);
@@ -143,6 +171,7 @@ public class eventPlanner extends JFrame {
         addStaffButton.setIcon(addStaffIcon);
         addAttendeeButton.setIcon(addAttendeeIcon);
         addTaskButton.setIcon(addTaskIcon);
+        loadEventButton.setIcon(addTaskIcon);
 
         // ----------------------------------------------------------------- >
 
@@ -265,7 +294,12 @@ public class eventPlanner extends JFrame {
         });
         addTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                taskInputPopup(taskMap);
+            }
+        });
+        loadEventButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadEventPopup();
             }
         });
 
@@ -341,10 +375,11 @@ public class eventPlanner extends JFrame {
         getContentPane().add(addStaffButton);
         getContentPane().add(addAttendeeButton);
         getContentPane().add(addTaskButton);
+        getContentPane().add(loadEventButton);
 
     }
 
-// Instead of a popup, make a proper customized JPanel for the inputs
+    // Instead of a popup, make a proper customized JPanel for the inputs
 
     public void financeInputPopup(Map<String, Float> targetMap) {
         String title = targetMap == revenueMap ? "Add Revenue" : "Add Income";
@@ -482,6 +517,181 @@ public class eventPlanner extends JFrame {
                 + "Seat Code: " + seatCode;
 
         JOptionPane.showMessageDialog(null, summary, "Attendee Summary", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void taskInputPopup(Map<String, Boolean> taskMap) {
+        String title = "Add Task";
+        String prompt = "Enter Task Name:";
+
+        String taskName = JOptionPane.showInputDialog(null, prompt, title, JOptionPane.PLAIN_MESSAGE);
+        if (taskName != null && !taskName.isEmpty()) {
+            taskMap.put(taskName, false);
+            JOptionPane.showMessageDialog(null, "Task added successfully!\nStatus: Incomplete", title,
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Task name cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void loadEventPopup() {
+        String[] options = { "Add New Event", "Load Existing Event" };
+        int choice = JOptionPane.showOptionDialog(null, "Choose an option:", "Event Options",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+        if (choice == 0) {
+            JOptionPane.showMessageDialog(null, "Add New Event selected");
+            addNewEvent();
+        } else if (choice == 1) {
+            loadExistingEvent();
+        }
+    }
+
+    private void loadExistingEvent() {
+        loadEventNames();
+        if (eventNames.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No events found!", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String[] currentEventNames = eventNames.toArray(new String[0]);
+        String selectedEvent = (String) JOptionPane.showInputDialog(null, "Which event?", "Load Event",
+                JOptionPane.QUESTION_MESSAGE, null, currentEventNames, currentEventNames[0]);
+
+        if (selectedEvent != null) {
+            currentEventName = selectedEvent;
+            System.out.println(currentEventName);
+            titleLabel.setText(currentEventName);
+            JOptionPane.showMessageDialog(null, "Event loaded: " + currentEventName);
+            // update
+            revalidate();
+            repaint();
+        }
+    }
+
+    public void loadEventNames() {
+        eventNames.clear();
+        try (BufferedReader reader = new BufferedReader(new FileReader("events.csv"))) {
+            String line;
+            reader.readLine(); // Skip the header line
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                eventNames.add(values[0].replace("\"", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error reading events.csv file", "Error",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private static void addNewEvent() {
+        while (true) {
+            currentEventName = JOptionPane.showInputDialog(null, "Event Name: "); // Get Event Name
+            if (currentEventName != null && !currentEventName.equals("")) {
+                break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Event name cannot be null!", "Error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        while (true) {
+            try {
+                String input = JOptionPane.showInputDialog(null, "Event Date (YYYY-MM-DD): "); // Get Event Date
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate eventDate = LocalDate.parse(input, formatter);
+                currentEventDate = eventDate.format(formatter);
+                break;
+            } catch (java.time.format.DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null, "Please input a valid date", "Format error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        while (true) {
+            try {
+                String budgetInput = JOptionPane.showInputDialog(null, "Budget Allocated: "); // Get Budget
+                eventBudgetAllocated = Float.parseFloat(budgetInput);
+
+                if (eventBudgetAllocated <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter an amount greater than zero.", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please input a valid amount", "Format error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        int maxAttendees = 0;
+
+        while (true) {
+            try {
+                String maxAttendeesInput = JOptionPane.showInputDialog(null, "Maximum number of attendees: ");
+                maxAttendees = Integer.parseInt(maxAttendeesInput);
+                if (maxAttendees <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a number greater than zero.", "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Please input a valid number", "Format error",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+
+        // Create CSV files for the new event and store event details
+        createCSVFiles(currentEventName, currentEventDate, eventBudgetAllocated, maxAttendees);
+
+        JOptionPane.showMessageDialog(null,
+                "Event added:\nName: " + currentEventName + "\nDate: " + currentEventDate + "\nBudget: "
+                        + eventBudgetAllocated + "\nMaximum Attendees: " + maxAttendees);
+    }
+
+    public static void createCSVFiles(String currentEventName, String currentEventDate, float budgetAllocated,
+            int maxAttendees) { // done
+        String financesCSVFilePath = currentEventName.toLowerCase() + "_finances.csv";
+        try {
+            BufferedWriter financesWriter = new BufferedWriter(new FileWriter(financesCSVFilePath));
+            financesWriter.close();
+        } catch (IOException e) {
+            System.err.println("Error creating finances CSV file for the new event: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Create programme CSV file
+        String programmeCSVFilePath = currentEventName.toLowerCase() + "_programme.csv";
+        try {
+            BufferedWriter programmeWriter = new BufferedWriter(new FileWriter(programmeCSVFilePath));
+            programmeWriter.close();
+        } catch (IOException e) {
+            System.err.println("Error creating programme CSV file for the new event: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Create staff CSV file
+        String staffCSVFilePath = currentEventName.toLowerCase() + "_people.csv";
+        try {
+            BufferedWriter staffWriter = new BufferedWriter(new FileWriter(staffCSVFilePath));
+            staffWriter.close();
+        } catch (IOException e) {
+            System.err.println("Error creating staff CSV file for the new event: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Append event details to events.csv
+        String eventsCSVFilePath = "events.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(eventsCSVFilePath, true))) {
+            writer.write(currentEventName + "," + currentEventDate + "," + budgetAllocated + "," + maxAttendees);
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing to events CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
