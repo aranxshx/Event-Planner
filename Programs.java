@@ -3,23 +3,32 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 public class Programs extends JPanel {
+    Color blueColor = new Color(97, 113, 255);
+
+    Font boldFont = new Font("Arial", Font.BOLD, 14);
+
+    // Non-bold (Regular Weight) font
+    Font regularFont = new Font("Arial", Font.PLAIN, 14);
+
     public Programs() {
 
         setSize(1440, 1024);
 
         setLayout(null);
 
+        
+        
         JPanel background = new JPanel();
         JPanel menuPanel1 = new JPanel();
         JPanel menuPanel2 = new JPanel();
-        JPanel attendeesPanel = new JPanel();
-        JPanel budgetPanel = new JPanel();
-        JPanel remainingBudgetPanel = new JPanel();
-        JPanel checkPanel = new JPanel();
-        JPanel revenuePanel = new JPanel();
-        JPanel expensesPanel = new JPanel();
-        JPanel programPanel = new JPanel();
-        JPanel resourcesPanel = new JPanel();
+        RoundedRectangle attendeesPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle budgetPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle remainingBudgetPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle checkPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle revenuePanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle expensesPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle programPanel = new RoundedRectangle(50, Color.WHITE);
+        RoundedRectangle resourcesPanel = new RoundedRectangle(50, Color.WHITE);
 
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
@@ -106,20 +115,40 @@ public class Programs extends JPanel {
         menuPanel2.setBackground(blueColor);
         menuPanel2.setBounds(1341, 0, 365, 1024);
 
-        attendeesPanel.setBackground(Color.WHITE);
+        attendeesPanel.setColor(Color.WHITE);
         attendeesPanel.setBounds(70, 215, 303, 93);
 
-        budgetPanel.setBackground(Color.WHITE);
+        budgetPanel.setColor(Color.WHITE);
         budgetPanel.setBounds(70, 334, 303, 93);
 
-        remainingBudgetPanel.setBackground(Color.WHITE);
+        remainingBudgetPanel.setColor(Color.WHITE);
         remainingBudgetPanel.setBounds(70, 453, 303, 93);
 
-        checkPanel.setBackground(Color.WHITE);
+        checkPanel.setColor(Color.WHITE);
         checkPanel.setBounds(70, 582, 303, 290);
 
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
+
+        titleLabel.setFont(boldFont);
+        attendeesLabel.setFont(boldFont);
+        attendeesPeopleLabel.setFont(boldFont);
+        budgetLabel.setFont(boldFont);
+        remainingLabel.setFont(boldFont);
+        checklistLabel.setFont(boldFont);
+        dashboardLabel.setFont(boldFont);
+        welcomeLabel.setFont(boldFont);
+
+        dateLabel.setFont(regularFont);
+        attendeesNumberLabel.setFont(regularFont);
+        budgetNumberLabel.setFont(regularFont);
+        remainingFirstNumberLabel.setFont(regularFont);
+        remaingingSecondNumberLabel.setFont(regularFont);
+        attendeesNumberLabel.setFont(regularFont);
+        budgetNumberLabel.setFont(regularFont);
+        remainingFirstNumberLabel.setFont(regularFont);
+        remaingingSecondNumberLabel.setFont(regularFont);
+
         // ------------------------------------------------------ >
 
         // - > Finances
@@ -135,27 +164,25 @@ public class Programs extends JPanel {
         priceLabel.setForeground(blueColor);
         statusLabel.setForeground(blueColor);
 
+        resourcesLabel.setFont(boldFont);
+        resourceLabel.setFont(boldFont);
+        sourceLabel.setFont(boldFont);
+        priceLabel.setFont(boldFont);
+        statusLabel.setFont(boldFont);
+
         resourcesLabel.setBounds(495, 265, 100, 100);
         resourceLabel.setBounds(495, 305, 100, 100);
         sourceLabel.setBounds(710, 305, 100, 100);
         priceLabel.setBounds(920, 305, 100, 100);
         statusLabel.setBounds(1150, 305, 100, 100);
 
-        resourcesPanel.setBackground(Color.WHITE);
+        resourcesPanel.setColor(Color.WHITE);
         resourcesPanel.setBounds(458, 279, 845, 290);
-        resourcesPanel.setBorder(border);
 
-        programPanel.setBackground(Color.WHITE);
+        programPanel.setColor(Color.WHITE);
         programPanel.setBounds(458, 590, 845, 290);
-        programPanel.setBorder(border);
 
-        expensesPanel.setBackground(Color.WHITE);
-        expensesPanel.setBounds(907, 282, 395, 505);
-        expensesPanel.setBorder(border);
-
-        revenuePanel.setBackground(Color.WHITE);
-        revenuePanel.setBounds(458, 282, 395, 505);
-        revenuePanel.setBorder(border);
+;
         // ------------------------------------------------------ >
 
         // - > Programs
@@ -163,9 +190,8 @@ public class Programs extends JPanel {
         programLabel.setForeground(blueColor);
         programLabel.setBounds(495, 575, 100, 100);
 
-        programPanel.setBackground(Color.WHITE);
+        programPanel.setColor(Color.WHITE);
         programPanel.setBounds(458, 590, 845, 290);
-        programPanel.setBorder(border);
 
         // programPanel.setBackground(Color.WHITE);
         // programPanel.setBounds(458, 601, 844, 290);

@@ -7,6 +7,11 @@ import java.awt.event.ActionListener;
 // import javafx.scene.text.Font;
 
 public class People extends JPanel {
+    Font boldFont = new Font("Arial", Font.BOLD, 14);
+
+    // Non-bold (Regular Weight) font
+    Font regularFont = new Font("Arial", Font.PLAIN, 14);
+    
     JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(97, 113, 255);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
@@ -45,13 +50,13 @@ public class People extends JPanel {
         JPanel background = new JPanel();
         JPanel menuPanel1 = new JPanel();
         JPanel menuPanel2 = new JPanel();
-        JPanel attendeesPanel = new JPanel();
-        JPanel budgetPanel = new JPanel();
-        JPanel remainingBudgetPanel = new JPanel();
-        JPanel checkPanel = new JPanel();
-        JPanel peoplePanel = new JPanel();
-        JPanel staffPanel = new JPanel();
-        JPanel programPanel = new JPanel();
+        RoundedRectangle attendeesPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle budgetPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle remainingBudgetPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle checkPanel = new RoundedRectangle(50, blueColor);
+        RoundedRectangle peoplePanel = new RoundedRectangle(50, Color.WHITE);
+        RoundedRectangle staffPanel = new RoundedRectangle(50, Color.WHITE);
+        RoundedRectangle programPanel = new RoundedRectangle(50, blueColor);
 
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
@@ -118,6 +123,28 @@ public class People extends JPanel {
         dashboardLabel.setBounds(464, 34, 100, 100);
         welcomeLabel.setBounds(464, 65, 500, 100);
 
+        titleLabel.setFont(boldFont);
+        attendeesLabel.setFont(boldFont);
+        attendeesPeopleLabel.setFont(boldFont);
+        budgetLabel.setFont(boldFont);
+        remainingLabel.setFont(boldFont);
+        checklistLabel.setFont(boldFont);
+        dashboardLabel.setFont(boldFont);
+        welcomeLabel.setFont(boldFont);
+
+        // People label setFont
+        
+
+        dateLabel.setFont(regularFont);
+        attendeesNumberLabel.setFont(regularFont);
+        budgetNumberLabel.setFont(regularFont);
+        remainingFirstNumberLabel.setFont(regularFont);
+        remaingingSecondNumberLabel.setFont(regularFont);
+        attendeesNumberLabel.setFont(regularFont);
+        budgetNumberLabel.setFont(regularFont);
+        remainingFirstNumberLabel.setFont(regularFont);
+        remaingingSecondNumberLabel.setFont(regularFont);
+
         menuPanel1.setBackground(blueColor);
         menuPanel1.setBounds(0, 0, 409, 1024);
 
@@ -140,6 +167,8 @@ public class People extends JPanel {
         // - > Finances
         JLabel peopleLabel = new JLabel("Attendees");
         JLabel staffLabel = new JLabel("Staff");
+        peopleLabel.setFont(boldFont);
+        staffLabel.setFont(boldFont);
 
         peopleLabel.setForeground(blueColor);
         staffLabel.setForeground(blueColor);
@@ -149,11 +178,9 @@ public class People extends JPanel {
 
         peoplePanel.setBackground(Color.WHITE);
         peoplePanel.setBounds(458, 282, 395, 650);
-        peoplePanel.setBorder(border);
 
         staffPanel.setBackground(Color.WHITE);
         staffPanel.setBounds(907, 282, 395, 650);
-        staffPanel.setBorder(border);
         // ----------------------------------------------------------- >
 
         // - > Program

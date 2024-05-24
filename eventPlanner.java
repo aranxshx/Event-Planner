@@ -143,6 +143,9 @@ public class eventPlanner extends JFrame {
         JPanel expensesPanel = new JPanel();
         JPanel programPanel = new JPanel();
 
+
+        
+
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
 
@@ -320,19 +323,31 @@ public class eventPlanner extends JFrame {
 
         // toggles for dashboard
         financesToggle = new JButton("FINANCES");
-
+        financesToggle.setFont(boldFont);
         financesToggle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setContentPane(FINANCES);
+                financesToggle.setForeground(Color.WHITE);
+                financesToggle.setBackground(blueColor);
+                programsToggle.setBackground(Color.WHITE);
+                programsToggle.setForeground(blueColor);
+                peopleToggle.setBackground(Color.WHITE);
+                peopleToggle.setForeground(blueColor);
                 addToggle();
                 addButtons();
             }
         });
 
         programsToggle = new JButton("RESOURCES");
-
+        programsToggle.setFont(boldFont);
         programsToggle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                programsToggle.setForeground(Color.WHITE);
+                programsToggle.setBackground(blueColor);
+                financesToggle.setBackground(Color.WHITE);
+                financesToggle.setForeground(blueColor);
+                peopleToggle.setBackground(Color.WHITE);
+                peopleToggle.setForeground(blueColor);
                 setContentPane(RESOURCES);
                 addToggle();
                 addButtons();
@@ -340,8 +355,15 @@ public class eventPlanner extends JFrame {
         });
 
         peopleToggle = new JButton("PEOPLE");
+        peopleToggle.setFont(boldFont);
         peopleToggle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                peopleToggle.setForeground(Color.WHITE);
+                peopleToggle.setBackground(blueColor);
+                programsToggle.setBackground(Color.WHITE);
+                programsToggle.setForeground(blueColor);
+                financesToggle.setBackground(Color.WHITE);
+                financesToggle.setForeground(blueColor);
                 setContentPane(PEOPLE);
                 addToggle();
                 addButtons();
