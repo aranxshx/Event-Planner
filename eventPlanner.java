@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,33 +33,19 @@ public class eventPlanner extends JFrame {
     public static String currentEventName = "";
     public static String currentEventDate = "";
     public static float eventBudgetAllocated = 0;
+    public static int totalInflows = 0;
+    public static int totalOutflows = 0;
+    public static int attendeeCount = 0;
 
     public static List<String> eventNames = new ArrayList<>();
     public static List<String> eventDates = new ArrayList<>();
     public static List<String> programNames = new ArrayList<>();
-    public static List<String> programTimes = new ArrayList<>();
+    public static List<String> programDate = new ArrayList<>();
+    public static List<String> programTime = new ArrayList<>();
     public static List<String> outflowNames = new ArrayList<>();
     public static List<Float> outflowPrices = new ArrayList<>();
     public static List<String> inflowNames = new ArrayList<>();
     public static List<Float> inflowPrices = new ArrayList<>();
-
-    // Revenue: String-float
-    Map<String, Float> revenueMap = new HashMap<>();
-
-    // Income: String-float
-    Map<String, Float> incomeMap = new HashMap<>();
-
-    // Resource: String-dictionary (another Map)
-    Map<String, Map<String, Object>> resourceMap = new HashMap<>();
-
-    // Staff: String-String
-    Map<String, String> staffMap = new HashMap<>();
-
-    // Attendee: String-String
-    Map<String, String> attendeeMap = new HashMap<>();
-
-    // Task: String-boolean
-    Map<String, Boolean> taskMap = new HashMap<>();
 
     JButton financesToggle, peopleToggle, programsToggle;
     Color blueColor = new Color(0x2F4F4F);
@@ -138,9 +126,6 @@ public class eventPlanner extends JFrame {
         JPanel revenuePanel = new JPanel();
         JPanel expensesPanel = new JPanel();
         JPanel programPanel = new JPanel();
-
-
-        
 
         // Font boldFont = new Font("Inter-Bold", 24);
         // Font lightFont = new Font("Inter-Light", 13);
@@ -283,7 +268,7 @@ public class eventPlanner extends JFrame {
         });
         addResourceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                resourceInputPopup(resourceMap);
+                resourceInputPopup();
             }
         });
         addStaffButton.addActionListener(new ActionListener() {
@@ -293,12 +278,12 @@ public class eventPlanner extends JFrame {
         });
         addAttendeeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                attendeeInputPopup(attendeeMap);
+                attendeeInputPopup();
             }
         });
         addTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                taskInputPopup(taskMap);
+                taskInputPopup();
             }
         });
         loadEventButton.addActionListener(new ActionListener() {
@@ -483,6 +468,8 @@ public class eventPlanner extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
+
+        csvToArrayList();
     }
 
     private void editFinance(String title) { // somewhat done
@@ -575,6 +562,8 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No records found!", "Edit " + type, JOptionPane.WARNING_MESSAGE);
         }
+
+        csvToArrayList();
     }
 
     private void deleteFinance(String title) { // somewhat done
@@ -651,6 +640,8 @@ public class eventPlanner extends JFrame {
             JOptionPane.showMessageDialog(null, "No " + type.toLowerCase() + " found!", "Delete " + type,
                     JOptionPane.WARNING_MESSAGE);
         }
+
+        csvToArrayList();
     }
 
     public void programInputPopup() { // not done
@@ -676,12 +667,12 @@ public class eventPlanner extends JFrame {
                 addProgram(title);
                 break;
             case 1: // Edit Program
-
+                editProgram();
                 break;
             case 2: // Delete Program
+                deleteProgram();
                 break;
             default:
-                // Cancel or close dialog, do nothing
                 break;
         }
     }
@@ -690,19 +681,29 @@ public class eventPlanner extends JFrame {
         String prompt = "Enter Program Name:";
         String programName = JOptionPane.showInputDialog(null, prompt, "Add Program - " + title,
                 JOptionPane.PLAIN_MESSAGE);
+
         if (programName != null && !programName.isEmpty()) {
             try {
-                String dateTimePrompt = "Enter Date and Time (yyyy-MM-dd HH:mm):";
-                String dateTimeString = JOptionPane.showInputDialog(null, dateTimePrompt, "Add Program - " + title,
+                String datePrompt = "Enter Date (yyyy-MM-dd):";
+                String timePrompt = "Enter Time (hh:mm a):";
+                String dateString = JOptionPane.showInputDialog(null, datePrompt, "Add Program - " + title,
                         JOptionPane.PLAIN_MESSAGE);
-                if (dateTimeString != null && !dateTimeString.isEmpty()) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
+                String timeString = JOptionPane.showInputDialog(null, timePrompt, "Add Program - " + title,
+                        JOptionPane.PLAIN_MESSAGE);
+
+                if (dateString != null && !dateString.isEmpty() && timeString != null && !timeString.isEmpty()) {
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+                    LocalDate date = LocalDate.parse(dateString, dateFormatter);
+                    LocalTime time = LocalTime.parse(timeString, timeFormatter);
+
+                    LocalDateTime dateTime = date.atTime(time);
 
                     // Save to CSV file
                     String csvFilePath = currentEventName.toLowerCase() + "_programme.csv";
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
-                        writer.append("Program," + programName + "," + dateTimeString);
+                        writer.append("Program," + programName + "," + dateString + "," + timeString);
                         writer.newLine();
                     } catch (IOException e) {
                         System.err.println("Error writing to CSV file: " + e.getMessage());
@@ -711,54 +712,206 @@ public class eventPlanner extends JFrame {
 
                     JOptionPane.showMessageDialog(null, "Program added successfully!", "Add Program - " + title,
                             JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Date and time cannot be empty.", "Add Program - " + title,
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } catch (DateTimeParseException ex) {
                 JOptionPane.showMessageDialog(null, "Invalid date-time format entered.", "Add Program - " + title,
                         JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Program name cannot be empty.", "Add Program - " + title,
+                    JOptionPane.ERROR_MESSAGE);
         }
+
+        csvToArrayList();
     }
 
-    private void editProgram(Map<String, Long> targetMap, String title) {
-        String programName = JOptionPane.showInputDialog(null, "Enter the Program Name to edit:",
-                "Edit Program - " + title, JOptionPane.PLAIN_MESSAGE);
-        if (programName != null && !programName.isEmpty() && targetMap.containsKey(programName)) {
-            try {
-                String dateTimePrompt = "Enter new Date and Time (yyyy-MM-dd HH:mm):";
-                String dateTimeString = JOptionPane.showInputDialog(null, dateTimePrompt, "Edit Program - " + title,
-                        JOptionPane.PLAIN_MESSAGE);
-                if (dateTimeString != null && !dateTimeString.isEmpty()) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-                    long epochMillis = dateTime.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
-                    targetMap.put(programName, epochMillis);
-                    JOptionPane.showMessageDialog(null, "Program edited successfully!", "Edit Program - " + title,
-                            JOptionPane.INFORMATION_MESSAGE);
+    private void editProgram() {
+        try {
+            String csvFilePath = currentEventName.toLowerCase() + "_programme.csv";
+            List<String> lines = new ArrayList<>();
+            String newProgram = "";
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
                 }
-            } catch (DateTimeParseException ex) {
-                JOptionPane.showMessageDialog(null, "Invalid date-time format entered.", "Edit Program - " + title,
+
+            } catch (IOException e) {
+                System.err.println("Error reading from CSV file: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            List<String> optionsList = new ArrayList<>();
+            for (int i = 0; i < lines.size(); i++) {
+                String[] values = lines.get(i).split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 3 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        optionsList.add(
+                                values[0].trim() + "," + values[1].trim() + "," + values[2].trim() + "," + values[3]);
+                    }
+                }
+            }
+
+            String[] options = optionsList.toArray(new String[0]);
+
+            String selectedEntry = (String) JOptionPane.showInputDialog(null, "Select the entry to Edit:",
+                    "Edit ",
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+            String correctWord = selectedEntry;
+
+            int selectedIndex = -1;
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println("Comparing '" + correctWord + "' with '" + lines.get(i) + "'");
+                if (correctWord.equals(lines.get(i))) {
+                    selectedIndex = i;
+                    System.out.println("Match found at index " + i);
+                    break;
+                } else {
+                    System.out.println("No match at index " + i);
+                }
+            }
+            System.out.println("Final selectedIndex: " + selectedIndex);
+
+            String[] values = lines.get(selectedIndex).split(",");
+            newProgram = JOptionPane.showInputDialog(null, "Enter new name:");
+            if (newProgram != null && !newProgram.isEmpty()) {
+                try {
+                    String datePrompt = "Enter new date (yyyy-MM-dd):";
+                    String timePrompt = "Enter new time (hh:mm a):";
+                    String dateString = JOptionPane.showInputDialog(null, datePrompt, "Add Program - ",
+                            JOptionPane.PLAIN_MESSAGE);
+                    String timeString = JOptionPane.showInputDialog(null, timePrompt, "Add Program - ",
+                            JOptionPane.PLAIN_MESSAGE);
+
+                    if (dateString != null && !dateString.isEmpty() && timeString != null && !timeString.isEmpty()) {
+                        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+                        LocalDate date = LocalDate.parse(dateString, dateFormatter);
+                        LocalTime time = LocalTime.parse(timeString, timeFormatter);
+
+                        LocalDateTime dateTime = date.atTime(time);
+
+                        String newData = "Program," + newProgram + "," + dateString + "," + timeString;
+
+                        lines.set(selectedIndex, newData);
+
+                        if (selectedIndex != -1) {
+                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+                                for (String updatedLine : lines) {
+                                    writer.write(updatedLine);
+                                    writer.newLine();
+                                }
+                                JOptionPane.showMessageDialog(null,
+                                        "Entry edited successfully!");
+                            } catch (IOException e) {
+                                System.err.println("Error writing to CSV file: " + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Invalid selection!");
+                        }
+
+                        JOptionPane.showMessageDialog(null, "Program edited successfully!", "Add Program - ",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Date and time cannot be empty.", "Add Program - ",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid date-time format entered.", "Add Program - ",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Program name cannot be empty.", "Add Program - ",
                         JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Program not found.", "Edit Program - " + title,
-                    JOptionPane.ERROR_MESSAGE);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "No program found!");
         }
+
+        csvToArrayList();
     }
 
-    private void deleteProgram(Map<String, Long> targetMap, String title) {
-        String programName = JOptionPane.showInputDialog(null, "Enter the Program Name to delete:",
-                "Delete Program - " + title, JOptionPane.PLAIN_MESSAGE);
-        if (programName != null && !programName.isEmpty() && targetMap.containsKey(programName)) {
-            targetMap.remove(programName);
-            JOptionPane.showMessageDialog(null, "Program deleted successfully!", "Delete Program - " + title,
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Program not found.", "Delete Program - " + title,
-                    JOptionPane.ERROR_MESSAGE);
+    private void deleteProgram() {
+        try {
+            String csvFilePath = currentEventName.toLowerCase() + "_programme.csv";
+            List<String> lines = new ArrayList<>();
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }
+
+            } catch (IOException e) {
+                System.err.println("Error reading from CSV file: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            List<String> optionsList = new ArrayList<>();
+            for (int i = 0; i < lines.size(); i++) {
+                String[] values = lines.get(i).split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty() && !values[3].trim().isEmpty()) {
+                        optionsList.add(values[0].trim() + "," + values[1].trim() + "," + values[2].trim() + ","
+                                + values[3].trim());
+                    }
+                }
+            }
+
+            String[] options = optionsList.toArray(new String[0]);
+
+            String selectedEntry = (String) JOptionPane.showInputDialog(null, "Select the entry to delete:",
+                    "Delete ",
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+            String correctWord = selectedEntry;
+
+            int selectedIndex = -1;
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println("Comparing '" + correctWord + "' with '" + lines.get(i) + "'");
+                if (correctWord.equals(lines.get(i))) {
+                    selectedIndex = i;
+                    System.out.println("Match found at index " + i);
+                    break;
+                } else {
+                    System.out.println("No match at index " + i);
+                }
+            }
+            System.out.println("Final selectedIndex: " + selectedIndex);
+
+            if (selectedIndex != -1) {
+                lines.remove(selectedIndex);
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+                    for (String updatedLine : lines) {
+                        writer.write(updatedLine);
+                        writer.newLine();
+                    }
+                    JOptionPane.showMessageDialog(null,
+                            "Entry deleted successfully!");
+                } catch (IOException e) {
+                    System.err.println("Error writing to CSV file: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid selection!");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "No program found!");
         }
+
+        csvToArrayList();
     }
 
-    public void resourceInputPopup(Map<String, Map<String, Object>> targetMap) {
+    public void resourceInputPopup() {
         if (currentEventName == null || currentEventName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please load an event first.", "No Event Loaded",
                     JOptionPane.WARNING_MESSAGE);
@@ -832,6 +985,8 @@ public class eventPlanner extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Invalid resource name entered!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        csvToArrayList();
     }
 
     private static void editResource(String title) { // somewhat done
@@ -927,6 +1082,8 @@ public class eventPlanner extends JFrame {
         } catch (IndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No resources found!");
         }
+
+        csvToArrayList();
     }
 
     private static void deleteResource(String title) { // somewhat done
@@ -997,6 +1154,8 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No resource found!");
         }
+
+        csvToArrayList();
     }
 
     public static void staffInputPopup() {
@@ -1067,6 +1226,9 @@ public class eventPlanner extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "An unexpected error occurred!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
     private static void editStaff() { // done
@@ -1143,6 +1305,9 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No staff found!");
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
     private static void deleteStaff() { // done
@@ -1212,9 +1377,12 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No staff found!");
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
-    public static void attendeeInputPopup(Map<String, String> attendeeMap) {
+    public static void attendeeInputPopup() {
         if (currentEventName == null || currentEventName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please load an event first.", "No Event Loaded",
                     JOptionPane.WARNING_MESSAGE);
@@ -1300,6 +1468,9 @@ public class eventPlanner extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid number format for ticket number!", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
     private static void editAttendee() { // somewhat done
@@ -1381,6 +1552,9 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No attendee found!");
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
     private static void deleteAttendee() { // somewhat done
@@ -1452,9 +1626,12 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No attendee found!");
         }
+
+        csvToArrayList();
+        countAttendee();
     }
 
-    public static void taskInputPopup(Map<String, Boolean> taskMap) {
+    public static void taskInputPopup() {
         if (currentEventName == null || currentEventName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please load an event first.", "No Event Loaded",
                     JOptionPane.WARNING_MESSAGE);
@@ -1470,7 +1647,7 @@ public class eventPlanner extends JFrame {
                 null, options, options[0]);
 
         if (choice == 3 || choice == JOptionPane.CLOSED_OPTION) {
-            return; // If Cancel or close option is selected, return
+            return;
         }
 
         switch (choice) {
@@ -1481,7 +1658,7 @@ public class eventPlanner extends JFrame {
                 editTask();
                 break;
             case 2:
-                deleteTask(taskMap);
+                deleteTask();
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Invalid action.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1508,14 +1685,108 @@ public class eventPlanner extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Task name cannot be empty.", title, JOptionPane.ERROR_MESSAGE);
         }
+
+        csvToArrayList();
     }
 
-    private static void editTask() {
+    private static void editTask() { // done
         try {
             String csvFilePath = currentEventName.toLowerCase() + "_programme.csv";
             List<String> lines = new ArrayList<>();
-            String taskName = "";
+            String task = "";
             String status = "";
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }
+            } catch (IOException e) {
+                System.err.println("Error reading from CSV File: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            List<String> optionsList = new ArrayList<>();
+
+            for (int i = 0; i < lines.size(); i++) {
+                String[] values = lines.get(i).split(",");
+
+                if (values[0].trim().equalsIgnoreCase("Task")) {
+
+                    if (values.length >= 3 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        optionsList.add(values[0].trim() + "," + values[1].trim() + "," + values[2].trim());
+                    }
+                }
+            }
+
+            String[] options = optionsList.toArray(new String[0]);
+
+            String selectedEntry = (String) JOptionPane.showInputDialog(null, "Select the entry to Edit: ", "Edit ",
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+            String correctWord = selectedEntry;
+
+            int selectedIndex = -1;
+            for (int i = 0; i < lines.size(); i++) {
+                System.out.println("Comparing '" + correctWord + "' with '" + lines.get(i) + "'");
+                if (correctWord.equals(lines.get(i))) {
+                    selectedIndex = i;
+                    System.out.println("Match found at index " + i);
+                    break;
+                } else {
+                    System.out.println("No match at index " + i);
+                }
+            }
+            System.out.println("Final selectedIndex: " + selectedIndex);
+
+            String[] values = lines.get(selectedIndex).split(",");
+            task = values[1].trim();
+            String[] choose = { "Incomplete", "Complete" };
+            int choice = JOptionPane.showOptionDialog(null, "Choose an Option", "Add, Edit, or Delete",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.PLAIN_MESSAGE, null, choose, choose[0]);
+
+            switch (choice) {
+                case 0:
+                    status = "Incomplete";
+                    break;
+                case 1:
+                    status = "Complete";
+                    break;
+                default:
+                    return;
+            }
+
+            String newData = "Task," + task + "," + status;
+            lines.set(selectedIndex, newData);
+
+            if (selectedIndex != -1) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
+                    for (String updatedLine : lines) {
+                        writer.write(updatedLine);
+                        writer.newLine();
+                    }
+                    JOptionPane.showMessageDialog(null, "Entry edited successfully!");
+                } catch (IOException e) {
+                    System.err.println("Error writing to CSV File: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Selection!");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "No task found!");
+            return;
+        }
+
+        csvToArrayList();
+    }
+
+    private static void deleteTask() { // done
+        try {
+            String csvFilePath = currentEventName.toLowerCase() + "_programme.csv";
+            List<String> lines = new ArrayList<>();
 
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
                 String line;
@@ -1527,52 +1798,47 @@ public class eventPlanner extends JFrame {
                 e.printStackTrace();
             }
 
-            System.out.println("Contents of lines:");
-            for (String line : lines) {
-                System.out.println(line);
-            }
-
-            String[] options = new String[lines.size()];
+            List<String> optionsList = new ArrayList<>();
             for (int i = 0; i < lines.size(); i++) {
                 String[] values = lines.get(i).split(",");
-                options[i] = values[1].trim(); // Assuming the task name is at index 1
+                if (values[0].trim().equalsIgnoreCase("Task")) {
+                    if (values.length >= 3 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        optionsList.add(values[0].trim() + "," + values[1].trim() + "," + values[2].trim());
+                    }
+                }
             }
 
-            System.out.println("Options:");
-            for (String option : options) {
-                System.out.println(option);
-            }
+            String[] options = optionsList.toArray(new String[0]);
 
-            String selectedEntry = (String) JOptionPane.showInputDialog(null, "Select the entry to Edit:",
-                    "Edit ",
+            String selectedEntry = (String) JOptionPane.showInputDialog(null, "Select the entry to delete:",
+                    "Delete ",
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
-            System.out.println("Selected entry: " + selectedEntry);
+            String correctWord = selectedEntry;
 
             int selectedIndex = -1;
             for (int i = 0; i < lines.size(); i++) {
-                String[] values = lines.get(i).split(",");
-                if (values[1].trim().equalsIgnoreCase(selectedEntry)) {
+                System.out.println("Comparing '" + correctWord + "' with '" + lines.get(i) + "'");
+                if (correctWord.equals(lines.get(i))) {
                     selectedIndex = i;
+                    System.out.println("Match found at index " + i);
                     break;
+                } else {
+                    System.out.println("No match at index " + i);
                 }
             }
             System.out.println("Final selectedIndex: " + selectedIndex);
 
             if (selectedIndex != -1) {
-                String[] values = lines.get(selectedIndex).split(",");
-                taskName = values[1]; // Assuming the task name is at index 1
-                status = JOptionPane.showInputDialog(null, "Enter status (Complete/Incomplete):");
-                String newData = "Task," + taskName + "," + status;
-
-                lines.set(selectedIndex, newData);
-
+                lines.remove(selectedIndex);
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath))) {
                     for (String updatedLine : lines) {
                         writer.write(updatedLine);
                         writer.newLine();
                     }
-                    JOptionPane.showMessageDialog(null, "Entry edited successfully!");
+                    JOptionPane.showMessageDialog(null,
+                            "Entry deleted successfully!");
                 } catch (IOException e) {
                     System.err.println("Error writing to CSV file: " + e.getMessage());
                     e.printStackTrace();
@@ -1583,21 +1849,8 @@ public class eventPlanner extends JFrame {
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "No task found!");
         }
-    }
 
-    private static void deleteTask(Map<String, Boolean> taskMap) {
-        String title = "Delete Task";
-        String taskName = JOptionPane.showInputDialog(null, "Enter Task Name to Delete:", title,
-                JOptionPane.PLAIN_MESSAGE);
-
-        if (taskName == null || taskName.isEmpty() || !taskMap.containsKey(taskName)) {
-            JOptionPane.showMessageDialog(null, "Task not found or name cannot be empty.", title,
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        taskMap.remove(taskName);
-        JOptionPane.showMessageDialog(null, "Task deleted successfully!", title, JOptionPane.INFORMATION_MESSAGE);
+        csvToArrayList();
     }
 
     public void loadEventPopup() {
@@ -1627,7 +1880,8 @@ public class eventPlanner extends JFrame {
         if (selectedEvent != null) {
             currentEventName = selectedEvent;
             System.out.println(currentEventName);
-            titleLabel.setText(currentEventName);
+            csvToArrayList();
+            countAttendee();
             JOptionPane.showMessageDialog(null, "Event loaded: " + currentEventName);
         }
     }
@@ -1718,31 +1972,32 @@ public class eventPlanner extends JFrame {
     }
 
     public static void createCSVFiles(String currentEventName, String currentEventDate, float budgetAllocated,
-            int maxAttendees) { // done
+            int maxAttendees) {
+        // Create finances CSV file with header
         String financesCSVFilePath = currentEventName.toLowerCase() + "_finances.csv";
-        try {
-            BufferedWriter financesWriter = new BufferedWriter(new FileWriter(financesCSVFilePath));
-            financesWriter.close();
+        try (BufferedWriter financesWriter = new BufferedWriter(new FileWriter(financesCSVFilePath))) {
+            financesWriter.write("Outflows and Inflows");
+            financesWriter.newLine();
         } catch (IOException e) {
             System.err.println("Error creating finances CSV file for the new event: " + e.getMessage());
             e.printStackTrace();
         }
 
-        // Create programme CSV file
+        // Create programme CSV file with header
         String programmeCSVFilePath = currentEventName.toLowerCase() + "_programme.csv";
-        try {
-            BufferedWriter programmeWriter = new BufferedWriter(new FileWriter(programmeCSVFilePath));
-            programmeWriter.close();
+        try (BufferedWriter programmeWriter = new BufferedWriter(new FileWriter(programmeCSVFilePath))) {
+            programmeWriter.write("Programs and Tasks");
+            programmeWriter.newLine();
         } catch (IOException e) {
             System.err.println("Error creating programme CSV file for the new event: " + e.getMessage());
             e.printStackTrace();
         }
 
-        // Create staff CSV file
+        // Create people CSV file with header
         String staffCSVFilePath = currentEventName.toLowerCase() + "_people.csv";
-        try {
-            BufferedWriter staffWriter = new BufferedWriter(new FileWriter(staffCSVFilePath));
-            staffWriter.close();
+        try (BufferedWriter staffWriter = new BufferedWriter(new FileWriter(staffCSVFilePath))) {
+            staffWriter.write("Attendees and Staffs");
+            staffWriter.newLine();
         } catch (IOException e) {
             System.err.println("Error creating staff CSV file for the new event: " + e.getMessage());
             e.printStackTrace();
@@ -1755,6 +2010,309 @@ public class eventPlanner extends JFrame {
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Error writing to events CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void csvToArrayList() {
+        // Clear ArrayList first
+        arrayClear();
+
+        // Initialize file paths
+        String outflowNameData = currentEventName.toLowerCase() + "_finances.csv";
+        String inflowNameData = currentEventName.toLowerCase() + "_finances.csv";
+        String outflowPriceData = currentEventName.toLowerCase() + "_finances.csv";
+        String inflowPriceData = currentEventName.toLowerCase() + "_finances.csv";
+        String eventDateData = "events.csv";
+        String programNameData = currentEventName.toLowerCase() + "_programme.csv";
+        String programTimeData = currentEventName.toLowerCase() + "_programme.csv";
+        String programDateData = currentEventName.toLowerCase() + "_programme.csv";
+
+        // Outflow Names
+        try (BufferedReader br = new BufferedReader(new FileReader(outflowNameData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Outflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        outflowNames.add(values[1]);
+                    }
+                }
+            }
+            System.out.println("Outflow Names updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Outflow Prices
+        try (BufferedReader br = new BufferedReader(new FileReader(outflowPriceData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Outflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        outflowPrices.add(Float.parseFloat(values[2]));
+                    }
+                }
+            }
+            System.out.println("Outflow Prices updated.");
+            calculateTotalOutflows();
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Inflow Names
+        try (BufferedReader br = new BufferedReader(new FileReader(inflowNameData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Inflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        inflowNames.add(values[1]);
+                    }
+                }
+            }
+            System.out.println("Inflow Names updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Inflow Prices
+        try (BufferedReader br = new BufferedReader(new FileReader(inflowPriceData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Inflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        inflowPrices.add(Float.parseFloat(values[2]));
+                    }
+                }
+            }
+            System.out.println("Inflow Prices updated.");
+            calculateTotalInflows();
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Event Date
+        try (BufferedReader br = new BufferedReader(new FileReader(eventDateData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                        && !values[2].trim().isEmpty() && !values[2].trim().isEmpty()) {
+                    eventDates.add(values[1]);
+                }
+            }
+            System.out.println("Event Date updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Program Names
+        try (BufferedReader br = new BufferedReader(new FileReader(programNameData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        programNames.add(values[1]);
+                    }
+                }
+            }
+            System.out.println("Program Names updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Program Date
+        try (BufferedReader br = new BufferedReader(new FileReader(programDateData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        programDate.add(values[2]);
+                    }
+                }
+            }
+            System.out.println("Program Dates updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Program Time
+        try (BufferedReader br = new BufferedReader(new FileReader(programTimeData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        programTime.add(values[3]);
+                    }
+                }
+            }
+            System.out.println("Program Times updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void arrayClear() {
+        eventDates.clear();
+        programNames.clear();
+        programDate.clear();
+        programTime.clear();
+        outflowNames.clear();
+        outflowPrices.clear();
+        inflowNames.clear();
+        inflowPrices.clear();
+    }
+
+    public static void calculateTotalInflows() {
+        totalInflows = 0;
+        String csvFilePath = "events.csv";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+
+                String[] details = line.split(",");
+                if (details.length > 0) {
+                    String type = details[0].trim();
+                    if (currentEventName.equalsIgnoreCase(type)) {
+                        if (details.length > 2 && details[2] != null && !details[2].isEmpty()) {
+                            totalInflows += Float.parseFloat(details[2]);
+                            System.out.println("Budget Alloted Inflow: " + totalInflows);
+                        }
+                    }
+                }
+
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading finances from CSV file: " + e.getMessage());
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            // Handle cases where the value cannot be parsed as a float
+            System.err.println("Error parsing inflow value: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        if (inflowPrices.isEmpty()) {
+            System.out.println("Inflows Empty");
+            return;
+        }
+
+        for (float price : inflowPrices) {
+            totalInflows += price;
+            System.out.println("Current Inflow: " + totalInflows);
+        }
+    }
+
+    public static void calculateTotalOutflows() {
+        if (outflowPrices.isEmpty()) {
+            System.out.println("Ouflow Empty");
+            totalOutflows = 0;
+            return;
+        }
+
+        for (float price : outflowPrices) {
+            totalOutflows += price;
+            System.out.println("Current Outflows: " + totalOutflows);
+        }
+    }
+
+    // Error fixing ni na function na handy, can get rid after the projectiftaposna
+    public static void printArrays() {
+        for (String name : outflowNames) {
+            int i = 1;
+            System.out.println("Ouflow Name " + i + ": " + name);
+            i++;
+        }
+
+        for (float name : outflowPrices) {
+            int i = 1;
+            System.out.println("Outflow Price " + i + ": " + name);
+            i++;
+        }
+
+        for (String name : inflowNames) {
+            int i = 1;
+            System.out.println("Inflow Name " + i + ": " + name);
+            i++;
+        }
+
+        for (float name : inflowPrices) {
+            int i = 1;
+            System.out.println("Inflow Price " + i + ": " + name);
+            i++;
+        }
+
+        for (String name : programNames) {
+            int i = 1;
+            System.out.println("Program Name " + i + ": " + name);
+            i++;
+        }
+
+        for (String name : programDate) {
+            int i = 1;
+            System.out.println("Program Date " + i + ": " + name);
+            i++;
+        }
+
+        for (String name : programTime) {
+            int i = 1;
+            System.out.println("Program Time " + i + ": " + name);
+            i++;
+        }
+
+        for (String name : eventDates) {
+            int i = 1;
+            System.out.println("Event Dates " + i + ": " + name);
+            i++;
+        }
+
+        System.out.println("Size of the Outflow Names: " + outflowNames.size());
+        System.out.println("Size of the Outflow Price: " + outflowPrices.size());
+        System.out.println("Size of the Inflow Names: " + inflowNames.size());
+        System.out.println("Size of the Inflow Price: " + inflowPrices.size());
+        System.out.println("Size of the Program Names: " + programNames.size());
+        System.out.println("Size of the Program Date: " + programDate.size());
+        System.out.println("Size of the Program Time: " + programTime.size());
+        System.out.println("Size of the Event Date: " + eventDates.size());
+    }
+
+    public static void countAttendee() {
+        String attendeeData = currentEventName.toLowerCase() + "_people.csv";
+
+        attendeeCount = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(attendeeData))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length > 0 && values[0].trim().equalsIgnoreCase("Attendee")) {
+                    attendeeCount++;
+                }
+            }
+            System.out.println("Attendee count updated: " + attendeeCount);
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
     }
