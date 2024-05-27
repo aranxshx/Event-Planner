@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DonutChartDemo",
+            "request": "launch",
+            "mainClass": "DonutChartDemo",
+            "projectName": "Event-Planner_94705cda"
+        },
+        {
+            "type": "java",
             "name": "eventPlanner",
             "request": "launch",
             "mainClass": "eventPlanner",

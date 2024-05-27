@@ -65,12 +65,12 @@ public class Finances extends JPanel {
         // Font lightFont = new Font("Inter-Light", 13);
 
         // - > Icons
-        ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
-        ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
-        ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
-        ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("Add Staff.png"));
-        ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("Add Attendee.png"));
-        ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("Add Task.png"));
+        ImageIcon financesIcon = new ImageIcon(getClass().getResource("/assets/Icons/Finances.png"));
+    ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Program.png"));
+    ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Resource.png"));
+    ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Staff.png"));
+    ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Attendee.png"));
+    ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Task.png"));
 
         JLabel icon1 = new JLabel(financesIcon);
         JLabel icon2 = new JLabel(addProgramIcon);

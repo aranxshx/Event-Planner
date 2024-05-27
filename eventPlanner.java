@@ -60,7 +60,7 @@ public class eventPlanner extends JFrame {
     Map<String, Boolean> taskMap = new HashMap<>();
 
     JButton financesToggle, peopleToggle, programsToggle;
-    Color blueColor = new Color(97, 113, 255);
+    Color blueColor = new Color(0x2F4F4F);
     Border border = BorderFactory.createLineBorder(blueColor, 1);
 
     JLabel titleLabel = new JLabel(currentEventName);
@@ -87,15 +87,14 @@ public class eventPlanner extends JFrame {
     JLabel expensesNameLabel = new JLabel("Name");
     JLabel expensesPriceLabel = new JLabel("Price");
     JLabel programLabel = new JLabel("Program");
-    Dashboard DASHBOARD = new Dashboard();
 
     // - > Icons
-    ImageIcon financesIcon = new ImageIcon(getClass().getResource("Finances.png"));
-    ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("Add Program.png"));
-    ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("Add Resource.png"));
-    ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("Add Staff.png"));
-    ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("Add Attendee.png"));
-    ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("Add Task.png"));
+    ImageIcon financesIcon = new ImageIcon(getClass().getResource("/assets/Icons/Finances.png"));
+    ImageIcon addProgramIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Program.png"));
+    ImageIcon addResourceIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Resource.png"));
+    ImageIcon addStaffIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Staff.png"));
+    ImageIcon addAttendeeIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Attendee.png"));
+    ImageIcon addTaskIcon = new ImageIcon(getClass().getResource("/assets/Icons/Add Task.png"));
 
     JButtonIcon financesButton = new JButtonIcon(financesIcon, false);
     JButtonIcon addProgramButton = new JButtonIcon(addProgramIcon, false);
@@ -105,6 +104,7 @@ public class eventPlanner extends JFrame {
     JButtonIcon addTaskButton = new JButtonIcon(addTaskIcon, false);
     JButtonIcon loadEventButton = new JButtonIcon(addTaskIcon, false);
 
+    
     Finances FINANCES = new Finances();
 
     People PEOPLE = new People();
@@ -117,8 +117,7 @@ public class eventPlanner extends JFrame {
         setSize(1440, 1024);
 
         setLayout(null);
-        add(DASHBOARD);
-        DASHBOARD.setLayout(null);
+
         add(FINANCES);
         FINANCES.setLayout(null);
         setContentPane(FINANCES);
