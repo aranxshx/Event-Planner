@@ -1,5 +1,7 @@
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +21,8 @@ import java.io.IOException;
 import java.util.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.AlphaComposite.*;
+
 
 public class eventPlannerBeta extends JFrame {
     private Point initialClick;
@@ -72,7 +76,13 @@ public class eventPlannerBeta extends JFrame {
     public static List<Float> outflowPrices = new ArrayList<>();
     public static List<String> inflowNames = new ArrayList<>();
     public static List<Float> inflowPrices = new ArrayList<>();
-
+    private Object[][] revenueData = {};  
+    private Object[][] expensesData = {};  
+    private Object[][] resourcesData = {};  
+    private Object[][] staffData = {};  
+    private Object[][] attendeeData = {{"Joseph", "joseph@gmail.com"}, {"Andrew S. Bread", "spanishbreadislife@gmail.com"}};  
+    
+    
     // ELEMENTS
     // Background
     JPanel background = new JPanel();
@@ -104,6 +114,11 @@ public class eventPlannerBeta extends JFrame {
     // Finances
     RoundedRectangle financesPanel = new RoundedRectangle(20);
     JLabel financesLabel = new JLabel("Finances");
+    String[] revenueColumns = {"Name", "Price"};
+    
+    CustomTableModel revenueModel = new CustomTableModel(revenueColumns, revenueData);
+    JTable revenueTable = new JTable(revenueModel);
+    JScrollPane revenueScroll = new JScrollPane(revenueTable);
 
     // Days
     RoundedRectangle daysPanel = new RoundedRectangle(20);
@@ -132,6 +147,10 @@ public class eventPlannerBeta extends JFrame {
     RoundedRectangle peoplePanel = new RoundedRectangle(20);
     JLabel staffLabel = new JLabel("Staff");
     JLabel attendeesTLabel = new JLabel("Attendees");
+    String[] attendeesColumn = {"", ""};
+    CustomTableModel attendeesModel = new CustomTableModel(attendeesColumn, attendeeData);
+    JTable attendeesTable = new JTable(attendeesModel);
+    JScrollPane attendeesScrollPane = new JScrollPane(attendeesTable);
 
     JLabel attendeeNameLabel = new JLabel("Name", JLabel.CENTER);
     JLabel attendeeEmailLabel = new JLabel("Role", JLabel.CENTER);
@@ -282,6 +301,24 @@ public class eventPlannerBeta extends JFrame {
         panel.add(resourcesPanel);
 
         // People Panel
+        attendeesTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        attendeesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        attendeesTable.setOpaque(false);
+        attendeesTable.setForeground(PRIMARY_TEXT_COLOR);
+        attendeesTable.setFont(tableContentFont);
+        attendeesTable.setBorder(null);
+        ((DefaultTableCellRenderer)attendeesTable.getDefaultRenderer(Object.class)).setOpaque(false);
+
+        
+        attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        attendeesScrollPane.setBorder(null);
+        attendeesScrollPane.setBounds(434, 812, 643, 151);
+        attendeesScrollPane.setOpaque(false);
+        attendeesScrollPane.getViewport().setOpaque(false);
+        attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        attendeesScrollPane.setBorder(null);
+        panel.add(attendeesScrollPane);
+
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
         switchRightButton.setBackground(NAVIGATION_PANEL_COLOR);
@@ -2548,6 +2585,7 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
