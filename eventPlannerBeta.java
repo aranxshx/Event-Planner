@@ -2345,7 +2345,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Attendee Data
-        attendeeData = new Object[100][4];
         try (BufferedReader br = new BufferedReader(new FileReader(people))) {
             int x = 0;
             String line;
@@ -2366,6 +2365,7 @@ public class eventPlannerBeta extends JFrame {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
+
 
         // Staff Data
         staffData = new Object[100][2];

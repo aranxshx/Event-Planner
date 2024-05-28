@@ -29,5 +29,9 @@ class CustomTableModel extends AbstractTableModel {
         return columnNames[column];
     }
 
+    public void updateTable(Object[][] data) {
+        this.data = data;
+    }
+
     // Optionally override other methods like setValueAt, isCellEditable, etc.
 }
