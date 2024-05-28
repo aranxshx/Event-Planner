@@ -2009,6 +2009,7 @@ public class eventPlannerBeta extends JFrame {
             countAttendee();
             csvToArrayList();
             JOptionPane.showMessageDialog(null, "Event loaded: " + currentEventName);
+            titleButton.setText(currentEventName);
         }
     }
 
@@ -2021,6 +2022,7 @@ public class eventPlannerBeta extends JFrame {
                 String[] values = line.split(",");
                 eventNames.add(values[0].replace("\"", ""));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error reading events.csv file", "Error",
@@ -2028,9 +2030,10 @@ public class eventPlannerBeta extends JFrame {
         }
     }
 
-    private static void addNewEvent() {
+    private void addNewEvent() {
         while (true) {
             currentEventName = JOptionPane.showInputDialog(null, "Event Name: "); // Get Event Name
+            titleButton.setText(currentEventName);
             if (currentEventName != null && !currentEventName.equals("")) {
                 break;
             } else {
