@@ -76,13 +76,14 @@ public class eventPlannerBeta extends JFrame {
     public static List<Float> outflowPrices = new ArrayList<>();
     public static List<String> inflowNames = new ArrayList<>();
     public static List<Float> inflowPrices = new ArrayList<>();
-    private Object[][] revenueData = {};  
-    private Object[][] expensesData = {};  
-    private Object[][] resourcesData = {};  
-    private Object[][] staffData = {};  
-    private Object[][] attendeeData = {{"Joseph", "joseph@gmail.com"}, {"Andrew S. Bread", "spanishbreadislife@gmail.com"}};  
-    
-    
+
+    private Object[][] revenueData = {};
+    private Object[][] expensesData = {};
+    private Object[][] resourcesData = {};
+    private Object[][] staffData = {};
+    private Object[][] attendeeData = {};
+    private Object[][] taskData = {};
+
     // ELEMENTS
     // Background
     JPanel background = new JPanel();
@@ -2195,6 +2196,9 @@ public class eventPlannerBeta extends JFrame {
         String programNameData = "./events/" + currentEventName.toLowerCase() + "_programme.csv";
         String programTimeData = "./events/" + currentEventName.toLowerCase() + "_programme.csv";
         String programDateData = "./events/" + currentEventName.toLowerCase() + "_programme.csv";
+        String finances = "./events/" + currentEventName.toLowerCase() + "_finances.csv";
+        String people = "./events/" + currentEventName.toLowerCase() + "_people.csv";
+        String task = "./events/" + currentEventName.toLowerCase() + "_programme.csv";
 
         // Outflow Names
         try (BufferedReader br = new BufferedReader(new FileReader(outflowNameData))) {
@@ -2335,6 +2339,144 @@ public class eventPlannerBeta extends JFrame {
                 }
             }
             System.out.println("Program Times updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Attendee Data
+        attendeeData = new Object[100][4];
+        try (BufferedReader br = new BufferedReader(new FileReader(people))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Attendee")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 4; i++) {
+                            attendeeData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Attendee data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Staff Data
+        staffData = new Object[100][2];
+        try (BufferedReader br = new BufferedReader(new FileReader(people))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Staff")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 2; i++) {
+                            staffData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Staff data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Resources Data
+        resourcesData = new Object[100][3];
+        try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Resource")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 3; i++) {
+                            resourcesData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Resources data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Revenue Data
+        revenueData = new Object[100][2];
+        try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Inflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 2; i++) {
+                            revenueData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Revenue data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Expenses Data
+        expensesData = new Object[100][2];
+        try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Outflow")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 2; i++) {
+                            expensesData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Expenses data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Task Data
+        taskData = new Object[100][2];
+        try (BufferedReader br = new BufferedReader(new FileReader(task))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Task")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 2; i++) {
+                            taskData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Task data updated.");
         } catch (IOException e) {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
@@ -2538,10 +2680,6 @@ public class eventPlannerBeta extends JFrame {
     }
 
     public void getDate() {
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, uuuu");
-        date = formatter.format(currentDate);
-
         String daysRemaining = "./events/events.csv";
 
         try (BufferedReader br = new BufferedReader(new FileReader(daysRemaining))) {
@@ -2575,6 +2713,9 @@ public class eventPlannerBeta extends JFrame {
                     LocalDate nowDate = LocalDate.now();
                     LocalDate selectedDate = LocalDate.of(year, month, day);
                     daysLeft = ChronoUnit.DAYS.between(nowDate, selectedDate);
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, uuuu");
+                    date = formatter.format(selectedDate);
 
                     System.out.println("DATE BRO: " + day + "/" + month + "/" + year);
                     System.out.println("DAYS LEFT" + daysLeft);
