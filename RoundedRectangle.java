@@ -12,9 +12,9 @@ public class RoundedRectangle extends JPanel {
     private Color backgroundColor;
     private Color borderColor; 
 
-    public RoundedRectangle(int borderRadius, Color bg) {
-        this.borderRadius = borderRadius;
-        this.setBackground(bg);
+    public RoundedRectangle(int borderRadius) {
+        setOpaque(false);
+        this.borderRadius = borderRadius;   
     }
 
     @Override
@@ -23,11 +23,6 @@ public class RoundedRectangle extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(backgroundColor);
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(), borderRadius, borderRadius);
-
-        g2d.setColor(blueColor);
-        g2d.drawRoundRect(0, 0, getWidth(), getHeight(), borderRadius, borderRadius);
-
-
     }
 
     public void setColor(Color color) {
