@@ -77,12 +77,12 @@ public class eventPlannerBeta extends JFrame {
     public static List<String> inflowNames = new ArrayList<>();
     public static List<Float> inflowPrices = new ArrayList<>();
 
-    private Object[][] revenueData = {};
-    private Object[][] expensesData = {};
-    private Object[][] resourcesData = {};
-    private Object[][] staffData = {};
-    private Object[][] attendeeData = {};
-    private Object[][] taskData = {};
+    private Object[][] revenueData = new Object[100][4];
+    private Object[][] expensesData = new Object[100][4];
+    private Object[][] resourcesData = new Object[100][4];
+    private Object[][] staffData = new Object[100][4];
+    private Object[][] attendeeData = new Object[100][4];
+    private Object[][] taskData = new Object[100][4];
 
     // ELEMENTS
     // Background
@@ -307,13 +307,19 @@ public class eventPlannerBeta extends JFrame {
         attendeesTable.setOpaque(false);
         attendeesTable.setForeground(PRIMARY_TEXT_COLOR);
         attendeesTable.setFont(tableContentFont);
-        attendeesTable.setBorder(null);
-        ((DefaultTableCellRenderer)attendeesTable.getDefaultRenderer(Object.class)).setOpaque(false);
+        attendeesTable.setShowGrid(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setOpaque(false);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        
 
         
         attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         attendeesScrollPane.setBorder(null);
-        attendeesScrollPane.setBounds(434, 812, 643, 151);
+        attendeesScrollPane.setBounds(434, 830, 643, 131);
         attendeesScrollPane.setOpaque(false);
         attendeesScrollPane.getViewport().setOpaque(false);
         attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
@@ -2366,6 +2372,7 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
+        
 
         // Staff Data
         staffData = new Object[100][2];
