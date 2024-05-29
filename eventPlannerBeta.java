@@ -82,7 +82,7 @@ public class eventPlannerBeta extends JFrame {
     private Object[][] staffData = new Object[100][4];
     private Object[][] attendeeData = new Object[100][4];
     private Object[][] taskData = new Object[100][4];
-    private Object[][] programData = new Object[100][3];
+    private Object[][] programData = new Object[100][2];
 
     // ELEMENTS
     // Background
@@ -168,12 +168,16 @@ public class eventPlannerBeta extends JFrame {
     // Inflow\
 
     // Task
+    String[] taskColumn = { "", "" };
+    CustomTableModel taskModel = new CustomTableModel(resourcesColumn, resourcesData);
+    JTable taskTable = new JTable(resourcesModel);
+    JScrollPane tableScrollPane = new JScrollPane(resourcesTable);
 
     // Program
     String[] programColumn = { "", "" };
-    CustomTableModel programModel = new CustomTableModel(resourcesColumn, resourcesData);
-    JTable programTable = new JTable(resourcesModel);
-    JScrollPane programScrollPane = new JScrollPane(resourcesTable);
+    CustomTableModel programModel = new CustomTableModel(programColumn, programData);
+    JTable programTable = new JTable(programModel);
+    JScrollPane programScrollPane = new JScrollPane(programTable);
 
     JLabel attendeeNameLabel = new JLabel("Name", JLabel.CENTER);
     JLabel attendeeEmailLabel = new JLabel("Role", JLabel.CENTER);
@@ -509,8 +513,8 @@ public class eventPlannerBeta extends JFrame {
         programTable.setFont(tableContentFont);
         programTable.setShowGrid(false);
 
-        attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
@@ -519,7 +523,8 @@ public class eventPlannerBeta extends JFrame {
         programScrollPane.getViewport().setOpaque(false);
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
-        panel.add(attendeesScrollPane);
+        panel.add(programScrollPane);
+
         // Buttons
         dashboardButton.setBounds(0, 210, 364, 90);
         dashboardButton.setBorder(null);
@@ -2588,7 +2593,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Program Data
-        programData = new Object[100][3];
         try (BufferedReader br = new BufferedReader(new FileReader(programNameData))) {
             int x = 0;
             String line;
@@ -2598,7 +2602,7 @@ public class eventPlannerBeta extends JFrame {
                     if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
                             && !values[2].trim().isEmpty()) {
                         for (int i = 0; i < 2; i++) {
-                            taskData[x][i] = values[i + 1].trim();
+                            programData[x][i] = values[i + 1].trim();
                         }
                     }
                     x++;
