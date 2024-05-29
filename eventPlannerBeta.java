@@ -2,6 +2,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -118,11 +119,17 @@ public class eventPlannerBeta extends JFrame {
     // Finances
     RoundedRectangle financesPanel = new RoundedRectangle(20);
     JLabel financesLabel = new JLabel("Finances");
+    JLabel financeTabLabel = new JLabel("Revenue");
     String[] revenueColumns = { "Name", "Price" };
 
     CustomTableModel revenueModel = new CustomTableModel(revenueColumns, revenueData);
     JTable revenueTable = new JTable(revenueModel);
-    JScrollPane revenueScroll = new JScrollPane(revenueTable);
+    JScrollPane revenueScrollPane = new JScrollPane(revenueTable);
+
+    String[] expensesColumn = { "Name", "Price" };
+    CustomTableModel expensesModel = new CustomTableModel(expensesColumn, expensesData);
+    JTable expensesTable = new JTable(expensesModel);
+    JScrollPane expensesScrollPane = new JScrollPane(expensesTable);
 
     // Days
     RoundedRectangle daysPanel = new RoundedRectangle(20);
@@ -187,6 +194,8 @@ public class eventPlannerBeta extends JFrame {
 
     JButton switchLeftButton = new JButton();
     JButton switchRightButton = new JButton();
+    JButton switchRightButtonFinance = new JButton();
+    JButton switchLeftButtonFinance = new JButton();
 
     RoundedRectangle peopleSeparator = new RoundedRectangle(10);
 
@@ -291,6 +300,92 @@ public class eventPlannerBeta extends JFrame {
         panel.add(remainingPanel);
 
         // Finances
+        switchRightButtonFinance.setBounds(535,192, 60, 60);
+        switchRightButtonFinance.setBorder(null);
+        switchRightButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
+        switchRightButtonFinance.setOpaque(false);
+        switchRightButtonFinance.setIcon(switchRightImage);
+        switchRightButtonFinance.setFont(iconButtonFont);
+        switchRightButtonFinance.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                financeTabLabel.setText("Expenses");
+                switchRightButtonFinance.setEnabled(false);
+                switchRightButtonFinance.setVisible(false);
+                switchLeftButtonFinance.setVisible(true);
+                switchLeftButtonFinance.setEnabled(true);
+                revenueScrollPane.setVisible(false);
+                expensesScrollPane.setVisible(true);
+            }
+        });
+        panel.add(switchRightButtonFinance);
+        
+
+        switchLeftButtonFinance.setBounds(535,192, 60, 60);
+        switchLeftButtonFinance.setBorder(null);
+        switchLeftButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
+        switchLeftButtonFinance.setOpaque(false);
+        switchLeftButtonFinance.setIcon(switchRightImage);
+        switchLeftButtonFinance.setFont(iconButtonFont);
+        switchLeftButtonFinance.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                financeTabLabel.setText("Revenue");
+                switchRightButtonFinance.setEnabled(true);
+                switchRightButtonFinance.setVisible(true);
+                switchLeftButtonFinance.setVisible(false);
+                switchLeftButtonFinance.setEnabled(false);
+                revenueScrollPane.setVisible(false);
+                expensesScrollPane.setVisible(true);
+            }
+        });
+        panel.add(switchRightButtonFinance);
+        switchRightButtonFinance.setVisible(true);
+
+        financeTabLabel.setBounds(443, 197, 110, 50);
+        financeTabLabel.setForeground(PRIMARY_TEXT_COLOR);
+        financeTabLabel.setFont(beforeEventFont);
+        panel.add(financeTabLabel);
+
+        expensesTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+        expensesTable.getColumnModel().getColumn(1).setPreferredWidth(171);
+        expensesTable.setOpaque(false);
+        expensesTable.setForeground(PRIMARY_TEXT_COLOR);
+        expensesTable.setFont(tableContentFont);
+        expensesTable.setShowGrid(false);
+
+        expensesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        expensesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        expensesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        expensesScrollPane.setBorder(null);
+        expensesScrollPane.setBounds(1163, 120, 231, 198);
+        expensesScrollPane.setOpaque(false);
+        expensesScrollPane.getViewport().setOpaque(false);
+        expensesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        expensesScrollPane.setBorder(null);
+        panel.add(expensesScrollPane);
+        expensesScrollPane.setVisible(false);
+
+
+        revenueTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+        revenueTable.getColumnModel().getColumn(1).setPreferredWidth(171);
+        revenueTable.setOpaque(false);
+        revenueTable.setForeground(PRIMARY_TEXT_COLOR);
+        revenueTable.setFont(tableContentFont);
+        revenueTable.setShowGrid(false);
+
+        revenueTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        revenueTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        revenueScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        revenueScrollPane.setBorder(null);
+        revenueScrollPane.setBounds(438, 243, 363, 203);
+        revenueScrollPane.setOpaque(false);
+        revenueScrollPane.getViewport().setOpaque(false);
+        revenueScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        revenueScrollPane.setBorder(null);
+        panel.add(revenueScrollPane);
+        revenueScrollPane.setVisible(true);
+        
         financesLabel.setBounds(441, 112, 232, 142);
         financesLabel.setForeground(PRIMARY_TEXT_COLOR);
         financesLabel.setFont(bTableFont);
