@@ -311,6 +311,7 @@ public class eventPlannerBeta extends JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setOpaque(false);
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setBorder(null);
 
         attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
