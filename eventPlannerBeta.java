@@ -858,7 +858,7 @@ public class eventPlannerBeta extends JFrame {
                             JOptionPane.INFORMATION_MESSAGE);
 
                     // Save to CSV
-                    String csvFilePath = currentEventName.toLowerCase() + "_finances.csv";
+                    String csvFilePath = "./events/" +currentEventName.toLowerCase() + "_finances.csv";
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFilePath, true))) {
                         writer.write(type + "," + name + "," + price);
                         writer.newLine();
@@ -3003,7 +3003,6 @@ public class eventPlannerBeta extends JFrame {
 
     public void getDate() {
         String daysRemaining = "./events/events.csv";
-        adjustTitleButtonAndNavigation();
 
         try (BufferedReader br = new BufferedReader(new FileReader(daysRemaining))) {
             String line;
