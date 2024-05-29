@@ -66,6 +66,7 @@ public class eventPlannerBeta extends JFrame {
     public int month = 0;
     public int year = 0;
     public long daysLeft;
+    public int progress = 0;
 
     // DATA VARIABLES
     public static List<String> eventNames = new ArrayList<>();
@@ -93,6 +94,8 @@ public class eventPlannerBeta extends JFrame {
     JLabel backgroundLabel = new JLabel(backgroundImage);
     JLabel dashboardLabel = new JLabel("Overview");
     JLabel remainingBudgetAmount = new JLabel("P" + remainingBudget + " / P" + totalInflows);
+    JProgressBar progressBar = new JProgressBar(0, 100);
+    
 
     // Icons
     ImageIcon dashboardImage = new ImageIcon("./assets/Icons/Dashboard.png");
@@ -223,6 +226,13 @@ public class eventPlannerBeta extends JFrame {
         centerRenderer.setOpaque(false);
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         centerRenderer.setBorder(null);
+        
+        
+        progressBar.setPreferredSize(new Dimension(218, 11));
+        progressBar.setBounds(871, 421, 218, 11);
+        progressBar.setStringPainted(true);
+
+        panel.add(progressBar);
 
         // Program
         programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
@@ -282,7 +292,7 @@ public class eventPlannerBeta extends JFrame {
         remainingBudgetLabel.setFont(beforeEventFont);
         panel.add(remainingBudgetLabel);
 
-        remainingBudgetAmount.setBounds(877, 400, 300, 25);
+        remainingBudgetAmount.setBounds(877, 380, 300, 25);
         remainingBudgetAmount.setForeground(PRIMARY_TEXT_COLOR);
         remainingBudgetAmount.setFont(remainingBudgetFont);
         panel.add(remainingBudgetAmount);
@@ -292,6 +302,27 @@ public class eventPlannerBeta extends JFrame {
         panel.add(remainingPanel);
 
         // Finances
+        switchLeftButtonFinance.setBounds(535,192, 60, 60);
+        switchLeftButtonFinance.setBorder(null);
+        switchLeftButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
+        switchLeftButtonFinance.setOpaque(false);
+        switchLeftButtonFinance.setIcon(switchLeftImage);
+        switchLeftButtonFinance.setFont(iconButtonFont);
+        switchLeftButtonFinance.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                financeTabLabel.setText("Revenue");
+                switchRightButtonFinance.setEnabled(true);
+                switchRightButtonFinance.setVisible(true);
+                switchLeftButtonFinance.setVisible(false);
+                switchLeftButtonFinance.setEnabled(true);
+                revenueScrollPane.setVisible(false);
+                expensesScrollPane.setVisible(true);
+                System.out.println("Switched to revenue");
+            }
+        });
+        panel.add(switchLeftButtonFinance);
+        switchLeftButtonFinance.setVisible(false);
+
         switchRightButtonFinance.setBounds(535,192, 60, 60);
         switchRightButtonFinance.setBorder(null);
         switchRightButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
@@ -307,30 +338,14 @@ public class eventPlannerBeta extends JFrame {
                 switchLeftButtonFinance.setEnabled(true);
                 revenueScrollPane.setVisible(false);
                 expensesScrollPane.setVisible(true);
-            }
-        });
-        panel.add(switchRightButtonFinance);
-        
-
-        switchLeftButtonFinance.setBounds(535,192, 60, 60);
-        switchLeftButtonFinance.setBorder(null);
-        switchLeftButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
-        switchLeftButtonFinance.setOpaque(false);
-        switchLeftButtonFinance.setIcon(switchRightImage);
-        switchLeftButtonFinance.setFont(iconButtonFont);
-        switchLeftButtonFinance.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                financeTabLabel.setText("Revenue");
-                switchRightButtonFinance.setEnabled(true);
-                switchRightButtonFinance.setVisible(true);
-                switchLeftButtonFinance.setVisible(false);
-                switchLeftButtonFinance.setEnabled(false);
-                revenueScrollPane.setVisible(false);
-                expensesScrollPane.setVisible(true);
+                System.out.println("Switched to expenses");
             }
         });
         panel.add(switchRightButtonFinance);
         switchRightButtonFinance.setVisible(true);
+        
+
+        
 
         financeTabLabel.setBounds(443, 197, 110, 50);
         financeTabLabel.setForeground(PRIMARY_TEXT_COLOR);
@@ -349,7 +364,7 @@ public class eventPlannerBeta extends JFrame {
 
         expensesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         expensesScrollPane.setBorder(null);
-        expensesScrollPane.setBounds(1163, 120, 231, 198);
+        expensesScrollPane.setBounds(438, 243, 363, 203);
         expensesScrollPane.setOpaque(false);
         expensesScrollPane.getViewport().setOpaque(false);
         expensesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
@@ -2908,6 +2923,8 @@ public class eventPlannerBeta extends JFrame {
         daysLeftNumLabel.setText("" + daysLeft);
         remainingBudget = totalInflows - totalOutflows;
         remainingBudgetAmount.setText("P" + remainingBudget + " / P" + totalInflows);
+        
+        
 
         revalidate();
         repaint();
@@ -2981,6 +2998,17 @@ public class eventPlannerBeta extends JFrame {
         } catch (IOException e) {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
+        }
+
+        if (totalInflows > 0) {
+            updateProgress(remainingBudget/totalInflows);
+        }
+        
+    }
+
+    public void updateProgress(int newValue) {
+        if(newValue >= 0 && newValue <= 100) {
+            progressBar.setValue(newValue);
         }
     }
 
