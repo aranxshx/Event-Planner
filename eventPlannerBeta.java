@@ -23,7 +23,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.AlphaComposite.*;
 
-
 public class eventPlannerBeta extends JFrame {
     private Point initialClick;
 
@@ -83,6 +82,7 @@ public class eventPlannerBeta extends JFrame {
     private Object[][] staffData = new Object[100][4];
     private Object[][] attendeeData = new Object[100][4];
     private Object[][] taskData = new Object[100][4];
+    private Object[][] programData = new Object[100][3];
 
     // ELEMENTS
     // Background
@@ -115,8 +115,8 @@ public class eventPlannerBeta extends JFrame {
     // Finances
     RoundedRectangle financesPanel = new RoundedRectangle(20);
     JLabel financesLabel = new JLabel("Finances");
-    String[] revenueColumns = {"Name", "Price"};
-    
+    String[] revenueColumns = { "Name", "Price" };
+
     CustomTableModel revenueModel = new CustomTableModel(revenueColumns, revenueData);
     JTable revenueTable = new JTable(revenueModel);
     JScrollPane revenueScroll = new JScrollPane(revenueTable);
@@ -148,10 +148,28 @@ public class eventPlannerBeta extends JFrame {
     RoundedRectangle peoplePanel = new RoundedRectangle(20);
     JLabel staffLabel = new JLabel("Staff");
     JLabel attendeesTLabel = new JLabel("Attendees");
-    String[] attendeesColumn = {"", ""};
+    String[] attendeesColumn = { "", "" };
     CustomTableModel attendeesModel = new CustomTableModel(attendeesColumn, attendeeData);
     JTable attendeesTable = new JTable(attendeesModel);
     JScrollPane attendeesScrollPane = new JScrollPane(attendeesTable);
+
+    // Staff
+    String[] staffColumn = { "", "" };
+    CustomTableModel staffModel = new CustomTableModel(staffColumn, staffData);
+    JTable staffTable = new JTable(staffModel);
+    JScrollPane staffScrollPane = new JScrollPane(staffTable);
+
+    // Resource
+    String[] resourcesColumn = { "", "" };
+    CustomTableModel resourcesModel = new CustomTableModel(resourcesColumn, resourcesData);
+    JTable resourcesTable = new JTable(resourcesModel);
+    JScrollPane resourcesScrollPane = new JScrollPane(resourcesTable);
+
+    // Inflow\
+
+    // Task
+
+    // Program
 
     JLabel attendeeNameLabel = new JLabel("Name", JLabel.CENTER);
     JLabel attendeeEmailLabel = new JLabel("Role", JLabel.CENTER);
@@ -314,9 +332,7 @@ public class eventPlannerBeta extends JFrame {
 
         attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        
 
-        
         attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         attendeesScrollPane.setBorder(null);
         attendeesScrollPane.setBounds(434, 830, 643, 131);
@@ -325,6 +341,48 @@ public class eventPlannerBeta extends JFrame {
         attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         attendeesScrollPane.setBorder(null);
         panel.add(attendeesScrollPane);
+
+        // Staff
+        staffTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        staffTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        staffTable.setOpaque(false);
+        staffTable.setForeground(PRIMARY_TEXT_COLOR);
+        staffTable.setFont(tableContentFont);
+        staffTable.setShowGrid(false);
+
+        staffTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        staffTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        staffScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        staffScrollPane.setBorder(null);
+        staffScrollPane.setBounds(100, 830, 643, 131);
+        staffScrollPane.setOpaque(false);
+        staffScrollPane.getViewport().setOpaque(false);
+        staffScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        staffScrollPane.setBorder(null);
+        panel.add(staffScrollPane);
+
+        // Resources
+        resourcesTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        resourcesTable.setOpaque(false);
+        resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
+        resourcesTable.setFont(tableContentFont);
+        resourcesTable.setShowGrid(false);
+
+        resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        resourcesScrollPane.setBounds(100, 830, 643, 131);
+        resourcesScrollPane.setOpaque(false);
+        resourcesScrollPane.getViewport().setOpaque(false);
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        panel.add(resourcesScrollPane);
+
+        // Inflow
 
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
@@ -2372,8 +2430,6 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
-        
-
         // Staff Data
         staffData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(people))) {
@@ -2484,6 +2540,29 @@ public class eventPlannerBeta extends JFrame {
                 }
             }
             System.out.println("Task data updated.");
+        } catch (IOException e) {
+            System.err.println("Error reading from the CSV file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Program Data
+        programData = new Object[100][3];
+        try (BufferedReader br = new BufferedReader(new FileReader(programNameData))) {
+            int x = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values[0].trim().equalsIgnoreCase("Program")) {
+                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
+                            && !values[2].trim().isEmpty()) {
+                        for (int i = 0; i < 2; i++) {
+                            taskData[x][i] = values[i + 1].trim();
+                        }
+                    }
+                    x++;
+                }
+            }
+            System.out.println("Program data updated.");
         } catch (IOException e) {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
@@ -2733,7 +2812,6 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
