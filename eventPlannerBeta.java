@@ -359,6 +359,8 @@ public class eventPlannerBeta extends JFrame {
                 switchRightButton.setVisible(false);
                 switchLeftButton.setVisible(true);
                 switchLeftButton.setEnabled(true);
+                attendeesScrollPane.setVisible(true);
+                staffScrollPane.setVisible(false);
             }
         });
         panel.add(switchRightButton);
@@ -377,6 +379,8 @@ public class eventPlannerBeta extends JFrame {
                 switchLeftButton.setVisible(false);
                 switchRightButton.setVisible(true);
                 switchRightButton.setEnabled(true);
+                attendeesScrollPane.setVisible(false);
+                staffScrollPane.setVisible(true);
             }
         });
         panel.add(switchLeftButton);
