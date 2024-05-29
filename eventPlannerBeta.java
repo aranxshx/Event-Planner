@@ -95,7 +95,6 @@ public class eventPlannerBeta extends JFrame {
     JLabel dashboardLabel = new JLabel("Overview");
     JLabel remainingBudgetAmount = new JLabel("P" + remainingBudget + " / P" + totalInflows);
     JProgressBar progressBar = new JProgressBar(0, 100);
-    
 
     // Icons
     ImageIcon dashboardImage = new ImageIcon("./assets/Icons/Dashboard.png");
@@ -225,8 +224,7 @@ public class eventPlannerBeta extends JFrame {
         centerRenderer.setOpaque(false);
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         centerRenderer.setBorder(null);
-        
-        
+
         progressBar.setPreferredSize(new Dimension(218, 11));
         progressBar.setBounds(871, 421, 218, 11);
         progressBar.setStringPainted(true);
@@ -301,7 +299,7 @@ public class eventPlannerBeta extends JFrame {
         panel.add(remainingPanel);
 
         // Finances
-        switchLeftButtonFinance.setBounds(535,192, 60, 60);
+        switchLeftButtonFinance.setBounds(535, 192, 60, 60);
         switchLeftButtonFinance.setBorder(null);
         switchLeftButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
         switchLeftButtonFinance.setOpaque(false);
@@ -322,7 +320,7 @@ public class eventPlannerBeta extends JFrame {
         panel.add(switchLeftButtonFinance);
         switchLeftButtonFinance.setVisible(false);
 
-        switchRightButtonFinance.setBounds(535,192, 60, 60);
+        switchRightButtonFinance.setBounds(535, 192, 60, 60);
         switchRightButtonFinance.setBorder(null);
         switchRightButtonFinance.setBackground(NAVIGATION_PANEL_COLOR);
         switchRightButtonFinance.setOpaque(false);
@@ -342,9 +340,6 @@ public class eventPlannerBeta extends JFrame {
         });
         panel.add(switchRightButtonFinance);
         switchRightButtonFinance.setVisible(true);
-        
-
-        
 
         financeTabLabel.setBounds(443, 197, 110, 50);
         financeTabLabel.setForeground(PRIMARY_TEXT_COLOR);
@@ -371,7 +366,6 @@ public class eventPlannerBeta extends JFrame {
         panel.add(expensesScrollPane);
         expensesScrollPane.setVisible(false);
 
-
         revenueTable.getColumnModel().getColumn(0).setPreferredWidth(60);
         revenueTable.getColumnModel().getColumn(1).setPreferredWidth(171);
         revenueTable.setOpaque(false);
@@ -391,7 +385,7 @@ public class eventPlannerBeta extends JFrame {
         revenueScrollPane.setBorder(null);
         panel.add(revenueScrollPane);
         revenueScrollPane.setVisible(true);
-        
+
         financesLabel.setBounds(441, 112, 232, 142);
         financesLabel.setForeground(PRIMARY_TEXT_COLOR);
         financesLabel.setFont(bTableFont);
@@ -2309,8 +2303,8 @@ public class eventPlannerBeta extends JFrame {
 
         while (true) {
             try {
-                String input = JOptionPane.showInputDialog(null, "Event Date (YYYY-MM-DD): "); // Get Event Date
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String input = JOptionPane.showInputDialog(null, "Event Date (DD/MM/YYYY): "); // Get Event Date
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy");
                 LocalDate eventDate = LocalDate.parse(input, formatter);
                 currentEventDate = eventDate.format(formatter);
                 break;
@@ -2920,8 +2914,6 @@ public class eventPlannerBeta extends JFrame {
         daysLeftNumLabel.setText("" + daysLeft);
         remainingBudget = totalInflows - totalOutflows;
         remainingBudgetAmount.setText("P" + remainingBudget + " / P" + totalInflows);
-        
-        
 
         revalidate();
         repaint();
@@ -2998,13 +2990,13 @@ public class eventPlannerBeta extends JFrame {
         }
 
         if (totalInflows > 0) {
-            updateProgress(remainingBudget/totalInflows);
+            updateProgress(remainingBudget / totalInflows);
         }
-        
+
     }
 
     public void updateProgress(int newValue) {
-        if(newValue >= 0 && newValue <= 100) {
+        if (newValue >= 0 && newValue <= 100) {
             progressBar.setValue(newValue);
         }
     }
