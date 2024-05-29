@@ -169,9 +169,9 @@ public class eventPlannerBeta extends JFrame {
 
     // Task
     String[] taskColumn = { "", "" };
-    CustomTableModel taskModel = new CustomTableModel(resourcesColumn, resourcesData);
-    JTable taskTable = new JTable(resourcesModel);
-    JScrollPane tableScrollPane = new JScrollPane(resourcesTable);
+    CustomTableModel taskModel = new CustomTableModel(taskColumn, taskData);
+    JTable taskTable = new JTable(taskModel);
+    JScrollPane taskScrollPane = new JScrollPane(taskTable);
 
     // Program
     String[] programColumn = { "", "" };
@@ -411,8 +411,45 @@ public class eventPlannerBeta extends JFrame {
         resourcesScrollPane.setBorder(null);
         panel.add(resourcesScrollPane);
 
-        
-        // Resources
+        // Program
+        programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
+        programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
+        programTable.setOpaque(false);
+        programTable.setForeground(PRIMARY_TEXT_COLOR);
+        programTable.setFont(tableContentFont);
+        programTable.setShowGrid(false);
+
+        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        programScrollPane.setBounds(1163, 396, 231, 567);
+        programScrollPane.setOpaque(false);
+        programScrollPane.getViewport().setOpaque(false);
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        panel.add(programScrollPane);
+
+        // Task
+        taskTable.getColumnModel().getColumn(0).setPreferredWidth(129);
+        taskTable.getColumnModel().getColumn(1).setPreferredWidth(102);
+        taskTable.setOpaque(false);
+        taskTable.setForeground(PRIMARY_TEXT_COLOR);
+        taskTable.setFont(tableContentFont);
+        taskTable.setShowGrid(false);
+
+        taskTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        taskTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        taskScrollPane.setBounds(1163, 109, 231, 209);
+        taskScrollPane.setOpaque(false);
+        taskScrollPane.getViewport().setOpaque(false);
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        panel.add(taskScrollPane);
 
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
@@ -2598,6 +2635,7 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
+        printArrays();
         refresh();
     }
 
@@ -2666,7 +2704,7 @@ public class eventPlannerBeta extends JFrame {
     }
 
     // Error fixing ni na function na handy, can get rid after the projectiftaposna
-    public static void printArrays() {
+    public void printArrays() {
         for (String name : outflowNames) {
             int i = 1;
             System.out.println("Ouflow Name " + i + ": " + name);
@@ -2713,6 +2751,19 @@ public class eventPlannerBeta extends JFrame {
             int i = 1;
             System.out.println("Event Dates " + i + ": " + name);
             i++;
+        }
+
+        for (String name : eventDates) {
+            int i = 1;
+            System.out.println("Event Dates " + i + ": " + name);
+            i++;
+        }
+
+        for (int i = 0; i < programData.length; i++) {
+            for (int j = 0; j < programData[i].length; j++) {
+                System.out.print(programData[i][j] + " ");
+            }
+            System.out.println();
         }
 
         System.out.println("Size of the Outflow Names: " + outflowNames.size());
