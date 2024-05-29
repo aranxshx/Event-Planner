@@ -82,7 +82,7 @@ public class eventPlannerBeta extends JFrame {
     private Object[][] staffData = new Object[100][4];
     private Object[][] attendeeData = new Object[100][4];
     private Object[][] taskData = new Object[100][4];
-    private Object[][] programData = new Object[100][2];
+    private Object[][] programData = new Object[100][3];
 
     // ELEMENTS
     // Background
@@ -208,6 +208,29 @@ public class eventPlannerBeta extends JFrame {
         panel.setBounds(0, 0, getWidth(), getHeight());
         add(panel);
 
+        // Program
+        programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
+        programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
+        programTable.setOpaque(false);
+        programTable.setForeground(PRIMARY_TEXT_COLOR);
+        programTable.setFont(tableContentFont);
+        programTable.setShowGrid(false);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setOpaque(false);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setBorder(null);
+        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        programScrollPane.setBounds(1163, 396, 231, 567);
+        programScrollPane.setOpaque(false);
+        programScrollPane.getViewport().setOpaque(false);
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        panel.add(programScrollPane);
+        
         // Exit Button
         exitButton.setBounds(49, 906, 153, 23);
         exitButton.setForeground(Color.RED);
@@ -334,10 +357,7 @@ public class eventPlannerBeta extends JFrame {
         attendeesTable.setForeground(PRIMARY_TEXT_COLOR);
         attendeesTable.setFont(tableContentFont);
         attendeesTable.setShowGrid(false);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setOpaque(false);
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        centerRenderer.setBorder(null);
+        
 
         attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
@@ -391,25 +411,8 @@ public class eventPlannerBeta extends JFrame {
         resourcesScrollPane.setBorder(null);
         panel.add(resourcesScrollPane);
 
-        // Program
-        programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
-        programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
-        programTable.setOpaque(false);
-        programTable.setForeground(PRIMARY_TEXT_COLOR);
-        programTable.setFont(tableContentFont);
-        programTable.setShowGrid(false);
-
-        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        programScrollPane.setBounds(1163, 396, 231, 567);
-        programScrollPane.setOpaque(false);
-        programScrollPane.getViewport().setOpaque(false);
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        panel.add(programScrollPane);
+        
+        // Resources
 
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
@@ -505,26 +508,7 @@ public class eventPlannerBeta extends JFrame {
         attendeesLabel.setForeground(PRIMARY_TEXT_COLOR);
         navigationPanel.add(attendeesLabel);
 
-        // Programs
-        programTable.getColumnModel().getColumn(0).setPreferredWidth(203);
-        programTable.getColumnModel().getColumn(1).setPreferredWidth(441);
-        programTable.setOpaque(false);
-        programTable.setForeground(PRIMARY_TEXT_COLOR);
-        programTable.setFont(tableContentFont);
-        programTable.setShowGrid(false);
-
-        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        programScrollPane.setBounds(434, 830, 643, 131);
-        programScrollPane.setOpaque(false);
-        programScrollPane.getViewport().setOpaque(false);
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        panel.add(programScrollPane);
-
+    
         // Buttons
         dashboardButton.setBounds(0, 210, 364, 90);
         dashboardButton.setBorder(null);
