@@ -208,29 +208,49 @@ public class eventPlannerBeta extends JFrame {
         panel.setBounds(0, 0, getWidth(), getHeight());
         add(panel);
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setOpaque(false);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setBorder(null);
+
         // Program
         programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
         programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
         programTable.setOpaque(false);
         programTable.setForeground(PRIMARY_TEXT_COLOR);
         programTable.setFont(tableContentFont);
-        programTable.setShowGrid(false);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setOpaque(false);
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        centerRenderer.setBorder(null);
+        programTable.setShowGrid(false);    
         programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
-        programScrollPane.setBounds(1163, 396, 231, 567);
+        programScrollPane.setBounds(1163, 416, 231, 547);
         programScrollPane.setOpaque(false);
         programScrollPane.getViewport().setOpaque(false);
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
         panel.add(programScrollPane);
         
+        // Task
+        taskTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+        taskTable.getColumnModel().getColumn(1).setPreferredWidth(171);
+        taskTable.setOpaque(false);
+        taskTable.setForeground(PRIMARY_TEXT_COLOR);
+        taskTable.setFont(tableContentFont);
+        taskTable.setShowGrid(false);
+
+        taskTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        taskTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        taskScrollPane.setBounds(1163, 120, 231, 198);
+        taskScrollPane.setOpaque(false);
+        taskScrollPane.getViewport().setOpaque(false);
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        panel.add(taskScrollPane);
+
         // Exit Button
         exitButton.setBounds(49, 906, 153, 23);
         exitButton.setForeground(Color.RED);
@@ -305,6 +325,64 @@ public class eventPlannerBeta extends JFrame {
         panel.add(tasksPanel);
 
         // Resources Panel
+        // Resources
+        resourcesTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        resourcesTable.setOpaque(false);
+        resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
+        resourcesTable.setFont(tableContentFont);
+        resourcesTable.setShowGrid(false);
+
+        resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        resourcesScrollPane.setBounds(433, 587, 639, 115);
+        resourcesScrollPane.setOpaque(false);
+        resourcesScrollPane.getViewport().setOpaque(false);
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        panel.add(resourcesScrollPane);
+
+        switchRightButton.setBounds(490, 750, 60, 60);
+        switchRightButton.setBorder(null);
+        switchRightButton.setBackground(NAVIGATION_PANEL_COLOR);
+        switchRightButton.setOpaque(false);
+        switchRightButton.setIcon(switchRightImage);
+        switchRightButton.setFont(iconButtonFont);
+        switchRightButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                staffLabel.setText("Attendee");
+                attendeeEmailLabel.setText("Email Address");
+                switchRightButton.setEnabled(false);
+                switchRightButton.setVisible(false);
+                switchLeftButton.setVisible(true);
+                switchLeftButton.setEnabled(true);
+            }
+        });
+        panel.add(switchRightButton);
+
+        switchLeftButton.setBounds(545, 752, 60, 60);
+        switchLeftButton.setBorder(null);
+        switchLeftButton.setBackground(NAVIGATION_PANEL_COLOR);
+        switchLeftButton.setOpaque(false);
+        switchLeftButton.setIcon(switchLeftImage);
+        switchLeftButton.setFont(iconButtonFont);
+        switchLeftButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                staffLabel.setText("Staff");
+                attendeeEmailLabel.setText("Role");
+                switchLeftButton.setEnabled(false);
+                switchLeftButton.setVisible(false);
+                switchRightButton.setVisible(true);
+                switchRightButton.setEnabled(true);
+            }
+        });
+        panel.add(switchLeftButton);
+        switchLeftButton.setVisible(false);
+        switchLeftButton.setEnabled(false);
+
         resourceNameLabel.setBounds(436, 544, 106, 50);
         resourceNameLabel.setForeground(PRIMARY_TEXT_COLOR);
         resourceNameLabel.setFont(headerFont);
@@ -369,6 +447,7 @@ public class eventPlannerBeta extends JFrame {
         attendeesScrollPane.getViewport().setOpaque(false);
         attendeesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         attendeesScrollPane.setBorder(null);
+        attendeesScrollPane.setVisible(false);
         panel.add(attendeesScrollPane);
 
         // Staff
@@ -384,110 +463,12 @@ public class eventPlannerBeta extends JFrame {
 
         staffScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         staffScrollPane.setBorder(null);
-        staffScrollPane.setBounds(100, 830, 643, 131);
+        staffScrollPane.setBounds(434, 830, 643, 131);
         staffScrollPane.setOpaque(false);
         staffScrollPane.getViewport().setOpaque(false);
         staffScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         staffScrollPane.setBorder(null);
         panel.add(staffScrollPane);
-
-        // Resources
-        resourcesTable.getColumnModel().getColumn(0).setPreferredWidth(203);
-        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
-        resourcesTable.setOpaque(false);
-        resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
-        resourcesTable.setFont(tableContentFont);
-        resourcesTable.setShowGrid(false);
-
-        resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        resourcesScrollPane.setBorder(null);
-        resourcesScrollPane.setBounds(100, 830, 643, 131);
-        resourcesScrollPane.setOpaque(false);
-        resourcesScrollPane.getViewport().setOpaque(false);
-        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        resourcesScrollPane.setBorder(null);
-        panel.add(resourcesScrollPane);
-
-        // Program
-        programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
-        programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
-        programTable.setOpaque(false);
-        programTable.setForeground(PRIMARY_TEXT_COLOR);
-        programTable.setFont(tableContentFont);
-        programTable.setShowGrid(false);
-
-        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        programScrollPane.setBounds(1163, 396, 231, 567);
-        programScrollPane.setOpaque(false);
-        programScrollPane.getViewport().setOpaque(false);
-        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        programScrollPane.setBorder(null);
-        panel.add(programScrollPane);
-
-        // Task
-        taskTable.getColumnModel().getColumn(0).setPreferredWidth(129);
-        taskTable.getColumnModel().getColumn(1).setPreferredWidth(102);
-        taskTable.setOpaque(false);
-        taskTable.setForeground(PRIMARY_TEXT_COLOR);
-        taskTable.setFont(tableContentFont);
-        taskTable.setShowGrid(false);
-
-        taskTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        taskTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-
-        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        taskScrollPane.setBorder(null);
-        taskScrollPane.setBounds(1163, 109, 231, 209);
-        taskScrollPane.setOpaque(false);
-        taskScrollPane.getViewport().setOpaque(false);
-        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        taskScrollPane.setBorder(null);
-        panel.add(taskScrollPane);
-
-        switchRightButton.setBounds(490, 750, 60, 60);
-        switchRightButton.setBorder(null);
-        switchRightButton.setBackground(NAVIGATION_PANEL_COLOR);
-        switchRightButton.setOpaque(false);
-        switchRightButton.setIcon(switchRightImage);
-        switchRightButton.setFont(iconButtonFont);
-        switchRightButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                staffLabel.setText("Attendee");
-                attendeeEmailLabel.setText("Email Address");
-                switchRightButton.setEnabled(false);
-                switchRightButton.setVisible(false);
-                switchLeftButton.setVisible(true);
-                switchLeftButton.setEnabled(true);
-            }
-        });
-        panel.add(switchRightButton);
-
-        switchLeftButton.setBounds(545, 752, 60, 60);
-        switchLeftButton.setBorder(null);
-        switchLeftButton.setBackground(NAVIGATION_PANEL_COLOR);
-        switchLeftButton.setOpaque(false);
-        switchLeftButton.setIcon(switchLeftImage);
-        switchLeftButton.setFont(iconButtonFont);
-        switchLeftButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                staffLabel.setText("Staff");
-                attendeeEmailLabel.setText("Role");
-                switchLeftButton.setEnabled(false);
-                switchLeftButton.setVisible(false);
-                switchRightButton.setVisible(true);
-                switchRightButton.setEnabled(true);
-            }
-        });
-        panel.add(switchLeftButton);
-        switchLeftButton.setVisible(false);
-        switchLeftButton.setEnabled(false);
 
         attendeeNameLabel.setBounds(436, 788, 170, 50);
         attendeeNameLabel.setForeground(PRIMARY_TEXT_COLOR);
