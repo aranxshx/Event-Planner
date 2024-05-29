@@ -139,7 +139,6 @@ public class eventPlannerBeta extends JFrame {
     JLabel resourceNameLabel = new JLabel("Name");
     JLabel resourceSourceLabel = new JLabel("Source");
     JLabel resourceDateLabel = new JLabel("Date");
-    JLabel resourceStatusLabel = new JLabel("Status");
 
     RoundedRectangle resourceSeparator1 = new RoundedRectangle(10);
     RoundedRectangle resourceSeparator2 = new RoundedRectangle(10);
@@ -162,7 +161,7 @@ public class eventPlannerBeta extends JFrame {
     JScrollPane staffScrollPane = new JScrollPane(staffTable);
 
     // Resource
-    String[] resourcesColumn = { "", "" };
+    String[] resourcesColumn = { "", "", "" };
     CustomTableModel resourcesModel = new CustomTableModel(resourcesColumn, resourcesData);
     JTable resourcesTable = new JTable(resourcesModel);
     JScrollPane resourcesScrollPane = new JScrollPane(resourcesTable);
@@ -334,7 +333,8 @@ public class eventPlannerBeta extends JFrame {
         // Resources Panel
         // Resources
         resourcesTable.getColumnModel().getColumn(0).setPreferredWidth(203);
-        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(203);
+        resourcesTable.getColumnModel().getColumn(2).setPreferredWidth(232);
         resourcesTable.setOpaque(false);
         resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
         resourcesTable.setFont(tableContentFont);
@@ -342,6 +342,7 @@ public class eventPlannerBeta extends JFrame {
 
         resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        resourcesTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
         resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         resourcesScrollPane.setBorder(null);
@@ -404,15 +405,10 @@ public class eventPlannerBeta extends JFrame {
         resourceSourceLabel.setFont(headerFont);
         panel.add(resourceSourceLabel);
 
-        resourceDateLabel.setBounds(885, 544, 106, 50);
+        resourceDateLabel.setBounds(930, 544, 106, 50);
         resourceDateLabel.setForeground(PRIMARY_TEXT_COLOR);
         resourceDateLabel.setFont(headerFont);
         panel.add(resourceDateLabel);
-
-        resourceStatusLabel.setBounds(1011, 544, 106, 50);
-        resourceStatusLabel.setForeground(PRIMARY_TEXT_COLOR);
-        resourceStatusLabel.setFont(headerFont);
-        panel.add(resourceStatusLabel);
 
         resourcesLabel.setBounds(436, 514, 170, 50);
         resourcesLabel.setForeground(PRIMARY_TEXT_COLOR);
@@ -433,7 +429,6 @@ public class eventPlannerBeta extends JFrame {
 
         resourceSeparator3.setBounds(982, 546, 3, 154);
         resourceSeparator3.setColor(BORDER_COLOR);
-        panel.add(resourceSeparator3);
 
         resourcesPanel.setBounds(410, 499, 695, 218);
         resourcesPanel.setColor(NAVIGATION_PANEL_COLOR);
@@ -2621,6 +2616,8 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
+        calculateTotalInflows();
+        calculateTotalOutflows();
         printArrays();
         refresh();
     }
