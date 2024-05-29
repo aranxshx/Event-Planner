@@ -91,8 +91,7 @@ public class eventPlannerBeta extends JFrame {
     ImageIcon backgroundImage = new ImageIcon("./assets/background.png");
     JLabel backgroundLabel = new JLabel(backgroundImage);
     JLabel dashboardLabel = new JLabel("Overview");
-    JLabel remainingBudgetAmount = new JLabel("P5,000");
-    JLabel remainingBudgetTotal = new JLabel("/ P10,000");
+    JLabel remainingBudgetAmount = new JLabel("" + remainingBudget + " / " + totalInflows);
 
     // Icons
     ImageIcon dashboardImage = new ImageIcon("./assets/Icons/Dashboard.png");
@@ -274,17 +273,10 @@ public class eventPlannerBeta extends JFrame {
         remainingBudgetLabel.setFont(beforeEventFont);
         panel.add(remainingBudgetLabel);
 
-        remainingBudgetAmount.setBounds(877, 336, 176, 25);
+        remainingBudgetAmount.setBounds(877, 400, 176, 25);
         remainingBudgetAmount.setForeground(PRIMARY_TEXT_COLOR);
         remainingBudgetAmount.setFont(remainingBudgetFont);
         panel.add(remainingBudgetAmount);
-        
-        remainingBudgetTotal.setBounds(877, 336, 176, 25);
-        remainingBudgetTotal.setForeground(PRIMARY_TEXT_COLOR);
-        remainingBudgetTotal.setFont(remainingBudgetFont);
-        panel.add(remainingBudgetTotal);
-
-        
 
         remainingPanel.setBounds(855, 305, 250, 175);
         remainingPanel.setColor(NAVIGATION_PANEL_COLOR);
@@ -2634,8 +2626,6 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
-        remainingBudget = totalInflows - totalOutflows;
-
         printArrays();
         refresh();
     }
@@ -2819,6 +2809,8 @@ public class eventPlannerBeta extends JFrame {
         dateLabel.setText(date);
         attendeesLabel.setText("Attendees: " + attendeeCount + " / " + maxAttendees);
         daysLeftNumLabel.setText("" + daysLeft);
+        remainingBudget = totalInflows - totalOutflows;
+        remainingBudgetAmount.setText("" + remainingBudget + " / " + totalInflows);
 
         revalidate();
         repaint();
