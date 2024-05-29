@@ -2597,20 +2597,21 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
-        // Program Data
         try (BufferedReader br = new BufferedReader(new FileReader(programNameData))) {
             int x = 0;
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values[0].trim().equalsIgnoreCase("Program")) {
-                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
-                            && !values[2].trim().isEmpty()) {
-                        for (int i = 0; i < 2; i++) {
-                            programData[x][i] = values[i + 1].trim();
-                        }
+
+                // Ensure values array has at least 3 elements to avoid index out of bounds
+                if (values.length >= 3 && values[0].trim().equalsIgnoreCase("Program")) {
+                    // Check that required values are not empty
+                    if (!values[1].trim().isEmpty() && !values[2].trim().isEmpty()) {
+                        programData[x][0] = values[1].trim();
+                        programData[x][1] = values[2].trim();
+                        programData[x][2] = values[3].trim();
+                        x++; // Increment x only when data is successfully added
                     }
-                    x++;
                 }
             }
             System.out.println("Program data updated.");
