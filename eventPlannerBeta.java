@@ -170,6 +170,10 @@ public class eventPlannerBeta extends JFrame {
     // Task
 
     // Program
+    String[] programColumn = { "", "" };
+    CustomTableModel programModel = new CustomTableModel(resourcesColumn, resourcesData);
+    JTable programTable = new JTable(resourcesModel);
+    JScrollPane programScrollPane = new JScrollPane(resourcesTable);
 
     JLabel attendeeNameLabel = new JLabel("Name", JLabel.CENTER);
     JLabel attendeeEmailLabel = new JLabel("Role", JLabel.CENTER);
@@ -383,7 +387,25 @@ public class eventPlannerBeta extends JFrame {
         resourcesScrollPane.setBorder(null);
         panel.add(resourcesScrollPane);
 
-        // Inflow
+        // Program
+        programTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        resourcesTable.setOpaque(false);
+        resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
+        resourcesTable.setFont(tableContentFont);
+        resourcesTable.setShowGrid(false);
+
+        resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        resourcesScrollPane.setBounds(100, 830, 643, 131);
+        resourcesScrollPane.setOpaque(false);
+        resourcesScrollPane.getViewport().setOpaque(false);
+        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        resourcesScrollPane.setBorder(null);
+        panel.add(resourcesScrollPane);
 
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
@@ -479,6 +501,25 @@ public class eventPlannerBeta extends JFrame {
         attendeesLabel.setForeground(PRIMARY_TEXT_COLOR);
         navigationPanel.add(attendeesLabel);
 
+        // Programs
+        programTable.getColumnModel().getColumn(0).setPreferredWidth(203);
+        programTable.getColumnModel().getColumn(1).setPreferredWidth(441);
+        programTable.setOpaque(false);
+        programTable.setForeground(PRIMARY_TEXT_COLOR);
+        programTable.setFont(tableContentFont);
+        programTable.setShowGrid(false);
+
+        attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        programScrollPane.setBounds(434, 830, 643, 131);
+        programScrollPane.setOpaque(false);
+        programScrollPane.getViewport().setOpaque(false);
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        panel.add(attendeesScrollPane);
         // Buttons
         dashboardButton.setBounds(0, 210, 364, 90);
         dashboardButton.setBorder(null);
