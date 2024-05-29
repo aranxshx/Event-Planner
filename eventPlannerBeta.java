@@ -169,9 +169,9 @@ public class eventPlannerBeta extends JFrame {
 
     // Task
     String[] taskColumn = { "", "" };
-    CustomTableModel taskModel = new CustomTableModel(resourcesColumn, resourcesData);
-    JTable taskTable = new JTable(resourcesModel);
-    JScrollPane tableScrollPane = new JScrollPane(resourcesTable);
+    CustomTableModel taskModel = new CustomTableModel(taskColumn, taskData);
+    JTable taskTable = new JTable(taskModel);
+    JScrollPane taskScrollPane = new JScrollPane(taskTable);
 
     // Program
     String[] programColumn = { "", "" };
@@ -411,6 +411,26 @@ public class eventPlannerBeta extends JFrame {
         programScrollPane.setBorder(null);
         panel.add(programScrollPane);
 
+        // Task
+        taskTable.getColumnModel().getColumn(0).setPreferredWidth(129);
+        taskTable.getColumnModel().getColumn(1).setPreferredWidth(102);
+        taskTable.setOpaque(false);
+        taskTable.setForeground(PRIMARY_TEXT_COLOR);
+        taskTable.setFont(tableContentFont);
+        taskTable.setShowGrid(false);
+
+        taskTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        taskTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        taskScrollPane.setBounds(1163, 109, 231, 209);
+        taskScrollPane.setOpaque(false);
+        taskScrollPane.getViewport().setOpaque(false);
+        taskScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        taskScrollPane.setBorder(null);
+        panel.add(taskScrollPane);
+
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
         switchRightButton.setBackground(NAVIGATION_PANEL_COLOR);
@@ -524,6 +544,8 @@ public class eventPlannerBeta extends JFrame {
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
         panel.add(programScrollPane);
+
+        //
 
         // Buttons
         dashboardButton.setBounds(0, 210, 364, 90);
