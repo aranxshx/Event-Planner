@@ -67,6 +67,7 @@ public class eventPlannerBeta extends JFrame {
     public int year = 0;
     public long daysLeft;
     public int progress = 0;
+    private int navigationY = 39;
 
     // DATA VARIABLES
     public static List<String> eventNames = new ArrayList<>();
@@ -615,9 +616,10 @@ public class eventPlannerBeta extends JFrame {
         navigationPanel.setBackground(NAVIGATION_PANEL_COLOR);
         navigationPanel.setLayout(null);
         panel.add(navigationPanel);
+        
 
         // Title and date
-        titleButton.setBounds(32, 39, 286, 71);
+        titleButton.setBounds(32, navigationY, 286, 71);
         titleButton.setFont(titleFont);
         titleButton.setForeground(PRIMARY_TEXT_COLOR);
         titleButton.setBackground(null);
@@ -633,18 +635,18 @@ public class eventPlannerBeta extends JFrame {
         });
         navigationPanel.add(titleButton);
 
-        dateLabel.setBounds(32, 95, 230, 32);
+        dateLabel.setBounds(32, navigationY + 56, 230, 32);
         dateLabel.setFont(dateFont);
         dateLabel.setForeground(PRIMARY_TEXT_COLOR);
         navigationPanel.add(dateLabel);
 
-        attendeesLabel.setBounds(32, 145, 230, 32);
+        attendeesLabel.setBounds(32, navigationY + 106, 230, 32);
         attendeesLabel.setFont(dateFont);
         attendeesLabel.setForeground(PRIMARY_TEXT_COLOR);
         navigationPanel.add(attendeesLabel);
 
         // Buttons
-        dashboardButton.setBounds(0, 210, 364, 90);
+        dashboardButton.setBounds(0, navigationY + 171, 364, 90);
         dashboardButton.setBorder(null);
         dashboardButton.setBackground(null);
         dashboardButton.setOpaque(false);
@@ -662,7 +664,7 @@ public class eventPlannerBeta extends JFrame {
         });
         navigationPanel.add(dashboardButton);
 
-        financesButton.setBounds(0, 300, 364, 90);
+        financesButton.setBounds(0, + navigationY + 261, 364, 90);
         financesButton.setBorder(null);
         financesButton.setBackground(null);
         financesButton.setOpaque(false);
@@ -680,7 +682,7 @@ public class eventPlannerBeta extends JFrame {
         });
         navigationPanel.add(financesButton);
 
-        resourcesButton.setBounds(0, 390, 364, 90);
+        resourcesButton.setBounds(0, navigationY + 351, 364, 90);
         resourcesButton.setBorder(null);
         resourcesButton.setBackground(null);
         resourcesButton.setOpaque(false);
@@ -698,7 +700,7 @@ public class eventPlannerBeta extends JFrame {
         });
         navigationPanel.add(resourcesButton);
 
-        peopleButton.setBounds(0, 480, 364, 90);
+        peopleButton.setBounds(0, navigationY + 441, 364, 90);
         peopleButton.setBorder(null);
         peopleButton.setBackground(null);
         peopleButton.setOpaque(false);
@@ -720,7 +722,7 @@ public class eventPlannerBeta extends JFrame {
         });
         navigationPanel.add(peopleButton);
 
-        programButton.setBounds(0, 570, 364, 90);
+        programButton.setBounds(0, navigationY + 531, 364, 90);
         programButton.setBorder(null);
         programButton.setBackground(null);
         programButton.setOpaque(false);
@@ -739,7 +741,7 @@ public class eventPlannerBeta extends JFrame {
         navigationPanel.add(programButton);
 
 
-        taskButton.setBounds(0, 660, 364, 90);
+        taskButton.setBounds(0, navigationY + 621, 364, 90);
         taskButton.setBorder(null);
         taskButton.setBackground(null);
         taskButton.setOpaque(false);
@@ -2555,7 +2557,7 @@ public class eventPlannerBeta extends JFrame {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
-
+        
         // Program Date
         try (BufferedReader br = new BufferedReader(new FileReader(programDateData))) {
             String line;
@@ -2933,6 +2935,32 @@ public class eventPlannerBeta extends JFrame {
         }
     }
 
+    /*
+    public void adjustTitleButtonAndNavigation() {
+        String buttonText = titleButton.getText();
+        String[] words = buttonText.split("\\s+"); // Splitting the string into words
+        
+        // Check if the number of words exceeds 2
+        if (words.length > 2) {
+            titleButton.setBounds(32, 39, 286, 161); // Adjust the bounds of titleButton
+            dateLabel.setBounds(dateLabel.getX(), dateLabel.getY() + 90, dateLabel.getWidth(), dateLabel.getHeight());
+            attendeesLabel.setBounds(attendeesLabel.getX(), attendeesLabel.getY() + 90, attendeesLabel.getWidth(), attendeesLabel.getHeight());
+            dashboardButton.setBounds(dashboardButton.getX(), dashboardButton.getY() + 90, dashboardButton.getWidth(), dashboardButton.getHeight());
+            financesButton.setBounds(financesButton.getX(), financesButton.getY() + 90, financesButton.getWidth(), financesButton.getHeight());
+            resourcesButton.setBounds(resourcesButton.getX(), resourcesButton.getY() + 90, resourcesButton.getWidth(), resourcesButton.getHeight());
+            peopleButton.setBounds(peopleButton.getX(), peopleButton.getY() + 90, peopleButton.getWidth(), peopleButton.getHeight());
+            programButton.setBounds()
+            taskButton.setBounds()
+
+            
+            
+        }
+
+        repaint();
+        revalidate();
+    }
+    */
+    
     public void refresh() {
         getDate();
 
@@ -2983,6 +3011,7 @@ public class eventPlannerBeta extends JFrame {
 
     public void getDate() {
         String daysRemaining = "./events/events.csv";
+        adjustTitleButtonAndNavigation();
 
         try (BufferedReader br = new BufferedReader(new FileReader(daysRemaining))) {
             String line;
