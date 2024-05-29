@@ -59,6 +59,7 @@ public class eventPlannerBeta extends JFrame {
     public static int totalOutflows = 0;
     public static int attendeeCount = 0;
     public static int maxAttendees = 0;
+    public static int remainingBudget = 0;
     public static String date = "";
     public int day = 0;
     public int month = 0;
@@ -221,7 +222,7 @@ public class eventPlannerBeta extends JFrame {
         programTable.setOpaque(false);
         programTable.setForeground(PRIMARY_TEXT_COLOR);
         programTable.setFont(tableContentFont);
-        programTable.setShowGrid(false);    
+        programTable.setShowGrid(false);
         programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
@@ -232,7 +233,7 @@ public class eventPlannerBeta extends JFrame {
         programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
         programScrollPane.setBorder(null);
         panel.add(programScrollPane);
-        
+
         // Task
         taskTable.getColumnModel().getColumn(0).setPreferredWidth(60);
         taskTable.getColumnModel().getColumn(1).setPreferredWidth(171);
@@ -453,7 +454,6 @@ public class eventPlannerBeta extends JFrame {
         attendeesTable.setForeground(PRIMARY_TEXT_COLOR);
         attendeesTable.setFont(tableContentFont);
         attendeesTable.setShowGrid(false);
-        
 
         attendeesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         attendeesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
@@ -544,7 +544,6 @@ public class eventPlannerBeta extends JFrame {
         attendeesLabel.setForeground(PRIMARY_TEXT_COLOR);
         navigationPanel.add(attendeesLabel);
 
-    
         // Buttons
         dashboardButton.setBounds(0, 210, 364, 90);
         dashboardButton.setBorder(null);
@@ -2612,20 +2611,21 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
-        // Program Data
         try (BufferedReader br = new BufferedReader(new FileReader(programNameData))) {
             int x = 0;
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values[0].trim().equalsIgnoreCase("Program")) {
-                    if (values.length >= 2 && !values[0].trim().isEmpty() && !values[1].trim().isEmpty()
-                            && !values[2].trim().isEmpty()) {
-                        for (int i = 0; i < 2; i++) {
-                            programData[x][i] = values[i + 1].trim();
-                        }
+
+                // Ensure values array has at least 3 elements to avoid index out of bounds
+                if (values.length >= 3 && values[0].trim().equalsIgnoreCase("Program")) {
+                    // Check that required values are not empty
+                    if (!values[1].trim().isEmpty() && !values[2].trim().isEmpty()) {
+                        programData[x][0] = values[1].trim();
+                        programData[x][1] = values[2].trim();
+                        programData[x][2] = values[3].trim();
+                        x++; // Increment x only when data is successfully added
                     }
-                    x++;
                 }
             }
             System.out.println("Program data updated.");
@@ -2633,6 +2633,8 @@ public class eventPlannerBeta extends JFrame {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
+
+        remainingBudget = totalInflows - totalOutflows;
 
         printArrays();
         refresh();
