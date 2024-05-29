@@ -103,6 +103,7 @@ public class eventPlannerBeta extends JFrame {
     ImageIcon peopleImage = new ImageIcon("./assets/Icons/People.png");
     ImageIcon programImage = new ImageIcon("./assets/Icons/Program.png");
     ImageIcon resourcesImage = new ImageIcon("./assets/Icons/Resources.png");
+    ImageIcon taskImage = new ImageIcon("./assets/Icons/Add Task.png");
     ImageIcon switchLeftImage = new ImageIcon("./assets/Icons/Switch Left.png");
     ImageIcon switchRightImage = new ImageIcon("./assets/Icons/Switch Right.png");
 
@@ -117,6 +118,7 @@ public class eventPlannerBeta extends JFrame {
     JButton resourcesButton = new JButton();
     JButton peopleButton = new JButton();
     JButton programButton = new JButton();
+    JButton taskButton = new JButton();
 
     // Finances
     RoundedRectangle financesPanel = new RoundedRectangle(20);
@@ -335,8 +337,8 @@ public class eventPlannerBeta extends JFrame {
                 switchRightButtonFinance.setVisible(false);
                 switchLeftButtonFinance.setVisible(true);
                 switchLeftButtonFinance.setEnabled(true);
-                revenueScrollPane.setVisible(false);
-                expensesScrollPane.setVisible(true);
+                revenueScrollPane.setVisible(true);
+                expensesScrollPane.setVisible(false);
                 System.out.println("Switched to expenses");
             }
         });
@@ -434,7 +436,7 @@ public class eventPlannerBeta extends JFrame {
 
         checklistSeparator.setBounds(1157, 334, 241, 3);
         checklistSeparator.setColor(BORDER_COLOR);
-        panel.add(checklistSeparator);
+        // panel.add(checklistSeparator);
 
         tasksPanel.setBounds(1141, 39, 271, 940);
         tasksPanel.setColor(NAVIGATION_PANEL_COLOR);
@@ -527,15 +529,15 @@ public class eventPlannerBeta extends JFrame {
 
         resourceSeparator1.setBounds(646, 546, 3, 154);
         resourceSeparator1.setColor(BORDER_COLOR);
-        panel.add(resourceSeparator1);
+        // panel.add(resourceSeparator1);
 
         resourceSeparator1.setBounds(646, 546, 3, 154);
         resourceSeparator1.setColor(BORDER_COLOR);
-        panel.add(resourceSeparator1);
+        // panel.add(resourceSeparator1);
 
         resourceSeparator2.setBounds(845, 546, 3, 154);
         resourceSeparator2.setColor(BORDER_COLOR);
-        panel.add(resourceSeparator2);
+        // panel.add(resourceSeparator2);
 
         resourceSeparator3.setBounds(982, 546, 3, 154);
         resourceSeparator3.setColor(BORDER_COLOR);
@@ -602,7 +604,7 @@ public class eventPlannerBeta extends JFrame {
 
         peopleSeparator.setBounds(636, 792, 3, 170);
         peopleSeparator.setColor(BORDER_COLOR);
-        panel.add(peopleSeparator);
+        // panel.add(peopleSeparator);
 
         peoplePanel.setBounds(410, 738, 695, 240);
         peoplePanel.setColor(NAVIGATION_PANEL_COLOR);
@@ -735,6 +737,25 @@ public class eventPlannerBeta extends JFrame {
             }
         });
         navigationPanel.add(programButton);
+
+
+        taskButton.setBounds(0, 660, 364, 90);
+        taskButton.setBorder(null);
+        taskButton.setBackground(null);
+        taskButton.setOpaque(false);
+        taskButton.setIcon(taskImage);
+        taskButton.setText("Tasks");
+        taskButton.setFont(iconButtonFont);
+        taskButton.setForeground(PRIMARY_TEXT_COLOR);
+        taskButton.setHorizontalAlignment(SwingConstants.LEFT);
+        taskButton.setVerticalTextPosition(SwingConstants.CENTER);
+        taskButton.setBorder(new EmptyBorder(10, 35, 10, 10));
+        taskButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                taskInputPopup();
+            }
+        });
+        navigationPanel.add(taskButton);
 
         // Background
         dashboardLabel.setBounds(416, 47, 485, 50);
@@ -2917,7 +2938,17 @@ public class eventPlannerBeta extends JFrame {
 
         dateLabel.setText(date);
         attendeesLabel.setText("Attendees: " + attendeeCount + " / " + maxAttendees);
+        
         daysLeftNumLabel.setText("" + daysLeft);
+
+        if (daysLeft > 9) {
+            daysLeftTextLabel1.setBounds(970, 146, 100, 100);
+        } else if (daysLeft > 99) {
+            daysLeftTextLabel1.setBounds(995, 146, 100, 100);
+        } else if (daysLeft > 999) {
+            daysLeftTextLabel1.setBounds(1010, 146, 100, 100);
+        }
+
         remainingBudget = totalInflows - totalOutflows;
         remainingBudgetAmount.setText("P" + remainingBudget + " / P" + totalInflows);
         
