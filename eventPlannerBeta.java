@@ -2636,6 +2636,7 @@ public class eventPlannerBeta extends JFrame {
             e.printStackTrace();
         }
 
+        printArrays();
         refresh();
     }
 
@@ -2704,7 +2705,7 @@ public class eventPlannerBeta extends JFrame {
     }
 
     // Error fixing ni na function na handy, can get rid after the projectiftaposna
-    public static void printArrays() {
+    public void printArrays() {
         for (String name : outflowNames) {
             int i = 1;
             System.out.println("Ouflow Name " + i + ": " + name);
@@ -2751,6 +2752,19 @@ public class eventPlannerBeta extends JFrame {
             int i = 1;
             System.out.println("Event Dates " + i + ": " + name);
             i++;
+        }
+
+        for (String name : eventDates) {
+            int i = 1;
+            System.out.println("Event Dates " + i + ": " + name);
+            i++;
+        }
+
+        for (int i = 0; i < programData.length; i++) {
+            for (int j = 0; j < programData[i].length; j++) {
+                System.out.print(programData[i][j] + " ");
+            }
+            System.out.println();
         }
 
         System.out.println("Size of the Outflow Names: " + outflowNames.size());
