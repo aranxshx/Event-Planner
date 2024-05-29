@@ -90,6 +90,8 @@ public class eventPlannerBeta extends JFrame {
     ImageIcon backgroundImage = new ImageIcon("./assets/background.png");
     JLabel backgroundLabel = new JLabel(backgroundImage);
     JLabel dashboardLabel = new JLabel("Overview");
+    JLabel remainingBudgetAmount = new JLabel("P5,000");
+    JLabel remainingBudgetTotal = new JLabel("/ P10,000");
 
     // Icons
     ImageIcon dashboardImage = new ImageIcon("./assets/Icons/Dashboard.png");
@@ -270,6 +272,18 @@ public class eventPlannerBeta extends JFrame {
         remainingBudgetLabel.setForeground(PRIMARY_TEXT_COLOR);
         remainingBudgetLabel.setFont(beforeEventFont);
         panel.add(remainingBudgetLabel);
+
+        remainingBudgetAmount.setBounds(877, 336, 176, 25);
+        remainingBudgetAmount.setForeground(PRIMARY_TEXT_COLOR);
+        remainingBudgetAmount.setFont(remainingBudgetFont);
+        panel.add(remainingBudgetAmount);
+        
+        remainingBudgetTotal.setBounds(877, 336, 176, 25);
+        remainingBudgetTotal.setForeground(PRIMARY_TEXT_COLOR);
+        remainingBudgetTotal.setFont(remainingBudgetFont);
+        panel.add(remainingBudgetTotal);
+
+        
 
         remainingPanel.setBounds(855, 305, 250, 175);
         remainingPanel.setColor(NAVIGATION_PANEL_COLOR);
