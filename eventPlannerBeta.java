@@ -92,8 +92,7 @@ public class eventPlannerBeta extends JFrame {
     ImageIcon backgroundImage = new ImageIcon("./assets/background.png");
     JLabel backgroundLabel = new JLabel(backgroundImage);
     JLabel dashboardLabel = new JLabel("Overview");
-    JLabel remainingBudgetAmount = new JLabel("P5,000");
-    JLabel remainingBudgetTotal = new JLabel("/ P10,000");
+    JLabel remainingBudgetAmount = new JLabel("P" + remainingBudget + " / P" + totalInflows);
 
     // Icons
     ImageIcon dashboardImage = new ImageIcon("./assets/Icons/Dashboard.png");
@@ -283,17 +282,10 @@ public class eventPlannerBeta extends JFrame {
         remainingBudgetLabel.setFont(beforeEventFont);
         panel.add(remainingBudgetLabel);
 
-        remainingBudgetAmount.setBounds(877, 336, 176, 25);
+        remainingBudgetAmount.setBounds(877, 400, 300, 25);
         remainingBudgetAmount.setForeground(PRIMARY_TEXT_COLOR);
         remainingBudgetAmount.setFont(remainingBudgetFont);
         panel.add(remainingBudgetAmount);
-        
-        remainingBudgetTotal.setBounds(877, 336, 176, 25);
-        remainingBudgetTotal.setForeground(PRIMARY_TEXT_COLOR);
-        remainingBudgetTotal.setFont(remainingBudgetFont);
-        panel.add(remainingBudgetTotal);
-
-        
 
         remainingPanel.setBounds(855, 305, 250, 175);
         remainingPanel.setColor(NAVIGATION_PANEL_COLOR);
@@ -2592,7 +2584,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Staff Data
-        staffData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(people))) {
             int x = 0;
             String line;
@@ -2615,7 +2606,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Resources Data
-        resourcesData = new Object[100][3];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2638,7 +2628,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Revenue Data
-        revenueData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2661,7 +2650,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Expenses Data
-        expensesData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2684,7 +2672,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Task Data
-        taskData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(task))) {
             int x = 0;
             String line;
@@ -2728,8 +2715,6 @@ public class eventPlannerBeta extends JFrame {
             System.err.println("Error reading from the CSV file: " + e.getMessage());
             e.printStackTrace();
         }
-
-        remainingBudget = totalInflows - totalOutflows;
 
         printArrays();
         refresh();
@@ -2862,6 +2847,13 @@ public class eventPlannerBeta extends JFrame {
             System.out.println();
         }
 
+        for (int i = 0; i < staffData.length; i++) {
+            for (int j = 0; j < staffData[i].length; j++) {
+                System.out.print(staffData[i][j] + " ");
+            }
+            System.out.println();
+        }
+
         System.out.println("Size of the Outflow Names: " + outflowNames.size());
         System.out.println("Size of the Outflow Price: " + outflowPrices.size());
         System.out.println("Size of the Inflow Names: " + inflowNames.size());
@@ -2914,6 +2906,8 @@ public class eventPlannerBeta extends JFrame {
         dateLabel.setText(date);
         attendeesLabel.setText("Attendees: " + attendeeCount + " / " + maxAttendees);
         daysLeftNumLabel.setText("" + daysLeft);
+        remainingBudget = totalInflows - totalOutflows;
+        remainingBudgetAmount.setText("P" + remainingBudget + " / P" + totalInflows);
 
         revalidate();
         repaint();
