@@ -388,24 +388,24 @@ public class eventPlannerBeta extends JFrame {
         panel.add(resourcesScrollPane);
 
         // Program
-        programTable.getColumnModel().getColumn(0).setPreferredWidth(203);
-        resourcesTable.getColumnModel().getColumn(1).setPreferredWidth(441);
-        resourcesTable.setOpaque(false);
-        resourcesTable.setForeground(PRIMARY_TEXT_COLOR);
-        resourcesTable.setFont(tableContentFont);
-        resourcesTable.setShowGrid(false);
+        programTable.getColumnModel().getColumn(0).setPreferredWidth(129);
+        programTable.getColumnModel().getColumn(1).setPreferredWidth(102);
+        programTable.setOpaque(false);
+        programTable.setForeground(PRIMARY_TEXT_COLOR);
+        programTable.setFont(tableContentFont);
+        programTable.setShowGrid(false);
 
-        resourcesTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        resourcesTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        programTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 
-        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        resourcesScrollPane.setBorder(null);
-        resourcesScrollPane.setBounds(100, 830, 643, 131);
-        resourcesScrollPane.setOpaque(false);
-        resourcesScrollPane.getViewport().setOpaque(false);
-        resourcesScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
-        resourcesScrollPane.setBorder(null);
-        panel.add(resourcesScrollPane);
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        programScrollPane.setBounds(1163, 396, 231, 567);
+        programScrollPane.setOpaque(false);
+        programScrollPane.getViewport().setOpaque(false);
+        programScrollPane.setBackground(NAVIGATION_PANEL_COLOR);
+        programScrollPane.setBorder(null);
+        panel.add(programScrollPane);
 
         switchRightButton.setBounds(490, 750, 60, 60);
         switchRightButton.setBorder(null);
