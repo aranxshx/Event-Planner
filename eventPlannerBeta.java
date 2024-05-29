@@ -2489,7 +2489,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Staff Data
-        staffData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(people))) {
             int x = 0;
             String line;
@@ -2512,7 +2511,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Resources Data
-        resourcesData = new Object[100][3];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2535,7 +2533,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Revenue Data
-        revenueData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2558,7 +2555,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Expenses Data
-        expensesData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(finances))) {
             int x = 0;
             String line;
@@ -2581,7 +2577,6 @@ public class eventPlannerBeta extends JFrame {
         }
 
         // Task Data
-        taskData = new Object[100][2];
         try (BufferedReader br = new BufferedReader(new FileReader(task))) {
             int x = 0;
             String line;
@@ -2753,6 +2748,13 @@ public class eventPlannerBeta extends JFrame {
         for (int i = 0; i < programData.length; i++) {
             for (int j = 0; j < programData[i].length; j++) {
                 System.out.print(programData[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < staffData.length; i++) {
+            for (int j = 0; j < staffData[i].length; j++) {
+                System.out.print(staffData[i][j] + " ");
             }
             System.out.println();
         }
