@@ -24,7 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.AlphaComposite.*;
 
-public class eventPlannerBeta extends JFrame {
+public class Eve extends JFrame {
     private Point initialClick;
 
     // COLORS
@@ -211,7 +211,7 @@ public class eventPlannerBeta extends JFrame {
     // Exit Button
     JButton exitButton = new JButton("Exit");
 
-    public eventPlannerBeta() {
+    public Eve() {
         setTitle("Eve");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1440, 1024);
@@ -2430,6 +2430,7 @@ public class eventPlannerBeta extends JFrame {
         arrayClear();
         countAttendee();
         refresh();
+        adjustTitleButtonAndNavigation();
 
         // Initialize file paths
         String outflowNameData = "./events/" + currentEventName.toLowerCase() + "_finances.csv";
@@ -2929,7 +2930,7 @@ public class eventPlannerBeta extends JFrame {
         }
     }
 
-    /*
+    
     public void adjustTitleButtonAndNavigation() {
         String buttonText = titleButton.getText();
         String[] words = buttonText.split("\\s+"); // Splitting the string into words
@@ -2943,17 +2944,14 @@ public class eventPlannerBeta extends JFrame {
             financesButton.setBounds(financesButton.getX(), financesButton.getY() + 90, financesButton.getWidth(), financesButton.getHeight());
             resourcesButton.setBounds(resourcesButton.getX(), resourcesButton.getY() + 90, resourcesButton.getWidth(), resourcesButton.getHeight());
             peopleButton.setBounds(peopleButton.getX(), peopleButton.getY() + 90, peopleButton.getWidth(), peopleButton.getHeight());
-            programButton.setBounds()
-            taskButton.setBounds()
-
-            
-            
+            programButton.setBounds(programButton.getX(), programButton.getY() + 90, programButton.getWidth(), programButton.getHeight());
+            taskButton.setBounds(taskButton.getX(), taskButton.getY() + 90, taskButton.getWidth(), taskButton.getHeight()); 
         }
 
         repaint();
         revalidate();
     }
-    */
+    
     
     public void refresh() {
         getDate();
@@ -3062,7 +3060,7 @@ public class eventPlannerBeta extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            eventPlannerBeta frame = new eventPlannerBeta();
+            Eve frame = new Eve();
             frame.setVisible(true);
         });
     }
